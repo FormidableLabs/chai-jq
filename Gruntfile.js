@@ -1,13 +1,38 @@
 /* global module:false */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+  // Strip comments from JsHint JSON files (naive).
+  var _jshintCfg = function (name) {
+    if (!grunt.file.exists(name)) { return "{}"; }
+
+    var raw = grunt.file.read(name);
+    return JSON.parse(raw.replace(/\/\/.*\n/g, ""));
+  };
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON("package.json"),
 
     jshint: {
+      options: _jshintCfg(".jshintrc-frontend.json"),
+      "frontend-frontend": {
+        files: {
+          src:  [
+            "test/js/spec/**/*.js",
+            "*.js",
+            "!Gruntfile.js"
+          ]
+        }
+      },
+      "frontend-backend": {
+        options: _jshintCfg(".jshintrc-backend.json"),
+        files: {
+          src:  [
+            "Gruntfile.js"
+          ]
+        }
+      }
     },
 
-    mocha_phantomjs: {
+    "mocha_phantomjs": {
       all: ["test/test.html"]
     },
 
@@ -70,5 +95,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-jade");
 
   // Default task
-  grunt.registerTask( "default", [ "jshint", "mocha_phantomjs" ] );
+  grunt.registerTask("default", ["jshint", "mocha_phantomjs"]);
 };
