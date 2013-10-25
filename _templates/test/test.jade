@@ -8,10 +8,12 @@ html
     link(rel="stylesheet", href="js/lib/mocha.css")
     script(src="js/lib/mocha.js")
     script(src="js/lib/chai.js")
+    script(src="js/chai-jq.js")
     script(src="js/lib/sinon.js")
 
     // Test Setup
     block setup
+      script(src="js/lib/jquery.js")
       script.
         // Set up Chai and Mocha.
         window.expect = chai.expect;
