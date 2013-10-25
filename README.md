@@ -11,6 +11,10 @@ Add `chai-jq.js` after your Chai script include.
     <script src="chai.js"></script>
     <script src="chai-jq.js"></script>
 
+## Development Guide
+
+**TODO: WRITE THIS UP!!!**
+
 ## Licenses
 All code not otherwise specified is Copyright 2013 Ryan Roemer.
 Released under the [MIT](./LICENSE.txt) License.
