@@ -12,3 +12,5 @@ Add `chai-jq.js` after your Chai script include.
 <script src="chai.js"></script>
 <script src="chai-jq.js"></script>
 ```
+
+TODO: Rest of README.md
