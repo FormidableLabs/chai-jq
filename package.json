@@ -16,6 +16,7 @@
     "grunt-contrib-copy": "~0.4.1"
   },
   "scripts": {
+    "postinstall": "./node_modules/.bin/bower install",
     "test": "./node_modules/.bin/grunt check"
   },
   "repository": {
