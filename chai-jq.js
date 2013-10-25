@@ -7,9 +7,11 @@
   /**
    * Chai jQuery plugin implementation.
    */
-  function chaiJq(chai, utils) {
+  function chaiJq(chai, utils, $) {
     "use strict";
 
+    /*jshint devel:true */
+    console.log("TODO HERE", $);
   }
 
   /**
@@ -26,13 +28,17 @@
       module.exports = plugin;
     } else if (typeof define === "function" && define.amd) {
       // AMD
-      define(function () {
-        return plugin;
+      define(["jquery"], function ($) {
+        return function (chai, utils) {
+          return plugin(chai, utils, $);
+        };
       });
     } else {
       // Other environment (usually <script> tag): plug in to global chai
       // instance directly.
-      chai.use(plugin);
+      chai.use(function (chai, utils) {
+        return plugin(chai, utils, window.jQuery);
+      });
     }
   }
 
