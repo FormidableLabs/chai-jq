@@ -95,5 +95,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-jade");
 
   // Default task
-  grunt.registerTask("default", ["jshint", "mocha_phantomjs"]);
+  grunt.registerTask("default", ["copy", "jshint", "mocha_phantomjs"]);
 };
