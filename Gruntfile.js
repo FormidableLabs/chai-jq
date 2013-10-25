@@ -58,7 +58,8 @@ module.exports = function (grunt) {
             src: [
               "bower_components/mocha/mocha.js",
               "bower_components/mocha/mocha.css",
-              "bower_components/chai/chai.js"
+              "bower_components/chai/chai.js",
+              "bower_components/jquery/jquery.js"
             ]
           },
           {
@@ -73,6 +74,7 @@ module.exports = function (grunt) {
       jade: {
         files: [
           "_templates/**/*.jade",
+          "*.md",
           "chai-jq.js"
         ],
         tasks: [
