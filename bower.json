@@ -1,0 +1,25 @@
+{
+  "name": "chai-jq",
+  "version": "0.0.1",
+  "homepage": "https://github.com/FormidableLabs/chai-jq",
+  "authors": [
+    "Ryan Roemer <ryan.roemer@formidablelabs.com>"
+  ],
+  "description": "An alternate jQuery assertion library for Chai.",
+  "main": "chai-jq.js",
+  "keywords": [
+    "test",
+    "assertion",
+    "assert",
+    "chai",
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
