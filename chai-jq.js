@@ -11,7 +11,7 @@
     "use strict";
 
     /*jshint devel:true */
-    console.log("TODO HERE", $);
+    console.log("TODO HERE", $, chai);
   }
 
   /**
@@ -27,11 +27,15 @@
       // NodeJS
       module.exports = plugin;
     } else if (typeof define === "function" && define.amd) {
-      // AMD
-      define(["jquery"], function ($) {
-        return function (chai, utils) {
+      // AMD: Assumes importing `chai` and `jquery`. Actually **adds** the
+      //      plugin to Chai. (Note that alternate plugin AMD impl's return
+      //      the plugin function, but **don't** add it).
+      //
+      // See: https://github.com/chaijs/chai-jquery/issues/27
+      define(["jquery", "chai"], function ($, chai) {
+        chai.use(function (chai, utils) {
           return plugin(chai, utils, $);
-        };
+        });
       });
     } else {
       // Other environment (usually <script> tag): plug in to global chai

@@ -33,7 +33,10 @@ module.exports = function (grunt) {
     },
 
     "mocha_phantomjs": {
-      all: ["test/test.html"]
+      all: [
+        "test/test.html",
+        "test/test-amd.html"
+      ]
     },
 
     jade: {
@@ -42,8 +45,9 @@ module.exports = function (grunt) {
           pretty: true
         },
         files: {
-          "index.html":     ["_templates/index.jade"],
-          "test/test.html": ["_templates/test/test.jade"]
+          "index.html":         ["_templates/index.jade"],
+          "test/test.html":     ["_templates/test/test.jade"],
+          "test/test-amd.html": ["_templates/test/test-amd.jade"]
         }
       }
     },
