@@ -10,8 +10,46 @@
   function chaiJq(chai, utils, $) {
     "use strict";
 
-    /*jshint devel:true */
-    console.log("TODO HERE", $, chai);
+    // Variables.
+    var flag = utils.flag;
+
+    // Helpers.
+    /**
+     * Give a more useful element name.
+     */
+    var _elName = function ($el) {
+      var name = "",
+        id = $el.attr("id"),
+        cls = $el.attr("class") || "";
+
+      // Try CSS selector id.
+      if (id) {
+        name += "#" + id;
+      }
+      if (cls) {
+        name += "." + cls.split(" ").join(".");
+      }
+      if (name) {
+        return "'" + name + "'";
+      }
+
+      // Give up.
+      return $el;
+    };
+
+    chai.Assertion.addMethod("val", function (exp) {
+      var $el = flag(this, "object"),
+        act = $el.val(),
+        name = _elName($el);
+
+      this.assert(
+         act === exp,
+        "expected " + name + " to have val #{exp} but got #{act}",
+        "expected " + name + " not to have val #{exp}",
+        exp,
+        typeof act === "undefined" ? "undefined" : act
+      );
+    });
   }
 
   /**
