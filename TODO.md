@@ -7,8 +7,8 @@ Tasks
 * Publish to Chai.
 * Add RequireJS/AMD tests in harness and automate. (With jQuery through RJS).
 * Add Testem.
+* Add Karma + Sauce.
 * Add Browserling.
-* Add Travis CI.
 
 ## API Roadmap
 
