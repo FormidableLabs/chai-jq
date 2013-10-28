@@ -7,7 +7,7 @@
   /**
    * Chai jQuery plugin implementation.
    */
-  function chaiJq(chai, utils, $) {
+  function chaiJq(chai, utils) {
     "use strict";
 
     // Variables.

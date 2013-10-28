@@ -33,8 +33,10 @@ module.exports = function (grunt) {
     },
 
     "mocha_phantomjs": {
-      all: [
+      test: [
         "test/test.html",
+      ],
+      amd: [
         "test/test-amd.html"
       ]
     },

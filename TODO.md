@@ -12,7 +12,8 @@ Tasks
 
 ## API Roadmap
 
-* `class`: ???
 * `val`: http://api.jquery.com/val/
+
+* `class`: ???
 * `css`: http://api.jquery.com/css/
 * `html`: ???
