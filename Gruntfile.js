@@ -1,4 +1,8 @@
 /* global module:false */
+
+// Add in local node_modules bin for testem.
+process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
+
 module.exports = function (grunt) {
   // Strip comments from JsHint JSON files (naive).
   var _jshintCfg = function (name) {
