@@ -41,6 +41,24 @@ module.exports = function (grunt) {
       ]
     },
 
+    testem: {
+      dev: {
+        options : {
+          "launch_in_ci": ["PhantomJS"]
+        },
+        src: [
+          "test/test.html"
+        ],
+        dest: ".testem-dev.tap"
+      },
+      ci: {
+        src: [
+          "test/test.html"
+        ],
+        dest: ".testem-ci.tap"
+      }
+    },
+
     jade: {
       compile: {
         options: {
@@ -100,6 +118,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-mocha-phantomjs");
+  grunt.loadNpmTasks("grunt-testem");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-jade");
 
