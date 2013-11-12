@@ -46,6 +46,14 @@ module.exports = function (grunt) {
     },
 
     testem: {
+      // Everything!
+      all: {
+        src: [
+          "test/test.html"
+        ],
+        dest: ".testem-dev.tap"
+      },
+      // Dev.
       dev: {
         options : {
           "launch_in_ci": [
@@ -57,10 +65,10 @@ module.exports = function (grunt) {
         ],
         dest: ".testem-dev.tap"
       },
+      // Travis. (Only FF and PhantomJS right now).
       ci: {
         options : {
           "launch_in_ci": [
-            "Chrome",
             "Firefox",
             "PhantomJS"
           ]
@@ -136,7 +144,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-jade");
 
   // Tasks.
-  grunt.registerTask("check:ci",  ["testem:ci"]);
-  grunt.registerTask("check",     ["jshint", "mocha_phantomjs"]);
-  grunt.registerTask("default",   ["copy", "check"]);
+  grunt.registerTask("check",   ["jshint", "mocha_phantomjs"]);
+  grunt.registerTask("default", ["copy", "check"]);
 };
