@@ -11,4 +11,4 @@ before_install:
 
 script:
   - ./node_modules/.bin/grunt check
-  - ./node_modules/.bin/grunt testem:dev
+  - ./node_modules/.bin/grunt check:ci
