@@ -48,7 +48,9 @@ module.exports = function (grunt) {
     testem: {
       dev: {
         options : {
-          "launch_in_ci": ["PhantomJS"]
+          "launch_in_ci": [
+            "PhantomJS"
+          ]
         },
         src: [
           "test/test.html"
@@ -56,6 +58,13 @@ module.exports = function (grunt) {
         dest: ".testem-dev.tap"
       },
       ci: {
+        options : {
+          "launch_in_ci": [
+            // "Chrome",
+            // "Firefox",
+            "PhantomJS"
+          ]
+        },
         src: [
           "test/test.html"
         ],
