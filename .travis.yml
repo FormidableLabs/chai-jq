@@ -1,13 +1,14 @@
 language: node_js
 
 node_js:
-  - 0.8
   - 0.10
 
-before_script:
+before_install:
+  # GUI for real browsers.
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  - sleep 5 # Give XVFB some startup time.
 
 script:
   - ./node_modules/.bin/grunt check
-  - ./node_modules/.bin/grunt check:ci
+  - ./node_modules/.bin/grunt check:dev
