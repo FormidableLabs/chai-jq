@@ -61,7 +61,7 @@ module.exports = function (grunt) {
         options : {
           "launch_in_ci": [
             // "Chrome",
-            // "Firefox",
+            "Firefox",
             "PhantomJS"
           ]
         },
