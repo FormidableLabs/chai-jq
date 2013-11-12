@@ -1,4 +1,8 @@
 /* global module:false */
+
+// Add in local node_modules bin for testem.
+process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
+
 module.exports = function (grunt) {
   // Strip comments from JsHint JSON files (naive).
   var _jshintCfg = function (name) {
@@ -39,6 +43,41 @@ module.exports = function (grunt) {
       amd: [
         "test/test-amd.html"
       ]
+    },
+
+    testem: {
+      // Everything!
+      all: {
+        src: [
+          "test/test.html"
+        ],
+        dest: ".testem-dev.tap"
+      },
+      // Dev.
+      dev: {
+        options : {
+          "launch_in_ci": [
+            "PhantomJS"
+          ]
+        },
+        src: [
+          "test/test.html"
+        ],
+        dest: ".testem-dev.tap"
+      },
+      // Travis. (Only FF and PhantomJS right now).
+      ci: {
+        options : {
+          "launch_in_ci": [
+            "Firefox",
+            "PhantomJS"
+          ]
+        },
+        src: [
+          "test/test.html"
+        ],
+        dest: ".testem-ci.tap"
+      }
     },
 
     jade: {
@@ -100,10 +139,11 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-mocha-phantomjs");
+  grunt.loadNpmTasks("grunt-testem");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-jade");
 
   // Tasks.
-  grunt.registerTask("check", ["jshint", "mocha_phantomjs"]);
+  grunt.registerTask("check",   ["jshint", "mocha_phantomjs"]);
   grunt.registerTask("default", ["copy", "check"]);
 };
