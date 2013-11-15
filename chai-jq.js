@@ -37,13 +37,38 @@
       return $el;
     };
 
-    chai.Assertion.addMethod("val", function (exp) {
+    var _equals = function (first, second) {
+      return first === second;
+    };
+
+    // var _regExpMatch = function (re, second) {
+    //   return re.exec(second);
+    // };
+
+    /**
+     * ### .val(regexp)
+     *
+     * Asserts that the target value matches a string or regular expression.
+     *
+     *     expect($("foo")).to.have.val(/^foo/);
+     *
+     * @name val
+     * @param {String|RegExp} expected value
+     * @param {String} message _optional_
+     * @api public
+     */
+    chai.Assertion.addMethod("val", function (exp, msg) {
       var $el = flag(this, "object"),
         act = $el.val(),
-        name = _elName($el);
+        name = _elName($el),
+        comp = _equals; // exp typeof RegExp ? _regExpMatch :
+
+      if (msg) {
+        flag(this, "message", msg);
+      }
 
       this.assert(
-         act === exp,
+        comp(exp, act),
         "expected " + name + " to have val #{exp} but got #{act}",
         "expected " + name + " not to have val #{exp}",
         exp,
