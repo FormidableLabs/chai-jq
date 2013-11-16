@@ -29,33 +29,33 @@ define(["jquery", "chai"], function ($, chai) {
         it("shows 'Object' with no element name", function () {
           expect(function () {
             expect($("<div />")).to.have.$val("a");
-          }).to.throw("expected [object Object] to have val 'a' but got ''");
+          }).to.throw("expected [object Object] to have val 'a' but found ''");
         });
 
         it("works with element id", function () {
           expect(function () {
             expect($("<div id=\"foo\" />")).to.have.$val("a");
-          }).to.throw("expected '#foo' to have val 'a' but got ''");
+          }).to.throw("expected '#foo' to have val 'a' but found ''");
         });
 
         it("works with element classes", function () {
           expect(function () {
             expect($("<div class=\"foo\" />")).to.have.$val("a");
-          }).to.throw("expected '.foo' to have val 'a' but got ''");
+          }).to.throw("expected '.foo' to have val 'a' but found ''");
 
           expect(function () {
             expect($("<div class=\"foo bar\" />")).to.have.$val("a");
-          }).to.throw("expected '.foo.bar' to have val 'a' but got ''");
+          }).to.throw("expected '.foo.bar' to have val 'a' but found ''");
         });
 
         it("works with mixed id's and classes", function () {
           expect(function () {
             expect($("<div id=\"foo\" class=\"a b c\" />")).to.have.$val("a");
-          }).to.throw("expected '#foo.a.b.c' to have val 'a' but got ''");
+          }).to.throw("expected '#foo.a.b.c' to have val 'a' but found ''");
 
           expect(function () {
             expect($("<div class=\"foo bar\" />")).to.have.$val("a");
-          }).to.throw("expected '.foo.bar' to have val 'a' but got ''");
+          }).to.throw("expected '.foo.bar' to have val 'a' but found ''");
         });
       });
     });
@@ -66,37 +66,41 @@ define(["jquery", "chai"], function ($, chai) {
       });
 
       it("works with no val", function () {
-        var self = this;
+        var $fixture = this.$fixture;
 
-        expect(this.$fixture)
+        expect($fixture)
           .to.have.$val("").and
           .to.not.have.$val("bar");
 
         expect(function () {
-          expect(self.$fixture).to.have.$val("foo");
-        }).to.throw("expected '#test' to have val 'foo' but got ''");
+          expect($fixture).to.have.$val("foo");
+        }).to.throw("expected '#test' to have val 'foo' but found ''");
       });
 
       it("works with basic val", function () {
-        var self = this;
+        var $fixture = this.$fixture;
 
-        this.$fixture.val("MY_VALUE");
+        $fixture.val("MY_VALUE");
 
-        expect(this.$fixture)
+        expect($fixture)
           .to.have.$val("MY_VALUE").and
           .to.not.have.$val("bar");
 
         expect(function () {
-          expect(self.$fixture).to.have.$val("a");
-        }).to.throw("expected '#test' to have val 'a' but got 'MY_VALUE'");
+          expect($fixture).to.have.$val("a");
+        }).to.throw("expected '#test' to have val 'a' but found 'MY_VALUE'");
+
+        expect($("<input value='foo' />"))
+          .to.have.$val("foo").and
+          .to.have.$val(/^foo/);
       });
 
       it("matches regexes with basic val", function () {
-        var self = this;
+        var $fixture = this.$fixture;
 
-        this.$fixture.val("RE_VAL");
+        $fixture.val("RE_VAL");
 
-        expect(this.$fixture)
+        expect($fixture)
           .to.have.$val(/RE_VAL/).and
           .to.have.$val(/re_val/i).and
           .to.have.$val(/.*/).and
@@ -104,7 +108,7 @@ define(["jquery", "chai"], function ($, chai) {
           .to.have.$val(/^R/).and
           .to.have.$val(/VAL$/);
 
-        expect(this.$fixture)
+        expect($fixture)
           .not
             .to.have.$val("bar").and
             .to.have.$val(/re_val/).and
@@ -112,8 +116,61 @@ define(["jquery", "chai"], function ($, chai) {
             .to.have.$val(/A^/);
 
         expect(function () {
-          expect(self.$fixture).to.have.$val("a");
-        }).to.throw("expected '#test' to have val 'a' but got 'RE_VAL'");
+          expect($fixture).to.have.$val("a");
+        }).to.throw("expected '#test' to have val 'a' but found 'RE_VAL'");
+      });
+    });
+
+    describe("$class", function () {
+      beforeEach(function () {
+        this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);
+      });
+
+      it("works with no class", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.have.$class("").and
+          .to.not.have.$class("bar");
+
+        expect(function () {
+          expect($fixture).to.have.$class("foo");
+        }).to.throw("expected '#test' to have class 'foo' but found ''");
+      });
+
+      it("works with single element class", function () {
+        var $fixture = this.$fixture;
+
+        $fixture.prop("class", "MY_CLASS");
+
+        expect($fixture)
+          .to.have.$class("MY_CLASS").and
+          .to.not.have.$val("bar");
+
+        expect(function () {
+          expect($fixture).to.have.$class("a");
+        }).to.throw("expected '#test.MY_CLASS' to have class 'a' " +
+                    "but found 'MY_CLASS'");
+      });
+
+      it("works with multiple element classes", function () {
+        var $fixture = this.$fixture;
+
+        $fixture.prop("class", "CLS1 CLS2");
+
+        expect($fixture)
+          .to.have.$class("CLS1").and
+          .to.have.$class("CLS2").and
+          .to.not.have.$val("CLS3");
+
+        expect(function () {
+          expect($fixture).to.have.$class("a");
+        }).to.throw("expected '#test.CLS1.CLS2' to have class 'a' " +
+                    "but found 'CLS1 CLS2'");
+
+        expect($("<div class='foo bar' />"))
+         .to.have.$class("foo").and
+         .to.have.$class("bar");
       });
     });
 

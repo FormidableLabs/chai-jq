@@ -69,9 +69,11 @@
     /**
      * ### .$val(string|regexp)
      *
-     * Asserts that the target value matches a string or regular expression.
+     * Asserts that the element value matches a string or regular expression.
      *
-     *     expect($("foo")).to.have.$val(/^foo/);
+     *     expect($("<input value='foo' />"))
+     *      .to.have.$val("foo").and
+     *      .to.have.$val(/^foo/);
      *
      * @name $val
      * @param {String|RegExp} expected value
@@ -90,10 +92,43 @@
 
       this.assert(
         comp(exp, act),
-        "expected " + name + " to have val #{exp} but got #{act}",
+        "expected " + name + " to have val #{exp} but found #{act}",
         "expected " + name + " not to have val #{exp}",
         exp,
         typeof act === "undefined" ? "undefined" : act
+      );
+    });
+
+    /**
+     * ### .$class(string)
+     *
+     * Asserts that the element has a class match.
+     *
+     *     expect($("<div class='foo bar' />"))
+     *       .to.have.$class("foo").and
+     *       .to.have.$class("bar");
+     *
+     * @name $class
+     * @param {String} expected class name
+     * @param {String} message _optional_
+     * @api public
+     */
+    chai.Assertion.addMethod("$class", function (exp, msg) {
+      var $el = flag(this, "object"),
+        act = $el.attr("class") || "",
+        name = _elName($el);
+
+      // TODO abstract message and rest of stuff here!!!
+      if (msg) {
+        flag(this, "message", msg);
+      }
+
+      this.assert(
+        $el.hasClass(exp),
+        "expected " + name + " to have class #{exp} but found #{act}",
+        "expected " + name + " not to have class #{exp}",
+        exp,
+        act
       );
     });
   }
