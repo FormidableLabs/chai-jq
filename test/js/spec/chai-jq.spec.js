@@ -184,7 +184,7 @@ define(["jquery", "chai"], function ($, chai) {
 
 
       it("matches HTML subsets", function () {
-        var $fixture = this.$fixture;
+        //var $fixture = this.$fixture;
 
         // TODO HERE LOTS MORE TESTS
 

@@ -59,7 +59,7 @@
     };
 
     var _contains = function (exp, act) {
-      return ~act.indexOf(exp);
+      return act.indexOf(exp) !== -1;
     };
 
     var _regExpMatch = function (expRe, act) {
