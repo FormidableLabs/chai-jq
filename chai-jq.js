@@ -10,10 +10,15 @@
   function chaiJq(chai, utils) {
     "use strict";
 
-    // Variables.
-    var flag = utils.flag;
+    // ------------------------------------------------------------------------
+    // Variables
+    // ------------------------------------------------------------------------
+    var flag = utils.flag,
+      toString = Object.prototype.toString;
 
-    // Helpers.
+    // ------------------------------------------------------------------------
+    // Helpers
+    // ------------------------------------------------------------------------
     /**
      * Give a more useful element name.
      */
@@ -37,16 +42,32 @@
       return $el;
     };
 
+    // ------------------------------------------------------------------------
+    // Type Inference
+    //
+    // (Inspired by Underscore)
+    // ------------------------------------------------------------------------
+    var _isRegExp = function (val) {
+      return toString.call(val) === "[object RegExp]";
+    };
+
+    // ------------------------------------------------------------------------
+    // Comparisons
+    // ------------------------------------------------------------------------
     var _equals = function (first, second) {
       return first === second;
     };
 
-    // var _regExpMatch = function (re, second) {
-    //   return re.exec(second);
-    // };
+    var _regExpMatch = function (re, second) {
+      return re.exec(second);
+    };
+
+    // ------------------------------------------------------------------------
+    // Assertions
+    // ------------------------------------------------------------------------
 
     /**
-     * ### .val(regexp)
+     * ### .val(string|regexp)
      *
      * Asserts that the target value matches a string or regular expression.
      *
@@ -61,7 +82,7 @@
       var $el = flag(this, "object"),
         act = $el.val(),
         name = _elName($el),
-        comp = _equals; // exp typeof RegExp ? _regExpMatch :
+        comp = _isRegExp(exp) ? _regExpMatch : _equals;
 
       if (msg) {
         flag(this, "message", msg);

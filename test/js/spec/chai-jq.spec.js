@@ -91,18 +91,29 @@ define(["jquery", "chai"], function ($, chai) {
         }).to.throw("expected '#test' to have val 'a' but got 'MY_VALUE'");
       });
 
-      // TODO: Implement regex matchin.
-      it.skip("matches regexes with basic val", function () {
+      it("matches regexes with basic val", function () {
         var self = this;
 
         this.$fixture.val("RE_VAL");
 
-        expect(this.$fixture).to.have.val(/RE_VAL/);
-        expect(this.$fixture).to.not.have.val("bar");
+        expect(this.$fixture)
+          .to.have.val(/RE_VAL/).and
+          .to.have.val(/re_val/i).and
+          .to.have.val(/.*/).and
+          .to.have.val(/./).and
+          .to.have.val(/^R/).and
+          .to.have.val(/VAL$/);
+
+        expect(this.$fixture)
+          .not
+            .to.have.val("bar").and
+            .to.have.val(/re_val/).and
+            .to.have.val(/$E/).and
+            .to.have.val(/A^/);
 
         expect(function () {
           expect(self.$fixture).to.have.val("a");
-        }).to.throw("expected '#test' to have val 'a' but got 'MY_VALUE'");
+        }).to.throw("expected '#test' to have val 'a' but got 'RE_VAL'");
       });
     });
 

@@ -55,7 +55,7 @@ module.exports = function (grunt) {
       },
       // Dev.
       dev: {
-        options : {
+        options: {
           "launch_in_ci": [
             "PhantomJS"
           ]
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
       },
       // Travis. (Only FF and PhantomJS right now).
       ci: {
-        options : {
+        options: {
           "launch_in_ci": [
             "Firefox",
             "PhantomJS"
