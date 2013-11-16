@@ -54,12 +54,16 @@
     // ------------------------------------------------------------------------
     // Comparisons
     // ------------------------------------------------------------------------
-    var _equals = function (first, second) {
-      return first === second;
+    var _equals = function (exp, act) {
+      return exp === act;
     };
 
-    var _regExpMatch = function (re, second) {
-      return re.exec(second);
+    var _contains = function (exp, act) {
+      return ~act.indexOf(exp);
+    };
+
+    var _regExpMatch = function (expRe, act) {
+      return expRe.exec(act);
     };
 
     // ------------------------------------------------------------------------
@@ -74,6 +78,8 @@
      *     expect($("<input value='foo' />"))
      *      .to.have.$val("foo").and
      *      .to.have.$val(/^foo/);
+     *
+     * @see http://api.jquery.com/val/
      *
      * @name $val
      * @param {String|RegExp} expected value
@@ -108,6 +114,8 @@
      *       .to.have.$class("foo").and
      *       .to.have.$class("bar");
      *
+     * @see http://api.jquery.com/hasClass/
+     *
      * @name $class
      * @param {String} expected class name
      * @param {String} message _optional_
@@ -131,6 +139,47 @@
         act
       );
     });
+
+
+    /**
+     * ### .$html(string)
+     *
+     * Asserts that the target has exactly the given HTML, or
+     * asserts the target contains a subset of the HTML when using the
+     * `include` or `contain` modifiers.
+     *
+     *     expect($("<div><span>foo</span></div>"))
+     *       .to.have.$html("<span>foo</span>").and
+     *       .to.contain.$html("foo");
+     *
+     * @see http://api.jquery.com/hasClass/
+     *
+     * @name $class
+     * @param {String} expected class name
+     * @param {String} message _optional_
+     * @api public
+     */
+    chai.Assertion.addMethod("$html", function (exp, msg) {
+      var $el = flag(this, "object"),
+        act = $el.html() || "",
+        name = _elName($el),
+        contains = flag(this, "contains"),
+        comp = contains ? _contains : _equals;
+
+      // TODO abstract message and rest of stuff here!!!
+      if (msg) {
+        flag(this, "message", msg);
+      }
+
+      this.assert(
+        comp(exp, act),
+        "expected " + name + " to have html #{exp} but found #{act}",
+        "expected " + name + " not to have html #{exp}",
+        exp,
+        act
+      );
+    });
+
   }
 
   /**

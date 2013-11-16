@@ -174,5 +174,25 @@ define(["jquery", "chai"], function ($, chai) {
       });
     });
 
+    describe("$html", function () {
+      beforeEach(function () {
+        this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);
+      });
+
+      // TODO HERE LOTS MORE TESTS
+
+
+
+      it("matches HTML subsets", function () {
+        var $fixture = this.$fixture;
+
+        // TODO HERE LOTS MORE TESTS
+
+        expect($("<div><span>foo</span></div>"))
+          .to.have.$html("<span>foo</span>").and
+          .to.contain.$html("foo");
+      });
+    });
+
   });
 });

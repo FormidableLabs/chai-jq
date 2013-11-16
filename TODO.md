@@ -3,6 +3,8 @@ Tasks
 
 ## General
 
+* Abstract addMethod stuff.
+
 * Publish to Bower.
 * Publish to Chai.
 * CI: Add in saucelabs + testem integration.
@@ -15,7 +17,11 @@ Tasks
 * `attr`: ???
 * `prop`: ???
 * `css`: http://api.jquery.com/css/
-* `html`: ???
+* `html`: ??? Use with "contains" / "includes" flags.
+
+## Environments
+
+* Add tests for Node.js + JSDom (or similar).
 
 ## CI
 
