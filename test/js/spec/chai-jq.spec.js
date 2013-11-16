@@ -77,7 +77,7 @@ define(["jquery", "chai"], function ($, chai) {
         }).to.throw("expected '#test' to have val 'foo' but found ''");
       });
 
-      it("works with basic val", function () {
+      it("matches basic vals", function () {
         var $fixture = this.$fixture;
 
         $fixture.val("MY_VALUE");
@@ -138,7 +138,7 @@ define(["jquery", "chai"], function ($, chai) {
         }).to.throw("expected '#test' to have class 'foo' but found ''");
       });
 
-      it("works with single element class", function () {
+      it("matches single classes in elements", function () {
         var $fixture = this.$fixture;
 
         $fixture.prop("class", "MY_CLASS");
@@ -153,7 +153,7 @@ define(["jquery", "chai"], function ($, chai) {
                     "but found 'MY_CLASS'");
       });
 
-      it("works with multiple element classes", function () {
+      it("matches multiple classes in elements", function () {
         var $fixture = this.$fixture;
 
         $fixture.prop("class", "CLS1 CLS2");
