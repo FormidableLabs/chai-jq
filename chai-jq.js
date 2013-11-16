@@ -67,18 +67,18 @@
     // ------------------------------------------------------------------------
 
     /**
-     * ### .val(string|regexp)
+     * ### .$val(string|regexp)
      *
      * Asserts that the target value matches a string or regular expression.
      *
-     *     expect($("foo")).to.have.val(/^foo/);
+     *     expect($("foo")).to.have.$val(/^foo/);
      *
-     * @name val
+     * @name $val
      * @param {String|RegExp} expected value
      * @param {String} message _optional_
      * @api public
      */
-    chai.Assertion.addMethod("val", function (exp, msg) {
+    chai.Assertion.addMethod("$val", function (exp, msg) {
       var $el = flag(this, "object"),
         act = $el.val(),
         name = _elName($el),
