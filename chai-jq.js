@@ -170,12 +170,14 @@
     var $html = _jqAssert(function (exp) {
       var act = this._$el.html() || "",
         contains = flag(this, "contains"),
+        have = contains ? "contain" : "have",
         comp = contains ? _contains : _equals;
 
       this.assert(
         comp(exp, act),
-        "expected " + this._name + " to have html #{exp} but found #{act}",
-        "expected " + this._name + " not to have html #{exp}",
+        "expected " + this._name + " to " + have +
+          " html #{exp} but found #{act}",
+        "expected " + this._name + " not to " + have + " html #{exp}",
         exp,
         act
       );

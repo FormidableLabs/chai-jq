@@ -179,14 +179,39 @@ define(["jquery", "chai"], function ($, chai) {
         this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);
       });
 
-      // TODO HERE LOTS MORE TESTS
+      it("matches HTML", function () {
+        var $fixture = this.$fixture,
+          html = "<div><em>Hi</em>there</div>";
 
+        $fixture.html(html);
 
+        expect($fixture)
+          .to.have.$html(html).and
+          .to.not.have.$html("<em>Hi</em>");
+
+        expect(function () {
+          expect($fixture).to.have.$html("there");
+        }).to.throw("expected '#test' to have html 'there' " +
+                    "but found '" + html + "'");
+      });
 
       it("matches HTML subsets", function () {
-        //var $fixture = this.$fixture;
+        var $fixture = this.$fixture,
+          html = "<div><em>Hi</em>there</div>";
 
-        // TODO HERE LOTS MORE TESTS
+        $fixture.html(html);
+
+        expect($fixture)
+          .to.contain.$html(html).and
+          .to.contain.$html("<em>Hi</em>").and
+          .to.not
+            .contain.$html("<em>Ho</em>").and
+            .contain.$html("<em>Ha</em>");
+
+        expect(function () {
+          expect($fixture).to.contain.$html("hi");
+        }).to.throw("expected '#test' to contain html 'hi' " +
+                    "but found '" + html + "'");
 
         expect($("<div><span>foo</span></div>"))
           .to.have.$html("<span>foo</span>").and
