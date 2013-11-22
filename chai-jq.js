@@ -155,7 +155,7 @@
      *       .to.have.$html("<span>foo</span>").and
      *       .to.contain.$html("foo");
      *
-     * @see http://api.jquery.com/hasClass/
+     * @see http://api.jquery.com/html/
      *
      * @name $class
      * @param {String} expected class name
