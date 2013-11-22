@@ -4,6 +4,7 @@ Tasks
 ## Next Up
 
 * Publish to Chai.
+* `prop`: Probably needs to handle `deep` equal flag (e.g., `css`).
 
 ## General
 
