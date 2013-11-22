@@ -169,12 +169,12 @@ module.exports = function (grunt) {
       re = new RegExp(start + "(\n|.)*" + end, "m"),
       updated = readme.replace(re, start + "\n" + md + end);
 
-    grunt.file.write("README.md", updated)
+    grunt.file.write("README.md", updated);
   });
   grunt.registerTask("build",     ["build:api", "jade"]);
 
   // Tasks.
   grunt.registerTask("check",     ["jshint", "mocha_phantomjs"]);
   grunt.registerTask("check:all", ["check", "testem:all"]);
-  grunt.registerTask("default",   ["copy", "check"]);
+  grunt.registerTask("default",   ["copy", "check", "build"]);
 };
