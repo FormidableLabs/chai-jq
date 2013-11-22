@@ -3,8 +3,6 @@ Tasks
 
 ## Next Up
 
-* Publish to Bower (w/ Readme isntrs).
-* Publish to NPM (w/ Readme isntrs).
 * Publish to Chai.
 
 ## General
