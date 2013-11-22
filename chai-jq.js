@@ -149,6 +149,28 @@
 
     chai.Assertion.addMethod("$class", $class);
 
+    /*!
+     * Abstract base for a "containable" property.
+     */
+    var _containProp = function (jqMeth) {
+      return _jqAssert(function (exp) {
+        var act = this._$el[jqMeth]() || "",
+          contains = flag(this, "contains"),
+          have = contains ? "contain" : "have",
+          comp = contains ? _contains : _equals;
+
+        this.assert(
+          comp(exp, act),
+          "expected " + this._name + " to " + have + " " + jqMeth +
+            " #{exp} but found #{act}",
+          "expected " + this._name + " not to " + have + " " + jqMeth +
+            " #{exp}",
+          exp,
+          act
+        );
+      });
+    };
+
     /**
      * `.$html(string)`
      *
@@ -167,21 +189,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $html = _jqAssert(function (exp) {
-      var act = this._$el.html() || "",
-        contains = flag(this, "contains"),
-        have = contains ? "contain" : "have",
-        comp = contains ? _contains : _equals;
-
-      this.assert(
-        comp(exp, act),
-        "expected " + this._name + " to " + have +
-          " html #{exp} but found #{act}",
-        "expected " + this._name + " not to " + have + " html #{exp}",
-        exp,
-        act
-      );
-    });
+    var $html = _containProp("html");
 
     chai.Assertion.addMethod("$html", $html);
   }
