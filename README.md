@@ -12,11 +12,11 @@ Add `chai-jq.js` after your Chai script include.
     <script src="chai-jq.js"></script>
 
 ## Plugin API
-  - [$val()](#val)
-  - [$class()](#class)
-  - [$html()](#html)
+  - [$val](#val)
+  - [$class](#class)
+  - [$html](#html)
 
-## $val()
+## $val
 
   `.$val(string|regexp)`
   
@@ -28,7 +28,7 @@ Add `chai-jq.js` after your Chai script include.
    .to.have.$val(/^foo/);
 ```
 
-## $class()
+## $class
 
   `.$class(string)`
   
@@ -40,7 +40,7 @@ Add `chai-jq.js` after your Chai script include.
     .to.have.$class("bar");
 ```
 
-## $html()
+## $html
 
   `.$html(string)`
   

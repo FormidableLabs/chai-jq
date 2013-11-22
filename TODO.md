@@ -14,10 +14,9 @@ Tasks
 
 ## API Roadmap
 
-* `val`: http://api.jquery.com/val/
 * `html`: http://api.jquery.com/html/ Use with "contains" / "includes" flags.
 
-* `class`: ???
+* `text`: http://api.jquery.com/text/ Use with "contains" / "includes" flags.
 * `attr`: ???
 * `prop`: ???
 * `css`: http://api.jquery.com/css/

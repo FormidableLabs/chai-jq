@@ -69,6 +69,24 @@
     // ------------------------------------------------------------------------
     // Assertions
     // ------------------------------------------------------------------------
+    /*!
+     * Wrap assert function and add properties.
+     */
+    var _jqAssert = function (fn) {
+      return function (exp, msg) {
+        // Set properties.
+        this._$el = flag(this, "object");
+        this._name = _elName(this._$el);
+
+        // Flag message.
+        if (msg) {
+          flag(this, "message", msg);
+        }
+
+        // Invoke assertion function.
+        fn.apply(this, arguments);
+      };
+    };
 
     /**
      * `.$val(string|regexp)`
@@ -86,24 +104,18 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $val = function (exp, msg) {
-      var $el = flag(this, "object"),
-        act = $el.val(),
-        name = _elName($el),
+    var $val = _jqAssert(function (exp, msg) {
+      var act = this._$el.val(),
         comp = _isRegExp(exp) ? _regExpMatch : _equals;
-
-      if (msg) {
-        flag(this, "message", msg);
-      }
 
       this.assert(
         comp(exp, act),
-        "expected " + name + " to have val #{exp} but found #{act}",
-        "expected " + name + " not to have val #{exp}",
+        "expected " + this._name + " to have val #{exp} but found #{act}",
+        "expected " + this._name + " not to have val #{exp}",
         exp,
         typeof act === "undefined" ? "undefined" : act
       );
-    };
+    });
 
     chai.Assertion.addMethod("$val", $val);
 
@@ -123,24 +135,17 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $class = function (exp, msg) {
-      var $el = flag(this, "object"),
-        act = $el.attr("class") || "",
-        name = _elName($el);
-
-      // TODO abstract message and rest of stuff here!!!
-      if (msg) {
-        flag(this, "message", msg);
-      }
+    var $class = _jqAssert(function (exp, msg) {
+      var act = this._$el.attr("class") || "";
 
       this.assert(
-        $el.hasClass(exp),
-        "expected " + name + " to have class #{exp} but found #{act}",
-        "expected " + name + " not to have class #{exp}",
+        this._$el.hasClass(exp),
+        "expected " + this._name + " to have class #{exp} but found #{act}",
+        "expected " + this._name + " not to have class #{exp}",
         exp,
         act
       );
-    };
+    });
 
     chai.Assertion.addMethod("$class", $class);
 
@@ -157,34 +162,26 @@
      *
      * @see http://api.jquery.com/html/
      *
-     * @name $class
-     * @param {String} expected class name
+     * @name $html
+     * @param {String} expected HTML content
      * @param {String} message _optional_
      * @api public
      */
-    var $html = function (exp, msg) {
-      var $el = flag(this, "object"),
-        act = $el.html() || "",
-        name = _elName($el),
+    var $html = _jqAssert(function (exp, msg) {
+      var act = this._$el.html() || "",
         contains = flag(this, "contains"),
         comp = contains ? _contains : _equals;
 
-      // TODO abstract message and rest of stuff here!!!
-      if (msg) {
-        flag(this, "message", msg);
-      }
-
       this.assert(
         comp(exp, act),
-        "expected " + name + " to have html #{exp} but found #{act}",
-        "expected " + name + " not to have html #{exp}",
+        "expected " + this._name + " to have html #{exp} but found #{act}",
+        "expected " + this._name + " not to have html #{exp}",
         exp,
         act
       );
-    };
+    });
 
     chai.Assertion.addMethod("$html", $html);
-
   }
 
   /*!

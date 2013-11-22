@@ -30,23 +30,23 @@ library to provide jQuery-specific assertions.</p>
 &lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
 <h2 id="plugin-api">Plugin API</h2>
 <ul>
-<li><a href="#val">$val()</a></li>
-<li><a href="#class">$class()</a></li>
-<li><a href="#html">$html()</a></li>
+<li><a href="#val">$val</a></li>
+<li><a href="#class">$class</a></li>
+<li><a href="#html">$html</a></li>
 </ul>
-<h2 id="-val-">$val()</h2>
+<h2 id="-val">$val</h2>
 <p>  <code>.$val(string|regexp)</code></p>
 <p>  Asserts that the element value matches a string or regular expression.</p>
 <pre><code class="lang-js">  expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
    .to.have.$val(&quot;foo&quot;).and
    .to.have.$val(/^foo/);</code></pre>
-<h2 id="-class-">$class()</h2>
+<h2 id="-class">$class</h2>
 <p>  <code>.$class(string)</code></p>
 <p>  Asserts that the element has a class match.</p>
 <pre><code class="lang-js">  expect($(&quot;&lt;div class=&#39;foo bar&#39; /&gt;&quot;))
     .to.have.$class(&quot;foo&quot;).and
     .to.have.$class(&quot;bar&quot;);</code></pre>
-<h2 id="-html-">$html()</h2>
+<h2 id="-html">$html</h2>
 <p>  <code>.$html(string)</code></p>
 <p>  Asserts that the target has exactly the given HTML, or
   asserts the target contains a subset of the HTML when using the
