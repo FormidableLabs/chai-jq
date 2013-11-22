@@ -240,6 +240,10 @@ define(["jquery", "chai"], function ($, chai) {
           expect($fixture).to.have.$prop("checked", false);
         }).to.throw("expected '#test' to have prop('checked') false " +
                     "but found true");
+
+        expect($("<input type=\"checkbox\" checked=\"checked\" />"))
+          .to.have.$prop("checked", true).and
+          .to.have.$prop("type", "checkbox");
       });
     });
 
