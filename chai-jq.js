@@ -104,7 +104,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $val = _jqAssert(function (exp, msg) {
+    var $val = _jqAssert(function (exp) {
       var act = this._$el.val(),
         comp = _isRegExp(exp) ? _regExpMatch : _equals;
 
@@ -135,7 +135,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $class = _jqAssert(function (exp, msg) {
+    var $class = _jqAssert(function (exp) {
       var act = this._$el.attr("class") || "";
 
       this.assert(
@@ -167,7 +167,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $html = _jqAssert(function (exp, msg) {
+    var $html = _jqAssert(function (exp) {
       var act = this._$el.html() || "",
         contains = flag(this, "contains"),
         comp = contains ? _contains : _equals;
