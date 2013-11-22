@@ -23,7 +23,7 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "_templates"
   ],
   "devDependencies": {
     "mocha": "~1.13.0",
