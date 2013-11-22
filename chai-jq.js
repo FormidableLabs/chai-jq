@@ -97,7 +97,7 @@
      *      .to.have.$val("foo").and
      *      .to.have.$val(/^foo/);
      *
-     * @see http://api.jquery.com/val/
+     * See: [http://api.jquery.com/val/]()
      *
      * @name $val
      * @param {String|RegExp} expected value
@@ -128,7 +128,7 @@
      *       .to.have.$class("foo").and
      *       .to.have.$class("bar");
      *
-     * @see http://api.jquery.com/hasClass/
+     * See: [http://api.jquery.com/hasClass/]()
      *
      * @name $class
      * @param {String} expected class name
@@ -182,7 +182,7 @@
      *       .to.have.$html("<span>foo</span>").and
      *       .to.contain.$html("foo");
      *
-     * @see http://api.jquery.com/html/
+     * See: [http://api.jquery.com/html/]()
      *
      * @name $html
      * @param {String} expected HTML content
@@ -192,6 +192,28 @@
     var $html = _containProp("html");
 
     chai.Assertion.addMethod("$html", $html);
+
+    /**
+     * `.$text(string)`
+     *
+     * Asserts that the target has exactly the given text, or
+     * asserts the target contains a subset of the text when using the
+     * `include` or `contain` modifiers.
+     *
+     *     expect($("<div><span>foo</span> bar</div>"))
+     *       .to.have.$text("foo bar").and
+     *       .to.contain.$text("foo");
+     *
+     * See: [http://api.jquery.com/text/]()
+     *
+     * @name $text
+     * @param {String} expected text content
+     * @param {String} message _optional_
+     * @api public
+     */
+    var $text = _containProp("text");
+
+    chai.Assertion.addMethod("$text", $text);
   }
 
   /*!

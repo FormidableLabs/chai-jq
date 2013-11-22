@@ -192,7 +192,7 @@ define(["jquery", "chai"], function ($, chai) {
         expect(function () {
           expect($fixture).to.have.$html("there");
         }).to.throw("expected '#test' to have html 'there' " +
-                    "but found '" + html + "'");
+                    "but found '" + $fixture.html() + "'");
       });
 
       it("matches HTML subsets", function () {
@@ -211,11 +211,56 @@ define(["jquery", "chai"], function ($, chai) {
         expect(function () {
           expect($fixture).to.contain.$html("hi");
         }).to.throw("expected '#test' to contain html 'hi' " +
-                    "but found '" + html + "'");
+                    "but found '" + $fixture.html() + "'");
 
         expect($("<div><span>foo</span></div>"))
           .to.have.$html("<span>foo</span>").and
           .to.contain.$html("foo");
+      });
+    });
+
+    describe("$text", function () {
+      beforeEach(function () {
+        this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);
+      });
+
+      it("matches text", function () {
+        var $fixture = this.$fixture,
+          html = "<div><em>Hi</em> there</div>";
+
+        $fixture.html(html);
+
+        expect($fixture)
+          .to.have.$text("Hi there").and
+          .to.not.have.$text("Hi");
+
+        expect(function () {
+          expect($fixture).to.have.$text("there");
+        }).to.throw("expected '#test' to have text 'there' " +
+                    "but found '" + $fixture.text() + "'");
+      });
+
+      it("matches text subsets", function () {
+        var $fixture = this.$fixture,
+          html = "<div><em>Hi</em> there</div>";
+
+        $fixture.html(html);
+
+        expect($fixture)
+          .to.contain.$text("Hi there").and
+          .to.contain.$text("Hi").and
+          .to.not
+            .contain.$text("Ho").and
+            .contain.$text("Ha");
+
+        expect(function () {
+          expect($fixture).to.contain.$text("hi");
+        }).to.throw("expected '#test' to contain text 'hi' " +
+                    "but found '" + $fixture.text() + "'");
+
+        expect($("<div><span>foo</span> bar</div>"))
+          .to.have.$text("foo bar").and
+          .to.contain.$text("foo");
       });
     });
 

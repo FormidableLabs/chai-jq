@@ -15,6 +15,7 @@ Add `chai-jq.js` after your Chai script include.
   - [$val](#val)
   - [$class](#class)
   - [$html](#html)
+  - [$text](#text)
 
 ## $val
 
@@ -28,6 +29,9 @@ Add `chai-jq.js` after your Chai script include.
    .to.have.$val(/^foo/);
 ```
 
+  
+  See: [http://api.jquery.com/val/]()
+
 ## $class
 
   `.$class(string)`
@@ -39,6 +43,9 @@ Add `chai-jq.js` after your Chai script include.
     .to.have.$class("foo").and
     .to.have.$class("bar");
 ```
+
+  
+  See: [http://api.jquery.com/hasClass/]()
 
 ## $html
 
@@ -54,6 +61,25 @@ Add `chai-jq.js` after your Chai script include.
     .to.contain.$html("foo");
 ```
 
+  
+  See: [http://api.jquery.com/html/]()
+
+## $text
+
+  `.$text(string)`
+  
+  Asserts that the target has exactly the given text, or
+  asserts the target contains a subset of the text when using the
+  `include` or `contain` modifiers.
+  
+```js
+  expect($("<div><span>foo</span> bar</div>"))
+    .to.have.$text("foo bar").and
+    .to.contain.$text("foo");
+```
+
+  
+  See: [http://api.jquery.com/text/]()
 ## Contributions
 
 Please see the [Contributions Guide](./CONTRIBUTING.md) for how to help out
