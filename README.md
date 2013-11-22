@@ -11,6 +11,11 @@ Add `chai-jq.js` after your Chai script include.
     <script src="chai.js"></script>
     <script src="chai-jq.js"></script>
 
+You can install `chai-jq` via the following package managers:
+
+* [NPM](https://npmjs.org/package/chai-jq): `npm install chai-jq`
+* [Bower](http://bower.io/): `bower install chai-jq`
+
 To see some of the plugin's assertions in action, see the
 [test page](./test/test.html) for the project.
 
