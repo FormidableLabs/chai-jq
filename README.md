@@ -50,6 +50,17 @@ expect($("<div id=\"hi\" foo=\"bar time\">/div>"))
 
 See: [http://api.jquery.com/attr/]()
 
+### `.$prop(value)`
+
+Asserts that the target has exactly the given property.
+
+```js
+expect($("<input type=\"checkbox\" checked=\"checked\" />"))
+  .to.have.$prop("checked", true);
+```
+
+See: [http://api.jquery.com/prop/]()
+
 ### `.$html(string)`
 
 Asserts that the target has exactly the given HTML, or

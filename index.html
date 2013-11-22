@@ -49,6 +49,11 @@ asserts the target contains a subset of the attribute when using the
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
+<h3 id="-prop-value-"><code>.$prop(value)</code></h3>
+<p>Asserts that the target has exactly the given property.</p>
+<pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
+  .to.have.$prop(&quot;checked&quot;, true);</code></pre>
+<p>See: <a href=""><a href="http://api.jquery.com/prop/">http://api.jquery.com/prop/</a></a></p>
 <h3 id="-html-string-"><code>.$html(string)</code></h3>
 <p>Asserts that the target has exactly the given HTML, or
 asserts the target contains a subset of the HTML when using the

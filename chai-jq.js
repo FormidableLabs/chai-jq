@@ -156,20 +156,31 @@
     /*!
      * Abstract base for a "containable" method call.
      *
-     * @param {String} jQuery method name.
-     * @param {String} hasArg takes argument for method
+     * @param {String} jQuery           method name.
+     * @param {Object} opts             options
+     * @param {String} opts.hasArg      takes argument for method
+     * @param {String} opts.hasContains is "contains" applicable
      */
-    var _containMethod = function (jqMeth, hasArg) {
-      hasArg = !!hasArg;
+    var _containMethod = function (jqMeth, opts) {
+      // Unpack options.
+      opts || (opts = {});
+      opts.hasArg = !!opts.hasArg;
+      opts.hasContains = !!opts.hasContains;
+      opts.defaultAct = undefined;
 
+      // Return decorated assert.
       return _jqAssert(function () {
-        var exp = arguments[hasArg ? 1 : 0],
-          arg = hasArg ? arguments[0] : undefined,
-          act = (hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()) || "",
-          meth = hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
-          contains = flag(this, "contains"),
+        var exp = arguments[opts.hasArg ? 1 : 0],
+          arg = opts.hasArg ? arguments[0] : undefined,
+          act = (opts.hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()),
+          meth = opts.hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
+          contains = opts.hasContains && flag(this, "contains"),
           have = contains ? "contain" : "have",
           comp = contains ? _contains : _equals;
+
+        if (typeof act === "undefined") {
+          act = opts.defaultAct;
+        }
 
         this.assert(
           comp(exp, act),
@@ -203,9 +214,35 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $attr = _containMethod("attr", true);
+    var $attr = _containMethod("attr", {
+      hasArg: true,
+      hasContains: true
+    });
 
     chai.Assertion.addMethod("$attr", $attr);
+
+    /**
+     * `.$prop(value)`
+     *
+     * Asserts that the target has exactly the given property.
+     *
+     * ```js
+     * expect($("<input type=\"checkbox\" checked=\"checked\" />"))
+     *   .to.have.$prop("checked", true);
+     * ```
+     *
+     * See: [http://api.jquery.com/prop/]()
+     *
+     * @name $prop
+     * @param {Object} expected property value
+     * @param {String} message _optional_
+     * @api public
+     */
+    var $prop = _containMethod("prop", {
+      hasArg: true,
+    });
+
+    chai.Assertion.addMethod("$prop", $prop);
 
     /**
      * `.$html(string)`
@@ -227,7 +264,9 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $html = _containMethod("html");
+    var $html = _containMethod("html", {
+      hasContains: true
+    });
 
     chai.Assertion.addMethod("$html", $html);
 
@@ -251,7 +290,9 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $text = _containMethod("text");
+    var $text = _containMethod("text", {
+      hasContains: true
+    });
 
     chai.Assertion.addMethod("$text", $text);
   }
