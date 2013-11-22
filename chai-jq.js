@@ -154,20 +154,25 @@
     chai.Assertion.addMethod("$class", $class);
 
     /*!
-     * Abstract base for a "containable" property.
+     * Abstract base for a "containable" method call.
+     *
+     * @param {String} jQuery method name.
+     * @param {String} value for method call (or `undefined`).
      */
-    var _containProp = function (jqMeth) {
+    var _containMethod = function (jqMeth, val) {
       return _jqAssert(function (exp) {
-        var act = this._$el[jqMeth]() || "",
+        var noVal = typeof val === "undefined",
+          act = (noVal ? this._$el[jqMeth]() : this._$el[jqMeth](val)) || "",
+          meth = noVal ? jqMeth : jqMeth + "(" + val + ")",
           contains = flag(this, "contains"),
           have = contains ? "contain" : "have",
           comp = contains ? _contains : _equals;
 
         this.assert(
           comp(exp, act),
-          "expected " + this._name + " to " + have + " " + jqMeth +
+          "expected " + this._name + " to " + have + " " + meth +
             " #{exp} but found #{act}",
-          "expected " + this._name + " not to " + have + " " + jqMeth +
+          "expected " + this._name + " not to " + have + " " + meth +
             " #{exp}",
           exp,
           act
@@ -195,7 +200,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $html = _containProp("html");
+    var $html = _containMethod("html");
 
     chai.Assertion.addMethod("$html", $html);
 
@@ -219,7 +224,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    var $text = _containProp("text");
+    var $text = _containMethod("text");
 
     chai.Assertion.addMethod("$text", $text);
   }

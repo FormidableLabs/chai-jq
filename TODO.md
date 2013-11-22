@@ -9,6 +9,7 @@ Tasks
 ## General
 
 * CI: Add in saucelabs + testem integration.
+* Docs: Use jsdoc-type parameters.
 
 ## API Roadmap
 
