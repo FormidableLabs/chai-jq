@@ -213,9 +213,9 @@ define(["jquery", "chai"], function ($, chai) {
         }).to.throw("expected '#test' to contain attr('foo') 'funky' " +
                     "but found '" + "fun time" + "'");
 
-        expect($("<div><span>foo</span></div>"))
-          .to.have.$html("<span>foo</span>").and
-          .to.contain.$html("foo");
+        expect($("<div id=\"hi\" foo=\"bar time\">/div>"))
+          .to.have.$attr("id", "hi").and
+          .to.contain.$attr("foo", "bar");
       });
     });
     describe("$html", function () {

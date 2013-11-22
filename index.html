@@ -45,7 +45,7 @@ library to provide jQuery-specific assertions.</p>
 <p>Asserts that the target has exactly the given attribute, or
 asserts the target contains a subset of the attribute when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
-<pre><code class="lang-js">expect($(&quot;&lt;div id=&quot;hi&quot; foo=&quot;bar time&quot;&gt;/div&gt;&quot;))
+<pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot;&gt;/div&gt;&quot;))
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
