@@ -31,13 +31,13 @@ library to provide jQuery-specific assertions.</p>
 <h2 id="plugin-api">Plugin API</h2>
 <h3 id="-val-string-regexp-"><code>.$val(string|regexp)</code></h3>
 <p>Asserts that the element value matches a string or regular expression.</p>
-<pre><code>expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
- .to.have.$val(&quot;foo&quot;).and
- .to.have.$val(/^foo/);</code></pre>
+<pre><code class="lang-js">expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
+  .to.have.$val(&quot;foo&quot;).and
+  .to.have.$val(/^foo/);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/val/">http://api.jquery.com/val/</a></a></p>
 <h3 id="-class-string-"><code>.$class(string)</code></h3>
 <p>Asserts that the element has a class match.</p>
-<pre><code>expect($(&quot;&lt;div class=&#39;foo bar&#39; /&gt;&quot;))
+<pre><code class="lang-js">expect($(&quot;&lt;div class=&#39;foo bar&#39; /&gt;&quot;))
   .to.have.$class(&quot;foo&quot;).and
   .to.have.$class(&quot;bar&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/hasClass/">http://api.jquery.com/hasClass/</a></a></p>
@@ -45,7 +45,7 @@ library to provide jQuery-specific assertions.</p>
 <p>Asserts that the target has exactly the given HTML, or
 asserts the target contains a subset of the HTML when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
-<pre><code>expect($(&quot;&lt;div&gt;&lt;span&gt;foo&lt;/span&gt;&lt;/div&gt;&quot;))
+<pre><code class="lang-js">expect($(&quot;&lt;div&gt;&lt;span&gt;foo&lt;/span&gt;&lt;/div&gt;&quot;))
   .to.have.$html(&quot;&lt;span&gt;foo&lt;/span&gt;&quot;).and
   .to.contain.$html(&quot;foo&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/html/">http://api.jquery.com/html/</a></a></p>
@@ -53,7 +53,7 @@ asserts the target contains a subset of the HTML when using the
 <p>Asserts that the target has exactly the given text, or
 asserts the target contains a subset of the text when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
-<pre><code>expect($(&quot;&lt;div&gt;&lt;span&gt;foo&lt;/span&gt; bar&lt;/div&gt;&quot;))
+<pre><code class="lang-js">expect($(&quot;&lt;div&gt;&lt;span&gt;foo&lt;/span&gt; bar&lt;/div&gt;&quot;))
   .to.have.$text(&quot;foo bar&quot;).and
   .to.contain.$text(&quot;foo&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/text/">http://api.jquery.com/text/</a></a></p>
