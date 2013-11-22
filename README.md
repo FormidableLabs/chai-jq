@@ -12,8 +12,47 @@ Add `chai-jq.js` after your Chai script include.
     <script src="chai-jq.js"></script>
 
 ## Plugin API
+  - [$val()](#val)
+  - [$class()](#class)
+  - [$html()](#html)
 
-**TODO: WRITE THIS UP!!!**
+## $val()
+
+  `.$val(string|regexp)`
+  
+  Asserts that the element value matches a string or regular expression.
+  
+```js
+  expect($("<input value='foo' />"))
+   .to.have.$val("foo").and
+   .to.have.$val(/^foo/);
+```
+
+## $class()
+
+  `.$class(string)`
+  
+  Asserts that the element has a class match.
+  
+```js
+  expect($("<div class='foo bar' />"))
+    .to.have.$class("foo").and
+    .to.have.$class("bar");
+```
+
+## $html()
+
+  `.$html(string)`
+  
+  Asserts that the target has exactly the given HTML, or
+  asserts the target contains a subset of the HTML when using the
+  `include` or `contain` modifiers.
+  
+```js
+  expect($("<div><span>foo</span></div>"))
+    .to.have.$html("<span>foo</span>").and
+    .to.contain.$html("foo");
+```
 
 ## Contributions
 

@@ -118,6 +118,18 @@ module.exports = function (grunt) {
     },
 
     watch: {
+      "build-api": {
+        files: [
+          "chai-jq.js"
+        ],
+        tasks: [
+          "build:api"
+        ],
+        options: {
+          spawn: false,
+          atBegin: true
+        }
+      },
       jade: {
         files: [
           "_templates/**/*.jade",
@@ -146,15 +158,20 @@ module.exports = function (grunt) {
 
   // Build.
   grunt.registerTask("build:api", "Insert API into README", function () {
-    var buf = grunt.file.read("chai-jq.js"),
+    var readme = grunt.file.read("README.md"),
+      buf = grunt.file.read("chai-jq.js"),
       data = dox.parseComments(buf, {
         raw: true
       }),
-      md = dox.api(data);
+      md = dox.api(data),
+      start = "## Plugin API",
+      end = "## Contributions",
+      re = new RegExp(start + "(\n|.)*" + end, "m"),
+      updated = readme.replace(re, start + "\n" + md + end);
 
-
-    console.log("TODO HERE", md);
+    grunt.file.write("README.md", updated)
   });
+  grunt.registerTask("build",     ["build:api", "jade"]);
 
   // Tasks.
   grunt.registerTask("check",     ["jshint", "mocha_phantomjs"]);
