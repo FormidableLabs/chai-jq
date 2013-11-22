@@ -200,9 +200,9 @@
     };
 
     /**
-     * `.$attr(string)`
+     * `.$attr(name, string)`
      *
-     * Asserts that the target has exactly the given attribute, or
+     * Asserts that the target has exactly the given named attribute, or
      * asserts the target contains a subset of the attribute when using the
      * `include` or `contain` modifiers.
      *
@@ -227,9 +227,9 @@
     chai.Assertion.addMethod("$attr", $attr);
 
     /**
-     * `.$prop(value)`
+     * `.$prop(name, value)`
      *
-     * Asserts that the target has exactly the given property.
+     * Asserts that the target has exactly the given named property.
      *
      * ```js
      * expect($("<input type=\"checkbox\" checked=\"checked\" />"))

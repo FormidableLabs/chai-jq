@@ -11,6 +11,9 @@ Add `chai-jq.js` after your Chai script include.
     <script src="chai.js"></script>
     <script src="chai-jq.js"></script>
 
+To see some of the plugin's assertions in action, see the
+[test page](./test/test.html) for the project.
+
 ## Plugin API
 ### `.$val(string|regexp)`
 
@@ -36,9 +39,9 @@ expect($("<div class='foo bar' />"))
 
 See: [http://api.jquery.com/hasClass/]()
 
-### `.$attr(string)`
+### `.$attr(name, string)`
 
-Asserts that the target has exactly the given attribute, or
+Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the
 `include` or `contain` modifiers.
 
@@ -50,9 +53,9 @@ expect($("<div id=\"hi\" foo=\"bar time\">/div>"))
 
 See: [http://api.jquery.com/attr/]()
 
-### `.$prop(value)`
+### `.$prop(name, value)`
 
-Asserts that the target has exactly the given property.
+Asserts that the target has exactly the given named property.
 
 ```js
 expect($("<input type=\"checkbox\" checked=\"checked\" />"))

@@ -28,6 +28,8 @@ library to provide jQuery-specific assertions.</p>
 <p>Add <code>chai-jq.js</code> after your Chai script include.</p>
 <pre><code>&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p>To see some of the plugin&#39;s assertions in action, see the
+<a href="./test/test.html">test page</a> for the project.</p>
 <h2 id="plugin-api">Plugin API</h2>
 <h3 id="-val-string-regexp-"><code>.$val(string|regexp)</code></h3>
 <p>Asserts that the element value matches a string or regular expression.</p>
@@ -41,16 +43,16 @@ library to provide jQuery-specific assertions.</p>
   .to.have.$class(&quot;foo&quot;).and
   .to.have.$class(&quot;bar&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/hasClass/">http://api.jquery.com/hasClass/</a></a></p>
-<h3 id="-attr-string-"><code>.$attr(string)</code></h3>
-<p>Asserts that the target has exactly the given attribute, or
+<h3 id="-attr-name-string-"><code>.$attr(name, string)</code></h3>
+<p>Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot;&gt;/div&gt;&quot;))
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
-<h3 id="-prop-value-"><code>.$prop(value)</code></h3>
-<p>Asserts that the target has exactly the given property.</p>
+<h3 id="-prop-name-value-"><code>.$prop(name, value)</code></h3>
+<p>Asserts that the target has exactly the given named property.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
   .to.have.$prop(&quot;checked&quot;, true).and
   .to.have.$prop(&quot;type&quot;, &quot;checkbox&quot;);</code></pre>
@@ -103,6 +105,11 @@ license.</p>
 
       </div>
       <div id="history"><h1 id="history">History</h1>
+<h2 id="0-0-1">0.0.1</h2>
+<ul>
+<li>Initial release with API: <code>$val</code>, <code>$class</code>, <code>$attr</code>, <code>$prop</code>, <code>$html</code>,
+<code>$text</code>.</li>
+</ul>
 
       </div>
       <div id="contributing"><h1 id="contributing">Contributing</h1>
