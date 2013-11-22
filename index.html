@@ -21,98 +21,86 @@
   </head>
   <body>
     <div id="page" class="bg container"><a href="https://github.com/FormidableLabs/chai-jq" style="position: absolute; top: 0; right: 0; border: 0;" class="hidden-phone"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" class="banner"></a>
-      <div id="main"><h1>Chai-jQ</h1>
-
+      <div id="main"><h1 id="chai-jq">Chai-jQ</h1>
 <p><code>chai-jq</code> is an alternate plugin for the <a href="http://chaijs.com/">Chai</a> assertion
 library to provide jQuery-specific assertions.</p>
-
-<h2>Usage</h2>
-
+<h2 id="usage">Usage</h2>
 <p>Add <code>chai-jq.js</code> after your Chai script include.</p>
-
 <pre><code>&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
-
-<h2>Plugin API</h2>
-
-<ul><li><a href="#val">$val()</a></li><li><a href="#class">$class()</a></li><li><a href="#html">$html()</a></li></ul>
-
-<h2>$val()</h2>
-
+<h2 id="plugin-api">Plugin API</h2>
+<ul>
+<li><a href="#val">$val()</a></li>
+<li><a href="#class">$class()</a></li>
+<li><a href="#html">$html()</a></li>
+</ul>
+<h2 id="-val-">$val()</h2>
 <p>  <code>.$val(string|regexp)</code></p>
-
 <p>  Asserts that the element value matches a string or regular expression.</p>
-
-<p><code>js
-  expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
+<pre><code class="lang-js">  expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
    .to.have.$val(&quot;foo&quot;).and
-   .to.have.$val(/^foo/);
-</code></p>
-
-<h2>$class()</h2>
-
+   .to.have.$val(/^foo/);</code></pre>
+<h2 id="-class-">$class()</h2>
 <p>  <code>.$class(string)</code></p>
-
 <p>  Asserts that the element has a class match.</p>
-
-<p><code>js
-  expect($(&quot;&lt;div class=&#39;foo bar&#39; /&gt;&quot;))
+<pre><code class="lang-js">  expect($(&quot;&lt;div class=&#39;foo bar&#39; /&gt;&quot;))
     .to.have.$class(&quot;foo&quot;).and
-    .to.have.$class(&quot;bar&quot;);
-</code></p>
-
-<h2>$html()</h2>
-
+    .to.have.$class(&quot;bar&quot;);</code></pre>
+<h2 id="-html-">$html()</h2>
 <p>  <code>.$html(string)</code></p>
-
 <p>  Asserts that the target has exactly the given HTML, or
   asserts the target contains a subset of the HTML when using the
   <code>include</code> or <code>contain</code> modifiers.</p>
-
-<p><code>js
-  expect($(&quot;&lt;div&gt;&lt;span&gt;foo&lt;/span&gt;&lt;/div&gt;&quot;))
+<pre><code class="lang-js">  expect($(&quot;&lt;div&gt;&lt;span&gt;foo&lt;/span&gt;&lt;/div&gt;&quot;))
     .to.have.$html(&quot;&lt;span&gt;foo&lt;/span&gt;&quot;).and
-    .to.contain.$html(&quot;foo&quot;);
-</code></p>
-
-<h2>Contributions</h2>
-
+    .to.contain.$html(&quot;foo&quot;);</code></pre>
+<h2 id="contributions">Contributions</h2>
 <p>Please see the <a href="./CONTRIBUTING.md">Contributions Guide</a> for how to help out
 with the plugin.</p>
-
 <p>We test all changes with <a href="https://travis-ci.org/">Travis CI</a>. Here&#39;s our current
 <a href="https://travis-ci.org/FormidableLabs/chai-jq">build status</a>:</p>
-
-<p><a href="https://travis-ci.org/FormidableLabs/chai-jq"><img alt="Build Status" src="https://api.travis-ci.org/FormidableLabs/chai-jq.png"/></a></p>
-
-<h2>Licenses</h2>
-
+<p><a href="https://travis-ci.org/FormidableLabs/chai-jq"><img src="https://api.travis-ci.org/FormidableLabs/chai-jq.png" alt="Build Status"></a></p>
+<h2 id="licenses">Licenses</h2>
 <p>All code not otherwise specified is Copyright 2013 Ryan Roemer.
 Released under the <a href="./LICENSE.txt">MIT</a> License.</p>
-
 <p>This repository contains various libraries from other folks, and are licensed
 as follows:</p>
-
-<ul><li><p><a href="https://github.com/jquery/jquery">jQuery</a> is Copyright jQuery Foundation and licensed under the
-<a href="https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt">MIT</a> license.</p></li><li><p><a href="https://github.com/visionmedia/mocha">Mocha</a> is Copyright TJ Holowaychuk and licensed under the
-<a href="https://github.com/visionmedia/mocha/blob/master/LICENSE">MIT</a> license.</p></li><li><p><a href="https://github.com/chaijs/chai">Chai</a> is Copyright Jake Luer and licensed under the
-<a href="https://github.com/cjohansen/Sinon.JS/blob/master/LICENSE">BSD</a> license.</p></li><li><p><a href="https://github.com/cjohansen/Sinon.JS">Sinon.JS</a> is Copyright Christian Johansen and licensed under the
-<a href="https://github.com/cjohansen/Sinon.JS/blob/master/LICENSE">BSD</a> license.</p></li><li><p><a href="https://github.com/metaskills/mocha-phantomjs">Mocha-PhantomJS</a> is Copyright Ken Collins and licensed under the
+<ul>
+<li><p><a href="https://github.com/jquery/jquery">jQuery</a> is Copyright jQuery Foundation and licensed under the
+<a href="https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt">MIT</a> license.</p>
+</li>
+<li><p><a href="https://github.com/visionmedia/mocha">Mocha</a> is Copyright TJ Holowaychuk and licensed under the
+<a href="https://github.com/visionmedia/mocha/blob/master/LICENSE">MIT</a> license.</p>
+</li>
+<li><p><a href="https://github.com/chaijs/chai">Chai</a> is Copyright Jake Luer and licensed under the
+<a href="https://github.com/cjohansen/Sinon.JS/blob/master/LICENSE">BSD</a> license.</p>
+</li>
+<li><p><a href="https://github.com/cjohansen/Sinon.JS">Sinon.JS</a> is Copyright Christian Johansen and licensed under the
+<a href="https://github.com/cjohansen/Sinon.JS/blob/master/LICENSE">BSD</a> license.</p>
+</li>
+<li><p><a href="https://github.com/metaskills/mocha-phantomjs">Mocha-PhantomJS</a> is Copyright Ken Collins and licensed under the
 <a href="https://github.com/metaskills/mocha-phantomjs/blob/master/MIT-LICENSE">MIT</a>
-license.</p></li></ul>
-      </div>
-      <div id="history"><h1>History</h1>
-      </div>
-      <div id="contributing"><h1>Contributing</h1>
+license.</p>
+</li>
+</ul>
 
+      </div>
+      <div id="history"><h1 id="history">History</h1>
+
+      </div>
+      <div id="contributing"><h1 id="contributing">Contributing</h1>
 <p>Community contributions are most welcome. Here are a couple of guidelines for
 contributions.</p>
-
-<ul><li>Use GitHub pull requests.</li><li>Reference existing open GitHub issues in commits where relevant.</li><li>Styles, Tests: Always run <code>grunt check</code> to run all style and test checks.
-This is a test library -- it should pass its own tests. ;)</li><li>Generation: Please run <code>grunt</code> to correctly generate all appropriate files
-before finishing up and submitting your pull request.</li></ul>
-
+<ul>
+<li>Use GitHub pull requests.</li>
+<li>Reference existing open GitHub issues in commits where relevant.</li>
+<li>Styles, Tests: Always run <code>grunt check</code> to run all style and test checks.
+This is a test library -- it should pass its own tests. ;)</li>
+<li>Generation: Please run <code>grunt</code> to correctly generate all appropriate files
+before finishing up and submitting your pull request.</li>
+</ul>
 <p>And, thanks!</p>
+
       </div>
     </div>
     <script src="test/js/jquery.js"></script>
