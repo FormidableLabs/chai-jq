@@ -174,6 +174,50 @@ define(["jquery", "chai"], function ($, chai) {
       });
     });
 
+    describe("$attr", function () {
+      beforeEach(function () {
+        this.$fixture = $("<div id=\"test\" foo=\"fun time\" />")
+          .appendTo(this.$base);
+      });
+
+      it("matches attribute", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.have.$attr("id", "test").and
+          .to.have.$attr("foo", "fun time").and
+          .to.not
+            .have.$attr("id", "te").and
+            .have.$attr("foo", "time");
+
+        expect(function () {
+          expect($fixture).to.have.$attr("foo", "fun");
+        }).to.throw("expected '#test' to have attr('foo') 'fun' " +
+                    "but found '" + "fun time" + "'");
+      });
+
+      it("matches attribute subsets", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.contain.$attr("id", "test").and
+          .to.contain.$attr("id", "te").and
+          .to.contain.$attr("foo", "fun time").and
+          .to.contain.$attr("foo", "fun").and
+          .to.not
+            .contain.$attr("id", "ate").and
+            .contain.$attr("foo", "atime");
+
+        expect(function () {
+          expect($fixture).to.contain.$attr("foo", "funky");
+        }).to.throw("expected '#test' to contain attr('foo') 'funky' " +
+                    "but found '" + "fun time" + "'");
+
+        expect($("<div><span>foo</span></div>"))
+          .to.have.$html("<span>foo</span>").and
+          .to.contain.$html("foo");
+      });
+    });
     describe("$html", function () {
       beforeEach(function () {
         this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);

@@ -36,6 +36,20 @@ expect($("<div class='foo bar' />"))
 
 See: [http://api.jquery.com/hasClass/]()
 
+### `.$attr(string)`
+
+Asserts that the target has exactly the given attribute, or
+asserts the target contains a subset of the attribute when using the
+`include` or `contain` modifiers.
+
+```js
+expect($("<div id="hi" foo="bar time">/div>"))
+  .to.have.$attr("id", "hi").and
+  .to.contain.$attr("foo", "bar");
+```
+
+See: [http://api.jquery.com/attr/]()
+
 ### `.$html(string)`
 
 Asserts that the target has exactly the given HTML, or

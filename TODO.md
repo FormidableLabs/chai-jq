@@ -3,6 +3,9 @@ Tasks
 
 ## Next Up
 
+* `attr`: ???
+* `prop`: ???
+
 * Publish to Bower.
 * Publish to Chai.
 
@@ -12,9 +15,6 @@ Tasks
 * Docs: Use jsdoc-type parameters.
 
 ## API Roadmap
-
-* `attr`: ???
-* `prop`: ???
 
 * `css`: http://api.jquery.com/css/
 

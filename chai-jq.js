@@ -157,13 +157,16 @@
      * Abstract base for a "containable" method call.
      *
      * @param {String} jQuery method name.
-     * @param {String} value for method call (or `undefined`).
+     * @param {String} hasArg takes argument for method
      */
-    var _containMethod = function (jqMeth, val) {
-      return _jqAssert(function (exp) {
-        var noVal = typeof val === "undefined",
-          act = (noVal ? this._$el[jqMeth]() : this._$el[jqMeth](val)) || "",
-          meth = noVal ? jqMeth : jqMeth + "(" + val + ")",
+    var _containMethod = function (jqMeth, hasArg) {
+      hasArg = !!hasArg;
+
+      return _jqAssert(function () {
+        var exp = arguments[hasArg ? 1 : 0],
+          arg = hasArg ? arguments[0] : undefined,
+          act = (hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()) || "",
+          meth = hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
           contains = flag(this, "contains"),
           have = contains ? "contain" : "have",
           comp = contains ? _contains : _equals;
@@ -179,6 +182,30 @@
         );
       });
     };
+
+    /**
+     * `.$attr(string)`
+     *
+     * Asserts that the target has exactly the given attribute, or
+     * asserts the target contains a subset of the attribute when using the
+     * `include` or `contain` modifiers.
+     *
+     * ```js
+     * expect($("<div id="hi" foo="bar time">/div>"))
+     *   .to.have.$attr("id", "hi").and
+     *   .to.contain.$attr("foo", "bar");
+     * ```
+     *
+     * See: [http://api.jquery.com/attr/]()
+     *
+     * @name $attr
+     * @param {String} expected attribute content
+     * @param {String} message _optional_
+     * @api public
+     */
+    var $attr = _containMethod("attr", true);
+
+    chai.Assertion.addMethod("$attr", $attr);
 
     /**
      * `.$html(string)`

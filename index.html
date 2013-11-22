@@ -41,6 +41,14 @@ library to provide jQuery-specific assertions.</p>
   .to.have.$class(&quot;foo&quot;).and
   .to.have.$class(&quot;bar&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/hasClass/">http://api.jquery.com/hasClass/</a></a></p>
+<h3 id="-attr-string-"><code>.$attr(string)</code></h3>
+<p>Asserts that the target has exactly the given attribute, or
+asserts the target contains a subset of the attribute when using the
+<code>include</code> or <code>contain</code> modifiers.</p>
+<pre><code class="lang-js">expect($(&quot;&lt;div id=&quot;hi&quot; foo=&quot;bar time&quot;&gt;/div&gt;&quot;))
+  .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
+  .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
+<p>See: <a href=""><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
 <h3 id="-html-string-"><code>.$html(string)</code></h3>
 <p>Asserts that the target has exactly the given HTML, or
 asserts the target contains a subset of the HTML when using the
