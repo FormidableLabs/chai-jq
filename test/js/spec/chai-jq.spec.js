@@ -218,6 +218,31 @@ define(["jquery", "chai"], function ($, chai) {
           .to.contain.$attr("foo", "bar");
       });
     });
+
+    describe("$prop", function () {
+      beforeEach(function () {
+        this.$fixture = $(
+          "<input id=\"test\" type=\"checkbox\" checked=\"checked\" />")
+            .appendTo(this.$base);
+      });
+
+      it("matches property", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.have.$prop("checked", true).and
+          .to.have.$prop("type", "checkbox").and
+          .to.not
+            .have.$prop("checked", false).and
+            .have.$prop("type", "check");
+
+        expect(function () {
+          expect($fixture).to.have.$prop("checked", false);
+        }).to.throw("expected '#test' to have prop('checked') false " +
+                    "but found true");
+      });
+    });
+
     describe("$html", function () {
       beforeEach(function () {
         this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);

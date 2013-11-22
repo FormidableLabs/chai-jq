@@ -228,7 +228,8 @@
      *
      * ```js
      * expect($("<input type=\"checkbox\" checked=\"checked\" />"))
-     *   .to.have.$prop("checked", true);
+     *   .to.have.$prop("checked", true).and
+     *   .to.have.$prop("type", "checkbox");
      * ```
      *
      * See: [http://api.jquery.com/prop/]()
