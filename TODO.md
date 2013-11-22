@@ -3,10 +3,8 @@ Tasks
 
 ## Next Up
 
-* `attr`: ???
-* `prop`: ???
-
-* Publish to Bower.
+* Publish to Bower (w/ Readme isntrs).
+* Publish to NPM (w/ Readme isntrs).
 * Publish to Chai.
 
 ## General
