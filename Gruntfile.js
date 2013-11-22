@@ -1,8 +1,27 @@
 /* global module:false */
-var dox = require("dox");
+var _ = require("grunt").util._,
+  dox = require("dox");
 
 // Add in local node_modules bin for testem.
 process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
+
+// Generate Markdown API snippets from dox object.
+var _genApi = function (obj) {
+  var tmpl = _.template("### <%= summary %>\n\n<%= body %>\n");
+
+  // Finesse comment markdown data.
+  return _.chain(obj)
+    .filter(function (c) {
+      return !c.isPrivate && !c.ignore && _.any(c.tags, function (t) {
+        return t.type === "api" && t.visibility === "public";
+      });
+    })
+    .map(function (c) {
+      return tmpl(c.description);
+    })
+    .value()
+    .join("");
+};
 
 module.exports = function (grunt) {
   // Strip comments from JsHint JSON files (naive).
@@ -160,13 +179,11 @@ module.exports = function (grunt) {
   grunt.registerTask("build:api", "Insert API into README", function () {
     var readme = grunt.file.read("README.md"),
       buf = grunt.file.read("chai-jq.js"),
-      data = dox.parseComments(buf, {
-        raw: true
-      }),
-      md = dox.api(data),
+      data = dox.parseComments(buf, { raw: true }),
       start = "## Plugin API",
       end = "## Contributions",
       re = new RegExp(start + "(\n|.)*" + end, "m"),
+      md = _genApi(data),
       updated = readme.replace(re, start + "\n" + md + end);
 
     grunt.file.write("README.md", updated);

@@ -3,8 +3,6 @@ Tasks
 
 ## Next Up
 
-* `html`: http://api.jquery.com/html/ Use with "contains" / "includes" flags.
-* Abstract addMethod stuff.
 * Publish to Bower.
 * Publish to Chai.
 
@@ -14,11 +12,9 @@ Tasks
 
 ## API Roadmap
 
-* `html`: http://api.jquery.com/html/ Use with "contains" / "includes" flags.
-
-* `text`: http://api.jquery.com/text/ Use with "contains" / "includes" flags.
 * `attr`: ???
 * `prop`: ???
+
 * `css`: http://api.jquery.com/css/
 
 ## Environments

@@ -12,74 +12,50 @@ Add `chai-jq.js` after your Chai script include.
     <script src="chai-jq.js"></script>
 
 ## Plugin API
-  - [$val](#val)
-  - [$class](#class)
-  - [$html](#html)
-  - [$text](#text)
+### `.$val(string|regexp)`
 
-## $val
+Asserts that the element value matches a string or regular expression.
 
-  `.$val(string|regexp)`
-  
-  Asserts that the element value matches a string or regular expression.
-  
-```js
-  expect($("<input value='foo' />"))
-   .to.have.$val("foo").and
-   .to.have.$val(/^foo/);
-```
+    expect($("<input value='foo' />"))
+     .to.have.$val("foo").and
+     .to.have.$val(/^foo/);
 
-  
-  See: [http://api.jquery.com/val/]()
+See: [http://api.jquery.com/val/]()
 
-## $class
+### `.$class(string)`
 
-  `.$class(string)`
-  
-  Asserts that the element has a class match.
-  
-```js
-  expect($("<div class='foo bar' />"))
-    .to.have.$class("foo").and
-    .to.have.$class("bar");
-```
+Asserts that the element has a class match.
 
-  
-  See: [http://api.jquery.com/hasClass/]()
+    expect($("<div class='foo bar' />"))
+      .to.have.$class("foo").and
+      .to.have.$class("bar");
 
-## $html
+See: [http://api.jquery.com/hasClass/]()
 
-  `.$html(string)`
-  
-  Asserts that the target has exactly the given HTML, or
-  asserts the target contains a subset of the HTML when using the
-  `include` or `contain` modifiers.
-  
-```js
-  expect($("<div><span>foo</span></div>"))
-    .to.have.$html("<span>foo</span>").and
-    .to.contain.$html("foo");
-```
+### `.$html(string)`
 
-  
-  See: [http://api.jquery.com/html/]()
+Asserts that the target has exactly the given HTML, or
+asserts the target contains a subset of the HTML when using the
+`include` or `contain` modifiers.
 
-## $text
+    expect($("<div><span>foo</span></div>"))
+      .to.have.$html("<span>foo</span>").and
+      .to.contain.$html("foo");
 
-  `.$text(string)`
-  
-  Asserts that the target has exactly the given text, or
-  asserts the target contains a subset of the text when using the
-  `include` or `contain` modifiers.
-  
-```js
-  expect($("<div><span>foo</span> bar</div>"))
-    .to.have.$text("foo bar").and
-    .to.contain.$text("foo");
-```
+See: [http://api.jquery.com/html/]()
 
-  
-  See: [http://api.jquery.com/text/]()
+### `.$text(string)`
+
+Asserts that the target has exactly the given text, or
+asserts the target contains a subset of the text when using the
+`include` or `contain` modifiers.
+
+    expect($("<div><span>foo</span> bar</div>"))
+      .to.have.$text("foo bar").and
+      .to.contain.$text("foo");
+
+See: [http://api.jquery.com/text/]()
+
 ## Contributions
 
 Please see the [Contributions Guide](./CONTRIBUTING.md) for how to help out
