@@ -1,4 +1,5 @@
 /* global module:false */
+var dox = require("dox");
 
 // Add in local node_modules bin for testem.
 process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
@@ -142,6 +143,18 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-testem");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-jade");
+
+  // Build.
+  grunt.registerTask("build:api", "Insert API into README", function () {
+    var buf = grunt.file.read("chai-jq.js"),
+      data = dox.parseComments(buf, {
+        raw: true
+      }),
+      md = dox.api(data);
+
+
+    console.log("TODO HERE", md);
+  });
 
   // Tasks.
   grunt.registerTask("check",     ["jshint", "mocha_phantomjs"]);

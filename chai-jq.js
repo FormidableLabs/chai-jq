@@ -1,10 +1,10 @@
-/**
+/*!
  * chai-jq
  * -------
  * An alternate jQuery assertion library for Chai.
  */
 (function () {
-  /**
+  /*!
    * Chai jQuery plugin implementation.
    */
   function chaiJq(chai, utils) {
@@ -19,7 +19,7 @@
     // ------------------------------------------------------------------------
     // Helpers
     // ------------------------------------------------------------------------
-    /**
+    /*!
      * Give a more useful element name.
      */
     var _elName = function ($el) {
@@ -71,7 +71,7 @@
     // ------------------------------------------------------------------------
 
     /**
-     * ### .$val(string|regexp)
+     * `.$val(string|regexp)`
      *
      * Asserts that the element value matches a string or regular expression.
      *
@@ -86,7 +86,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    chai.Assertion.addMethod("$val", function (exp, msg) {
+    var $val = function (exp, msg) {
       var $el = flag(this, "object"),
         act = $el.val(),
         name = _elName($el),
@@ -103,10 +103,12 @@
         exp,
         typeof act === "undefined" ? "undefined" : act
       );
-    });
+    };
+
+    chai.Assertion.addMethod("$val", $val);
 
     /**
-     * ### .$class(string)
+     * `.$class(string)`
      *
      * Asserts that the element has a class match.
      *
@@ -121,7 +123,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    chai.Assertion.addMethod("$class", function (exp, msg) {
+    var $class = function (exp, msg) {
       var $el = flag(this, "object"),
         act = $el.attr("class") || "",
         name = _elName($el);
@@ -138,11 +140,12 @@
         exp,
         act
       );
-    });
+    };
 
+    chai.Assertion.addMethod("$class", $class);
 
     /**
-     * ### .$html(string)
+     * `.$html(string)`
      *
      * Asserts that the target has exactly the given HTML, or
      * asserts the target contains a subset of the HTML when using the
@@ -159,7 +162,7 @@
      * @param {String} message _optional_
      * @api public
      */
-    chai.Assertion.addMethod("$html", function (exp, msg) {
+    var $html = function (exp, msg) {
       var $el = flag(this, "object"),
         act = $el.html() || "",
         name = _elName($el),
@@ -178,11 +181,13 @@
         exp,
         act
       );
-    });
+    };
+
+    chai.Assertion.addMethod("$html", $html);
 
   }
 
-  /**
+  /*!
    * Wrap AMD, etc. using boilerplate.
    */
   function wrap(plugin) {
