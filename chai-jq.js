@@ -170,10 +170,15 @@
 
       // Return decorated assert.
       return _jqAssert(function () {
+        // Arguments.
         var exp = arguments[opts.hasArg ? 1 : 0],
           arg = opts.hasArg ? arguments[0] : undefined,
+
+          // Method.
           act = (opts.hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()),
           meth = opts.hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
+
+          // Assertion type.
           contains = opts.hasContains && flag(this, "contains"),
           have = contains ? "contain" : "have",
           comp = contains ? _contains : _equals;
@@ -240,7 +245,7 @@
      * @api public
      */
     var $prop = _containMethod("prop", {
-      hasArg: true,
+      hasArg: true
     });
 
     chai.Assertion.addMethod("$prop", $prop);

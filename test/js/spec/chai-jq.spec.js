@@ -229,6 +229,10 @@ define(["jquery", "chai"], function ($, chai) {
       it("matches property", function () {
         var $fixture = this.$fixture;
 
+        // TODO: Consider whether to abstract "no property" to `not.have`.
+        expect($fixture)
+          .to.have.$prop("nothave", undefined);
+
         expect($fixture)
           .to.have.$prop("checked", true).and
           .to.have.$prop("type", "checkbox").and
