@@ -135,6 +135,10 @@ as follows:
   [MIT](https://github.com/metaskills/mocha-phantomjs/blob/master/MIT-LICENSE)
   license.
 
+* [Pure][pure] is Copyright Yahoo! and licensed under the
+  [MIT](https://github.com/yui/pure/blob/master/LICENSE.md)
+  license.
+
 [jquery]: https://github.com/jquery/jquery
 [mocha]: https://github.com/visionmedia/mocha
 [mocha-phantom]: https://github.com/metaskills/mocha-phantomjs
@@ -142,3 +146,4 @@ as follows:
 [phantom-install]: http://phantomjs.org/download.html
 [chai]: https://github.com/chaijs/chai
 [sinon]: https://github.com/cjohansen/Sinon.JS
+[pure]: https://github.com/yui/pure/
