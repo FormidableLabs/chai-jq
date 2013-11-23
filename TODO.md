@@ -3,7 +3,6 @@ Tasks
 
 ## Next Up
 
-* Website: Make pretty.
 * `prop`: Probably needs to handle `deep` equal flag (e.g., `css`).
 
 ## General
