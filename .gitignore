@@ -9,4 +9,7 @@ npm-debug\.log
 .testem-dev.tap
 .testem-ci.tap
 
+\.idea
+*.iml
+
 local
