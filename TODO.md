@@ -3,8 +3,6 @@ Tasks
 
 ## Next Up
 
-* `prop`: Probably needs to handle `deep` equal flag (e.g., `css`).
-
 ## General
 
 * CI: Add in saucelabs + testem integration.
