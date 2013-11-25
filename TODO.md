@@ -14,7 +14,6 @@ Tasks
 
 * `all`: Flag to apply to **each** element in selector match.
 * `some`: Flag to apply to **at least one** element in selector match.
-* `css`: http://api.jquery.com/css/
 
 ## Environments
 

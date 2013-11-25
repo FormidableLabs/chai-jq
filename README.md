@@ -44,6 +44,28 @@ expect($("<div class='foo bar' />"))
 
 See: [http://api.jquery.com/hasClass/]()
 
+### `.$visible`
+
+Asserts that the element is visible.
+
+```js
+expect($("<div>&nbsp;</div>"))
+  .to.be.$visible;
+```
+
+See: [http://api.jquery.com/visible-selector/]()
+
+### `.$hidden`
+
+Asserts that the element is hidden.
+
+```js
+expect($("<div style=\"display: none\" />"))
+  .to.be.$hidden;
+```
+
+See: [http://api.jquery.com/hidden-selector/]()
+
 ### `.$attr(name, string)`
 
 Asserts that the target has exactly the given named attribute, or
@@ -51,7 +73,7 @@ asserts the target contains a subset of the attribute when using the
 `include` or `contain` modifiers.
 
 ```js
-expect($("<div id=\"hi\" foo=\"bar time\">/div>"))
+expect($("<div id=\"hi\" foo=\"bar time\"></div>"))
   .to.have.$attr("id", "hi").and
   .to.contain.$attr("foo", "bar");
 ```
@@ -97,6 +119,18 @@ expect($("<div><span>foo</span> bar</div>"))
 ```
 
 See: [http://api.jquery.com/text/]()
+
+### `.$css(name, string)`
+
+Asserts that the target has exactly the given CSS property.
+
+```js
+expect($("<div style=\"width: 50px; border: 1px dotted black;\"></div>"))
+  .to.have.$css("width", "50px").and
+  .to.have.$css("border-top-style", "dotted");
+```
+
+See: [http://api.jquery.com/css/]()
 
 ## Contributions
 

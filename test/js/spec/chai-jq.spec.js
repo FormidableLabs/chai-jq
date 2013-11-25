@@ -169,8 +169,59 @@ define(["jquery", "chai"], function ($, chai) {
                     "but found 'CLS1 CLS2'");
 
         expect($("<div class='foo bar' />"))
-         .to.have.$class("foo").and
-         .to.have.$class("bar");
+          .to.have.$class("foo").and
+          .to.have.$class("bar");
+      });
+    });
+
+    describe("$visible, $hidden", function () {
+      beforeEach(function () {
+        this.$fixture = $("<div id=\"test\" >&nbsp;</div>")
+          .appendTo(this.$base);
+      });
+
+      it("verifies element visibility", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.be.$visible.and
+          .to.not.be.$hidden;
+
+        $fixture.hide();
+
+        expect($fixture)
+          .to.be.$hidden.and
+          .to.not.be.$visible;
+
+        expect(function () {
+          expect($fixture).to.be.$visible;
+        }).to.throw("expected '#test' to be visible");
+
+        $fixture.show();
+
+        expect(function () {
+          expect($fixture).to.be.$hidden;
+        }).to.throw("expected '#test' to be hidden");
+
+        expect($("<div style=\"width: 0; height: 0;\" />"))
+          .to.be.$hidden.and
+          .to.not.be.$visible;
+      });
+
+      it("verifies visibility if parent is hidden", function () {
+        var $fixture = this.$fixture;
+
+        $fixture.wrap("<div />");
+
+        expect($fixture)
+          .to.be.$visible.and
+          .to.not.be.$hidden;
+
+        $fixture.parent().hide();
+
+        expect($fixture)
+          .to.be.$hidden.and
+          .to.not.be.$visible;
       });
     });
 
@@ -338,6 +389,33 @@ define(["jquery", "chai"], function ($, chai) {
         expect($("<div><span>foo</span> bar</div>"))
           .to.have.$text("foo bar").and
           .to.contain.$text("foo");
+      });
+    });
+
+    describe("$css", function () {
+      beforeEach(function () {
+        this.$fixture = $("<div style=\"width: 50px;" +
+          "border: 1px dotted black;\" />").appendTo(this.$base);
+      });
+
+      it("matches CSS property", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.have.$css("width", "50px").and
+          .to.have.$css("border-top-style", "dotted").and
+          .to.not
+          .have.$css("width", "100px").and
+          .have.$css("border-top-style", "solid");
+
+        expect(function () {
+          expect($fixture).to.have.$css("width", "100px");
+        }).to.throw("expected [object Object] to have css('width') '100px' " +
+            "but found '50px'");
+
+        expect($("<p style=\"float: left; display: none;\" />"))
+          .to.have.$css("float", "left").and
+          .to.have.$css("display", "none");
       });
     });
 
