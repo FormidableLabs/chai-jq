@@ -39,6 +39,16 @@ library to provide jQuery-specific assertions.</p>
 <p>To see some of the plugin&#39;s assertions in action, see the
 <a href="./test/test.html">test page</a> for the project.</p>
 <h2 id="plugin-api">Plugin API</h2>
+<h3 id="-visible-"><code>.$visible</code></h3>
+<p>Asserts that the element is visible.</p>
+<pre><code class="lang-js">expect($(&quot;&lt;div&gt;&amp;nbsp;&lt;/div&gt;&quot;))
+  .to.be.$visible;</code></pre>
+<p>See: <a href=""><a href="http://api.jquery.com/visible-selector/">http://api.jquery.com/visible-selector/</a></a></p>
+<h3 id="-hidden-"><code>.$hidden</code></h3>
+<p>Asserts that the element is hidden.</p>
+<pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;display: none\&quot; /&gt;&quot;))
+  .to.be.$hidden;</code></pre>
+<p>See: <a href=""><a href="http://api.jquery.com/hidden-selector/">http://api.jquery.com/hidden-selector/</a></a></p>
 <h3 id="-val-string-regexp-"><code>.$val(string|regexp)</code></h3>
 <p>Asserts that the element value matches a string or regular expression.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
@@ -51,16 +61,6 @@ library to provide jQuery-specific assertions.</p>
   .to.have.$class(&quot;foo&quot;).and
   .to.have.$class(&quot;bar&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/hasClass/">http://api.jquery.com/hasClass/</a></a></p>
-<h3 id="-visible-"><code>.$visible</code></h3>
-<p>Asserts that the element is visible.</p>
-<pre><code class="lang-js">expect($(&quot;&lt;div&gt;&amp;nbsp;&lt;/div&gt;&quot;))
-  .to.be.$visible;</code></pre>
-<p>See: <a href=""><a href="http://api.jquery.com/visible-selector/">http://api.jquery.com/visible-selector/</a></a></p>
-<h3 id="-hidden-"><code>.$hidden</code></h3>
-<p>Asserts that the element is hidden.</p>
-<pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;display: none\&quot; /&gt;&quot;))
-  .to.be.$hidden;</code></pre>
-<p>See: <a href=""><a href="http://api.jquery.com/hidden-selector/">http://api.jquery.com/hidden-selector/</a></a></p>
 <h3 id="-attr-name-string-"><code>.$attr(name, string)</code></h3>
 <p>Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the

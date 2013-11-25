@@ -161,6 +161,42 @@
     // ------------------------------------------------------------------------
 
     /**
+     * `.$visible`
+     *
+     * Asserts that the element is visible.
+     *
+     * ```js
+     * expect($("<div>&nbsp;</div>"))
+     *   .to.be.$visible;
+     * ```
+     *
+     * See: [http://api.jquery.com/visible-selector/]()
+     *
+     * @api public
+     */
+    var $visible = _isMethod(":visible");
+
+    chai.Assertion.addProperty("$visible", $visible);
+
+    /**
+     * `.$hidden`
+     *
+     * Asserts that the element is hidden.
+     *
+     * ```js
+     * expect($("<div style=\"display: none\" />"))
+     *   .to.be.$hidden;
+     * ```
+     *
+     * See: [http://api.jquery.com/hidden-selector/]()
+     *
+     * @api public
+     */
+    var $hidden = _isMethod(":hidden");
+
+    chai.Assertion.addProperty("$hidden", $hidden);
+
+    /**
      * `.$val(string|regexp)`
      *
      * Asserts that the element value matches a string or regular expression.
@@ -224,42 +260,6 @@
     });
 
     chai.Assertion.addMethod("$class", $class);
-
-    /**
-     * `.$visible`
-     *
-     * Asserts that the element is visible.
-     *
-     * ```js
-     * expect($("<div>&nbsp;</div>"))
-     *   .to.be.$visible;
-     * ```
-     *
-     * See: [http://api.jquery.com/visible-selector/]()
-     *
-     * @api public
-     */
-    var $visible = _isMethod(":visible");
-
-    chai.Assertion.addProperty("$visible", $visible);
-
-    /**
-     * `.$hidden`
-     *
-     * Asserts that the element is hidden.
-     *
-     * ```js
-     * expect($("<div style=\"display: none\" />"))
-     *   .to.be.$hidden;
-     * ```
-     *
-     * See: [http://api.jquery.com/hidden-selector/]()
-     *
-     * @api public
-     */
-    var $hidden = _isMethod(":hidden");
-
-    chai.Assertion.addProperty("$hidden", $hidden);
 
     /**
      * `.$attr(name, string)`

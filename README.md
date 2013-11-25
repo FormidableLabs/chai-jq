@@ -20,6 +20,28 @@ To see some of the plugin's assertions in action, see the
 [test page](./test/test.html) for the project.
 
 ## Plugin API
+### `.$visible`
+
+Asserts that the element is visible.
+
+```js
+expect($("<div>&nbsp;</div>"))
+  .to.be.$visible;
+```
+
+See: [http://api.jquery.com/visible-selector/]()
+
+### `.$hidden`
+
+Asserts that the element is hidden.
+
+```js
+expect($("<div style=\"display: none\" />"))
+  .to.be.$hidden;
+```
+
+See: [http://api.jquery.com/hidden-selector/]()
+
 ### `.$val(string|regexp)`
 
 Asserts that the element value matches a string or regular expression.
@@ -43,28 +65,6 @@ expect($("<div class='foo bar' />"))
 ```
 
 See: [http://api.jquery.com/hasClass/]()
-
-### `.$visible`
-
-Asserts that the element is visible.
-
-```js
-expect($("<div>&nbsp;</div>"))
-  .to.be.$visible;
-```
-
-See: [http://api.jquery.com/visible-selector/]()
-
-### `.$hidden`
-
-Asserts that the element is hidden.
-
-```js
-expect($("<div style=\"display: none\" />"))
-  .to.be.$hidden;
-```
-
-See: [http://api.jquery.com/hidden-selector/]()
 
 ### `.$attr(name, string)`
 
