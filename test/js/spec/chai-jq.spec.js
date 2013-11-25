@@ -77,6 +77,14 @@ define(["jquery", "chai"], function ($, chai) {
         }).to.throw("expected '#test' to have val 'foo' but found ''");
       });
 
+      it("can override error messages", function () {
+        var $fixture = this.$fixture;
+
+        expect(function () {
+          expect($fixture).to.have.$val("foo", "MY ERROR MSG");
+        }).to.throw("MY ERROR MSG");
+      });
+
       it("matches basic vals", function () {
         var $fixture = this.$fixture;
 
