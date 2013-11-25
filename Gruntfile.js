@@ -5,22 +5,38 @@ var _ = require("grunt").util._,
 // Add in local node_modules bin for testem.
 process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
 
+// Marked: Process heading text into ID.
+var _headingId = function (text) {
+  return text.toLowerCase().replace(/[^\w]+/g, "-");
+};
+
 // Generate Markdown API snippets from dox object.
 var _genApi = function (obj) {
-  var tmpl = _.template("### <%= summary %>\n\n<%= body %>\n");
+  var toc = [],
+    tocTmpl = _.template("* [<%= heading %>](#<%= id %>)\n"),
+    sectionTmpl = _.template("### <%= summary %>\n\n<%= body %>\n");
 
   // Finesse comment markdown data.
-  return _.chain(obj)
+  // Also, statefully create TOC.
+  var sections = _.chain(obj)
     .filter(function (c) {
       return !c.isPrivate && !c.ignore && _.any(c.tags, function (t) {
         return t.type === "api" && t.visibility === "public";
       });
     })
     .map(function (c) {
-      return tmpl(c.description);
+      // Add to TOC.
+      toc.push(tocTmpl({
+        heading: c.description.summary,
+        id: _headingId(c.description.summary)
+      }));
+
+      return sectionTmpl(c.description);
     })
     .value()
     .join("");
+
+  return "\n" + toc.join("") + "\n" + sections;
 };
 
 module.exports = function (grunt) {
