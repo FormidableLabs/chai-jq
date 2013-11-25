@@ -97,11 +97,11 @@
      * @param {String} selector jQuery selector to match against
      */
     var _isMethod = function (jqSelector) {
+      // Make selector human readable.
+      var selectorDesc = jqSelector.replace(/:/g, "");
+
       // Return decorated assert.
       return _jqAssert(function () {
-        // Make it human readable
-        var selectorDesc = jqSelector.replace(/:/g, "");
-
         this.assert(
           this._$el.is(jqSelector),
           "expected " + this._name + " to be " + selectorDesc,
