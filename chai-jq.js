@@ -269,7 +269,7 @@
      * `include` or `contain` modifiers.
      *
      * ```js
-     * expect($("<div id=\"hi\" foo=\"bar time\"></div>"))
+     * expect($("<div id=\"hi\" foo=\"bar time\" />"))
      *   .to.have.$attr("id", "hi").and
      *   .to.contain.$attr("foo", "bar");
      * ```
