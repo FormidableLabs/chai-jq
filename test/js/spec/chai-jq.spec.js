@@ -264,7 +264,7 @@ define(["jquery", "chai"], function ($, chai) {
         }).to.throw("expected '#test' to contain attr('foo') 'funky' " +
                     "but found '" + "fun time" + "'");
 
-        expect($("<div id=\"hi\" foo=\"bar time\">/div>"))
+        expect($("<div id=\"hi\" foo=\"bar time\" />"))
           .to.have.$attr("id", "hi").and
           .to.contain.$attr("foo", "bar");
       });

@@ -67,7 +67,7 @@
     };
 
     // ------------------------------------------------------------------------
-    // Assertions
+    // Assertions (Internal)
     // ------------------------------------------------------------------------
     /*!
      * Wrap assert function and add properties.
@@ -87,6 +87,78 @@
         fn.apply(this, arguments);
       };
     };
+
+    /*!
+     * Base for the boolean is("selector") method call.
+     *
+     *
+     * See: [http://api.jquery.com/is/]
+     *
+     * @param {String} selector jQuery selector to match against
+     */
+    var _isMethod = function (jqSelector) {
+      // Return decorated assert.
+      return _jqAssert(function () {
+        // Make it human readable
+        var selectorDesc = jqSelector.replace(/:/g, "");
+
+        this.assert(
+          this._$el.is(jqSelector),
+          "expected " + this._name + " to be " + selectorDesc,
+          "expected " + this._name + " to not be " + selectorDesc
+        );
+      });
+    };
+
+    /*!
+     * Abstract base for a "containable" method call.
+     *
+     * @param {String} jQuery           method name.
+     * @param {Object} opts             options
+     * @param {String} opts.hasArg      takes argument for method
+     * @param {String} opts.hasContains is "contains" applicable
+     */
+    var _containMethod = function (jqMeth, opts) {
+      // Unpack options.
+      opts || (opts = {});
+      opts.hasArg = !!opts.hasArg;
+      opts.hasContains = !!opts.hasContains;
+      opts.defaultAct = undefined;
+
+      // Return decorated assert.
+      return _jqAssert(function () {
+        // Arguments.
+        var exp = arguments[opts.hasArg ? 1 : 0],
+          arg = opts.hasArg ? arguments[0] : undefined,
+
+          // Method.
+          act = (opts.hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()),
+          meth = opts.hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
+
+          // Assertion type.
+          contains = opts.hasContains && flag(this, "contains"),
+          have = contains ? "contain" : "have",
+          comp = contains ? _contains : _equals;
+
+        if (typeof act === "undefined") {
+          act = opts.defaultAct;
+        }
+
+        this.assert(
+          comp(exp, act),
+          "expected " + this._name + " to " + have + " " + meth +
+            " #{exp} but found #{act}",
+          "expected " + this._name + " not to " + have + " " + meth +
+            " #{exp}",
+          exp,
+          act
+        );
+      });
+    };
+
+    // ------------------------------------------------------------------------
+    // API
+    // ------------------------------------------------------------------------
 
     /**
      * `.$val(string|regexp)`
@@ -153,28 +225,6 @@
 
     chai.Assertion.addMethod("$class", $class);
 
-    /*!
-     * Base for the boolean is("selector") method call.
-     *
-     *
-     * See: [http://api.jquery.com/is/]
-     *
-     * @param {String} selector jQuery selector to match against
-     */
-    var _isMethod = function (jqSelector) {
-      // Return decorated assert.
-      return _jqAssert(function () {
-        // Make it human readable
-        var selectorDesc = jqSelector.replace(/:/g, "");
-
-        this.assert(
-          this._$el.is(jqSelector),
-          "expected " + this._name + " to be " + selectorDesc,
-          "expected " + this._name + " to not be " + selectorDesc
-        );
-      });
-    };
-
     /**
      * `.$visible`
      *
@@ -210,52 +260,6 @@
     var $hidden = _isMethod(":hidden");
 
     chai.Assertion.addProperty("$hidden", $hidden);
-
-    /*!
-     * Abstract base for a "containable" method call.
-     *
-     * @param {String} jQuery           method name.
-     * @param {Object} opts             options
-     * @param {String} opts.hasArg      takes argument for method
-     * @param {String} opts.hasContains is "contains" applicable
-     */
-    var _containMethod = function (jqMeth, opts) {
-      // Unpack options.
-      opts || (opts = {});
-      opts.hasArg = !!opts.hasArg;
-      opts.hasContains = !!opts.hasContains;
-      opts.defaultAct = undefined;
-
-      // Return decorated assert.
-      return _jqAssert(function () {
-        // Arguments.
-        var exp = arguments[opts.hasArg ? 1 : 0],
-          arg = opts.hasArg ? arguments[0] : undefined,
-
-          // Method.
-          act = (opts.hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()),
-          meth = opts.hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
-
-          // Assertion type.
-          contains = opts.hasContains && flag(this, "contains"),
-          have = contains ? "contain" : "have",
-          comp = contains ? _contains : _equals;
-
-        if (typeof act === "undefined") {
-          act = opts.defaultAct;
-        }
-
-        this.assert(
-          comp(exp, act),
-          "expected " + this._name + " to " + have + " " + meth +
-            " #{exp} but found #{act}",
-          "expected " + this._name + " not to " + have + " " + meth +
-            " #{exp}",
-          exp,
-          act
-        );
-      });
-    };
 
     /**
      * `.$attr(name, string)`
@@ -366,7 +370,7 @@
      * Asserts that the target has exactly the given CSS property.
      *
      * ```js
-     * expect($("<div style=\"width: 50px; border: 1px dotted black;\"></div>"))
+     * expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
      *   .to.have.$css("width", "50px").and
      *   .to.have.$css("border-top-style", "dotted");
      * ```

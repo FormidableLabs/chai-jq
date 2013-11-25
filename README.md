@@ -125,7 +125,7 @@ See: [http://api.jquery.com/text/]()
 Asserts that the target has exactly the given CSS property.
 
 ```js
-expect($("<div style=\"width: 50px; border: 1px dotted black;\"></div>"))
+expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
   .to.have.$css("width", "50px").and
   .to.have.$css("border-top-style", "dotted");
 ```

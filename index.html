@@ -93,7 +93,7 @@ asserts the target contains a subset of the text when using the
 <p>See: <a href=""><a href="http://api.jquery.com/text/">http://api.jquery.com/text/</a></a></p>
 <h3 id="-css-name-string-"><code>.$css(name, string)</code></h3>
 <p>Asserts that the target has exactly the given CSS property.</p>
-<pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;width: 50px; border: 1px dotted black;\&quot;&gt;&lt;/div&gt;&quot;))
+<pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;width: 50px; border: 1px dotted black;\&quot; /&gt;&quot;))
   .to.have.$css(&quot;width&quot;, &quot;50px&quot;).and
   .to.have.$css(&quot;border-top-style&quot;, &quot;dotted&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/css/">http://api.jquery.com/css/</a></a></p>
