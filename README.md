@@ -11,7 +11,7 @@ You can install `chai-jq` via the following package managers:
 * [NPM](https://npmjs.org/package/chai-jq): `npm install chai-jq`
 * [Bower](http://bower.io/): `bower install chai-jq`
 
-See the [integration notes][#integration] below to properly patch Chai with
+See the [integration notes](#integration) below to properly patch Chai with
 the plugin's asserts in different environments (browser, AMD, Node.js).
 
 To see some of the plugin's assertions in action, see the
@@ -158,6 +158,9 @@ expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
 See: [http://api.jquery.com/css/]()
 
 ## Integration
+
+`chai-jq` works in your browser, with AMD/RequireJS, and in Node.js with
+JsDom.
 
 **Standard Browser**: To use in a standard HTML page, include `chai-jq.js`
 after Chai.
