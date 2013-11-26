@@ -391,7 +391,7 @@
      *
      * *Browser Note*: Explicit CSS properties are sometimes not matched
      * (in contrast to Node.js), so the plugin performs an extra check against
-     * explicity `style` properties for a match. May still have other wonky
+     * explicit `style` properties for a match. May still have other wonky
      * corner cases.
      *
      * ```js
@@ -423,7 +423,7 @@
    */
   function wrap(plugin) {
     "use strict";
-    /* global module:false */
+    /* global module:false, define:false */
 
     if (typeof require === "function" &&
         typeof exports === "object" &&
@@ -445,7 +445,7 @@
     } else {
       // Other environment (usually <script> tag): plug in to global chai
       // instance directly.
-      chai.use(function (chai, utils) {
+      root.chai.use(function (chai, utils) {
         return plugin(chai, utils, root.jQuery);
       });
     }
@@ -453,4 +453,4 @@
 
   // Hook it all together.
   wrap(chaiJq);
-}(this));
+}());

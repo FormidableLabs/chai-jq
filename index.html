@@ -113,7 +113,7 @@ asserts the target contains a subset of the CSS when using the
 inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.</p>
 <p><em>Browser Note</em>: Explicit CSS properties are sometimes not matched
 (in contrast to Node.js), so the plugin performs an extra check against
-explicity <code>style</code> properties for a match. May still have other wonky
+explicit <code>style</code> properties for a match. May still have other wonky
 corner cases.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;width: 50px; border: 1px dotted black;\&quot; /&gt;&quot;))
   .to.have.$css(&quot;width&quot;, &quot;50px&quot;).and

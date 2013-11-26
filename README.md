@@ -146,7 +146,7 @@ inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.
 
 *Browser Note*: Explicit CSS properties are sometimes not matched
 (in contrast to Node.js), so the plugin performs an extra check against
-explicity `style` properties for a match. May still have other wonky
+explicit `style` properties for a match. May still have other wonky
 corner cases.
 
 ```js

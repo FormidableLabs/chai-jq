@@ -1,13 +1,14 @@
 // Boilerplate and test setup.
 (function () {
+  /*global module:true */
   var root = this,
-    isNode = (function () { /*global module:true */
-      return !!(typeof module !== "undefined" && module.exports);
-    }());
+    isNode = typeof require === "function" &&
+             typeof exports === "object" &&
+             typeof module  === "object";
 
   // Make AMD/Non-AMD compatible (boilerplate).
   if (typeof define !== "function") {     /*global define:true */
-    define = function (deps, callback) {  /*global module:true */
+    define = function (deps, callback) {
       // Export if node, else actually run.
       if (isNode) { module.exports = callback; }
       else        { callback(root.$); }
