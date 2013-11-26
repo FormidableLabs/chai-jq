@@ -1,5 +1,38 @@
 (function () {
-  var root = this;
+  var root = this,
+
+    // Check if running in Node.js
+    // Inference from: http://stackoverflow.com/questions/4224606 (underscore's)
+    isNode = (function () {
+      /*global module:false */
+      return !!(typeof module !== "undefined" && module.exports);
+    }());
+
+  // Node setup.
+  // TODO: Handle RequireJS + Node.js
+  if (isNode) {
+    /*global require:false */
+    var plugin = require("../chai-jq"),
+      jsdom = require("jsdom");
+
+    // Global setup.
+    root.$ = require("jquery");
+    root.chai = require("chai");
+    root.expect = chai.expect;
+
+    // Inject plugin.
+    root.chai.use(plugin);
+
+    // // Set up JsDom.
+    // var document = jsdom.env({
+    //   html: "<html><head></head><body>" +
+    //     "<div id=\"fixtures\" style=\"position: absolute; bottom: 0;\"></div>" +
+    //     "</body></html>",
+    //   scripts:
+    // });
+    //   );
+    // var window = document.parentWindow;
+  }
 
   // Make AMD/Non-AMD compatible (boilerplate).
   if (typeof define !== "function") {
@@ -15,6 +48,7 @@
 
       before(function () {
         this.$base = $("#fixtures");
+        console.log("TODO HERE", this.$base)
       });
 
       afterEach(function () {
