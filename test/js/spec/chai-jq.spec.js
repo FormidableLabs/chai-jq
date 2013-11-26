@@ -10,6 +10,9 @@
 
   // Node setup.
   // TODO: Handle RequireJS + Node.js
+  // TODO: Instructions for node (chai.use)
+  // TODO: Extract to "runner" file (?)
+  // TODO: Remove extra npm modules.
   if (isNode) {
     /*global require:false */
     var plugin = require("../chai-jq"),
@@ -19,7 +22,7 @@
     var document = jsdom.jsdom("<html><head></head><body>" +
       "<div id=\"fixtures\" style=\"position: absolute; bottom: 0;\"></div>" +
       "</body></html>");
-    var window = document.parentWindow;
+    var window = document.createWindow();
 
     // Global setup.
     root.$ = require("jquery").create(window);
@@ -38,6 +41,12 @@
       callback(root.$, root.chai);
     };
   }
+
+  // Patch Mocha.
+  // Skip node for certain tests.
+  it.skipNode = function () {
+    return (isNode ? it.skip : it).apply(this, arguments);
+  };
 
   define(["jquery", "chai"], function ($, chai) {
     describe("chai-jq", function () {
@@ -243,7 +252,10 @@
           expect(function () {
             expect($fixture).to.be.$hidden;
           }).to.throw("expected '#test' to be hidden");
+        });
 
+        // JsDom doesn't work for zero sizes.
+        it.skipNode("verifies element visibility on zero-sizes", function () {
           expect($("<div style=\"width: 0; height: 0;\" />"))
             .to.be.$hidden.and
             .to.not.be.$visible;
