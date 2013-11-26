@@ -8,12 +8,11 @@ var root = this,
 if (typeof define !== "function") {
   /*global define:true */
   define = function (deps, callback) {
+    // Export if node, else actually run.
     if (isNode) {
-      // Export if node.
       /*global module:true */
       module.exports = callback;
     } else {
-      // Else actually run.
       callback(root.$, root.chai);
     }
   };

@@ -117,6 +117,15 @@ module.exports = function (grunt) {
       }
     },
 
+    mochaTest: {
+      test: {
+        options: {
+          reporter: "spec"
+        },
+        src: ["test/test-node.js"]
+      }
+    },
+
     jade: {
       compile: {
         options: {
@@ -190,6 +199,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-mocha-phantomjs");
   grunt.loadNpmTasks("grunt-testem");
+  grunt.loadNpmTasks("grunt-mocha-test");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-jade");
 
