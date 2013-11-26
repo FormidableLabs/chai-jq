@@ -15,23 +15,19 @@
     var plugin = require("../chai-jq"),
       jsdom = require("jsdom");
 
+    // Set up JsDom.
+    var document = jsdom.jsdom("<html><head></head><body>" +
+      "<div id=\"fixtures\" style=\"position: absolute; bottom: 0;\"></div>" +
+      "</body></html>");
+    var window = document.parentWindow;
+
     // Global setup.
-    root.$ = require("jquery");
+    root.$ = require("jquery").create(window);
     root.chai = require("chai");
     root.expect = chai.expect;
 
     // Inject plugin.
     root.chai.use(plugin);
-
-    // // Set up JsDom.
-    // var document = jsdom.env({
-    //   html: "<html><head></head><body>" +
-    //     "<div id=\"fixtures\" style=\"position: absolute; bottom: 0;\"></div>" +
-    //     "</body></html>",
-    //   scripts:
-    // });
-    //   );
-    // var window = document.parentWindow;
   }
 
   // Make AMD/Non-AMD compatible (boilerplate).
@@ -48,7 +44,6 @@
 
       before(function () {
         this.$base = $("#fixtures");
-        console.log("TODO HERE", this.$base)
       });
 
       afterEach(function () {
