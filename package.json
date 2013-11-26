@@ -17,7 +17,10 @@
     "testem": "~0.5.8",
     "phantomjs": "~1.9.2-2",
     "dox": "~0.4.4",
-    "marked": "~0.2.10"
+    "marked": "~0.2.10",
+    "chai": "~1.8.1",
+    "mocha": "~1.14.0",
+    "jsdom": "~0.8.8"
   },
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",
