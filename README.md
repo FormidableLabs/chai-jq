@@ -35,6 +35,9 @@ To see some of the plugin's assertions in action, see the
 
 Asserts that the element is visible.
 
+*Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
+hidden parent elements as hidden / visible appropriately.
+
 ```js
 expect($("<div>&nbsp;</div>"))
   .to.be.$visible;
@@ -45,6 +48,9 @@ See: [http://api.jquery.com/visible-selector/]()
 ### `.$hidden`
 
 Asserts that the element is hidden.
+
+*Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
+hidden parent elements as hidden / visible appropriately.
 
 ```js
 expect($("<div style=\"display: none\" />"))
@@ -133,7 +139,17 @@ See: [http://api.jquery.com/text/]()
 
 ### `.$css(name, string)`
 
-Asserts that the target has exactly the given CSS property.
+Asserts that the target has exactly the given CSS property, or
+asserts the target contains a subset of the CSS when using the
+`include` or `contain` modifiers.
+
+*Node.js/JsDom Note*: Computed CSS properties are not correctly
+inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.
+
+*Browser Note*: Explicit CSS properties are sometimes not matched
+(in contrast to Node.js), so the plugin performs an extra check against
+explicity `style` properties for a match. May still have other wonky
+corner cases.
 
 ```js
 expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))

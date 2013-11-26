@@ -52,11 +52,15 @@ library to provide jQuery-specific assertions.</p>
 </ul>
 <h3 id="-visible-"><code>.$visible</code></h3>
 <p>Asserts that the element is visible.</p>
+<p><em>Node.js/JsDom Note</em>: JsDom does not currently infer zero-sized or
+hidden parent elements as hidden / visible appropriately.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div&gt;&amp;nbsp;&lt;/div&gt;&quot;))
   .to.be.$visible;</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/visible-selector/">http://api.jquery.com/visible-selector/</a></a></p>
 <h3 id="-hidden-"><code>.$hidden</code></h3>
 <p>Asserts that the element is hidden.</p>
+<p><em>Node.js/JsDom Note</em>: JsDom does not currently infer zero-sized or
+hidden parent elements as hidden / visible appropriately.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;display: none\&quot; /&gt;&quot;))
   .to.be.$hidden;</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/hidden-selector/">http://api.jquery.com/hidden-selector/</a></a></p>
@@ -103,7 +107,15 @@ asserts the target contains a subset of the text when using the
   .to.contain.$text(&quot;foo&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/text/">http://api.jquery.com/text/</a></a></p>
 <h3 id="-css-name-string-"><code>.$css(name, string)</code></h3>
-<p>Asserts that the target has exactly the given CSS property.</p>
+<p>Asserts that the target has exactly the given CSS property, or
+asserts the target contains a subset of the CSS when using the
+<code>include</code> or <code>contain</code> modifiers.</p>
+<p><em>Node.js/JsDom Note</em>: Computed CSS properties are not correctly
+inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.</p>
+<p><em>Browser Note</em>: Explicit CSS properties are sometimes not matched
+(in contrast to Node.js), so the plugin performs an extra check against
+explicity <code>style</code> properties for a match. May still have other wonky
+corner cases.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;width: 50px; border: 1px dotted black;\&quot; /&gt;&quot;))
   .to.have.$css(&quot;width&quot;, &quot;50px&quot;).and
   .to.have.$css(&quot;border-top-style&quot;, &quot;dotted&quot;);</code></pre>
@@ -146,6 +158,8 @@ license.</p>
         <div id="history"><h1 id="history">History</h1>
 <h2 id="0-0-3">0.0.3</h2>
 <ul>
+<li>Add fallback to &quot;style&quot; property for <code>$css</code>. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+<li>Add <code>contains</code> support for <code>$css</code> assert. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
 <li>Add support for Node.js with JsDom. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
 </ul>
 <h2 id="0-0-2">0.0.2</h2>

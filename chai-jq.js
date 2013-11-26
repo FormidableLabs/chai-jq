@@ -117,6 +117,7 @@
      * @param {Object} opts             options
      * @param {String} opts.hasArg      takes argument for method
      * @param {String} opts.hasContains is "contains" applicable
+     * @param {String} opts.altGet      alternate function to get value if none
      */
     var _containMethod = function (jqMeth, opts) {
       // Unpack options.
@@ -140,6 +141,12 @@
           have = contains ? "contain" : "have",
           comp = contains ? _contains : _equals;
 
+        // Second chance getter.
+        if (opts.altGet && !act) {
+          act = opts.altGet(this._$el, arg);
+        }
+
+        // Default actual value on undefined.
         if (typeof act === "undefined") {
           act = opts.defaultAct;
         }
@@ -165,6 +172,9 @@
      *
      * Asserts that the element is visible.
      *
+     * *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
+     * hidden parent elements as hidden / visible appropriately.
+     *
      * ```js
      * expect($("<div>&nbsp;</div>"))
      *   .to.be.$visible;
@@ -182,6 +192,9 @@
      * `.$hidden`
      *
      * Asserts that the element is hidden.
+     *
+     * *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
+     * hidden parent elements as hidden / visible appropriately.
      *
      * ```js
      * expect($("<div style=\"display: none\" />"))
@@ -367,7 +380,17 @@
     /**
      * `.$css(name, string)`
      *
-     * Asserts that the target has exactly the given CSS property.
+     * Asserts that the target has exactly the given CSS property, or
+     * asserts the target contains a subset of the CSS when using the
+     * `include` or `contain` modifiers.
+     *
+     * *Node.js/JsDom Note*: Computed CSS properties are not correctly
+     * inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.
+     *
+     * *Browser Note*: Explicit CSS properties are sometimes not matched
+     * (in contrast to Node.js), so the plugin performs an extra check against
+     * explicity `style` properties for a match. May still have other wonky
+     * corner cases.
      *
      * ```js
      * expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
@@ -383,7 +406,11 @@
      * @api public
      */
     var $css = _containMethod("css", {
-      hasArg: true
+      hasArg: true,
+      hasContains: true,
+
+      // Alternate Getter: If no match, go for explicit property.
+      altGet: function ($el, prop) { return $el.prop("style")[prop]; }
     });
 
     chai.Assertion.addMethod("$css", $css);

@@ -3,6 +3,8 @@ History
 
 ## 0.0.3
 
+* Add fallback to "style" property for `$css`. [*[@ryan-roemer][]*]
+* Add `contains` support for `$css` assert. [*[@ryan-roemer][]*]
 * Add support for Node.js with JsDom. [*[@ryan-roemer][]*]
 
 ## 0.0.2

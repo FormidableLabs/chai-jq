@@ -220,10 +220,12 @@ module.exports = function (grunt) {
 
   // Tasks.
   grunt.registerTask("test:dev",  ["mocha_phantomjs"]);
-  grunt.registerTask("test:ci",   ["testem:all"]);
+  grunt.registerTask("test:all",  ["testem:all"]);
+  grunt.registerTask("test:ci",   ["testem:ci"]);
   grunt.registerTask("test:node", ["mochaTest"]);
 
-  grunt.registerTask("check",     ["jshint", "test:dev"]);
-  grunt.registerTask("check:all", ["check", "test:ci", "test:node"]);
+  grunt.registerTask("check",     ["jshint", "test:dev", "test:node"]);
+  grunt.registerTask("check:ci",  ["check", "test:ci"]);
+  grunt.registerTask("check:all", ["check", "test:all"]);
   grunt.registerTask("default",   ["copy", "check", "build"]);
 };
