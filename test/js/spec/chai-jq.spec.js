@@ -1,28 +1,25 @@
-var root = this,
-  isNode = (function () {
-    /*global module:true */
-    return !!(typeof module !== "undefined" && module.exports);
-  }());
+// Boilerplate and test setup.
+(function () {
+  var root = this,
+    isNode = (function () { /*global module:true */
+      return !!(typeof module !== "undefined" && module.exports);
+    }());
 
-// Make AMD/Non-AMD compatible (boilerplate).
-if (typeof define !== "function") {
-  /*global define:true */
-  define = function (deps, callback) {
-    // Export if node, else actually run.
-    if (isNode) {
-      /*global module:true */
-      module.exports = callback;
-    } else {
-      callback(root.$, root.chai);
-    }
+  // Make AMD/Non-AMD compatible (boilerplate).
+  if (typeof define !== "function") {     /*global define:true */
+    define = function (deps, callback) {  /*global module:true */
+      // Export if node, else actually run.
+      if (isNode) { module.exports = callback; }
+      else        { callback(root.$, root.chai); }
+    };
+  }
+
+  // Patch Mocha.
+  // Skip node for certain tests.
+  it.skipNode = function () {
+    return (isNode ? it.skip : it).apply(this, arguments);
   };
-}
-
-// Patch Mocha.
-// Skip node for certain tests.
-it.skipNode = function () {
-  return (isNode ? it.skip : it).apply(this, arguments);
-};
+}());
 
 define(["jquery", "chai"], function ($, chai) {
   describe("chai-jq", function () {
