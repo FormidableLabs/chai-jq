@@ -149,6 +149,10 @@ inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.
 explicit `style` properties for a match. May still have other wonky
 corner cases.
 
+*PhantomJS Note*: PhantomJS also is fairly wonky and unpredictable with
+respect to CSS / styles, especially those that come from CSS classes
+and not explicity `style` attributes.
+
 ```js
 expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
   .to.have.$css("width", "50px").and

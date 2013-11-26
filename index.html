@@ -115,6 +115,9 @@ inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.</p>
 (in contrast to Node.js), so the plugin performs an extra check against
 explicit <code>style</code> properties for a match. May still have other wonky
 corner cases.</p>
+<p><em>PhantomJS Note</em>: PhantomJS also is fairly wonky and unpredictable with
+respect to CSS / styles, especially those that come from CSS classes
+and not explicity <code>style</code> attributes.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;width: 50px; border: 1px dotted black;\&quot; /&gt;&quot;))
   .to.have.$css(&quot;width&quot;, &quot;50px&quot;).and
   .to.have.$css(&quot;border-top-style&quot;, &quot;dotted&quot;);</code></pre>
