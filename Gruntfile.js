@@ -66,7 +66,8 @@ module.exports = function (grunt) {
         options: _jshintCfg(".jshintrc-backend.json"),
         files: {
           src:  [
-            "Gruntfile.js"
+            "Gruntfile.js",
+            "test/js/test-node.js"
           ]
         }
       }
