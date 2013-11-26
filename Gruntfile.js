@@ -219,7 +219,11 @@ module.exports = function (grunt) {
   grunt.registerTask("build",     ["build:api", "jade"]);
 
   // Tasks.
-  grunt.registerTask("check",     ["jshint", "mocha_phantomjs"]);
-  grunt.registerTask("check:all", ["check", "testem:all"]);
+  grunt.registerTask("test:dev",  ["mocha_phantomjs"]);
+  grunt.registerTask("test:ci",   ["testem:all"]);
+  grunt.registerTask("test:node", ["mochaTest"]);
+
+  grunt.registerTask("check",     ["jshint", "test:dev"]);
+  grunt.registerTask("check:all", ["check", "test:ci", "test:node"]);
   grunt.registerTask("default",   ["copy", "check", "build"]);
 };
