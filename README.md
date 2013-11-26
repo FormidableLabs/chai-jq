@@ -6,15 +6,25 @@ library to provide jQuery-specific assertions.
 
 ## Usage
 
-Add `chai-jq.js` after your Chai script include.
-
-    <script src="chai.js"></script>
-    <script src="chai-jq.js"></script>
-
 You can install `chai-jq` via the following package managers:
 
 * [NPM](https://npmjs.org/package/chai-jq): `npm install chai-jq`
 * [Bower](http://bower.io/): `bower install chai-jq`
+
+To use in a standard HTML page, include `chai-jq.js` after Chai.
+
+```html
+<script src="chai.js"></script>
+<script src="chai-jq.js"></script>
+```
+
+To use in a RequireJS/AMD page, require in `chai-jq` which patches Chai from
+the import action.
+
+```js
+require(["chai", "../chai-jq"], function (chai) { /* test stuff ... */ });
+```
+
 
 To see some of the plugin's assertions in action, see the
 [test page](./test/test.html) for the project.

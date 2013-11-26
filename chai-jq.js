@@ -4,6 +4,8 @@
  * An alternate jQuery assertion library for Chai.
  */
 (function () {
+  var root = this;
+
   /*!
    * Chai jQuery plugin implementation.
    */
@@ -428,26 +430,27 @@
         typeof module  === "object") {
       // NodeJS
       module.exports = plugin;
+
     } else if (typeof define === "function" && define.amd) {
-      // AMD: Assumes importing `chai` and `jquery`. Actually **adds** the
-      //      plugin to Chai. (Note that alternate plugin AMD impl's return
-      //      the plugin function, but **don't** add it).
+      // AMD: Assumes importing `chai` and `jquery`. Returns a function to
+      //      inject with `chai.use()`.
       //
       // See: https://github.com/chaijs/chai-jquery/issues/27
-      define(["jquery", "chai"], function ($, chai) {
-        chai.use(function (chai, utils) {
+      define(["jquery"], function ($) {
+        return function (chai, utils) {
           return plugin(chai, utils, $);
-        });
+        };
       });
+
     } else {
       // Other environment (usually <script> tag): plug in to global chai
       // instance directly.
       chai.use(function (chai, utils) {
-        return plugin(chai, utils, window.jQuery);
+        return plugin(chai, utils, root.jQuery);
       });
     }
   }
 
   // Hook it all together.
   wrap(chaiJq);
-}());
+}(this));

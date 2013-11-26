@@ -10,7 +10,7 @@
     define = function (deps, callback) {  /*global module:true */
       // Export if node, else actually run.
       if (isNode) { module.exports = callback; }
-      else        { callback(root.$, root.chai); }
+      else        { callback(root.$); }
     };
   }
 
@@ -21,7 +21,7 @@
   };
 }());
 
-define(["jquery", "chai"], function ($, chai) {
+define(["jquery"], function ($) {
   describe("chai-jq", function () {
     before(function () {
       this.$base = $("#fixtures");
@@ -29,12 +29,6 @@ define(["jquery", "chai"], function ($, chai) {
 
     afterEach(function () {
       this.$base.empty();
-    });
-
-    describe("setup", function () {
-      it("patches native chai", function () {
-        expect(chai).to.be.ok;
-      });
     });
 
     describe("test meta", function () {

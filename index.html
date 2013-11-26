@@ -28,14 +28,17 @@
 <p><code>chai-jq</code> is an alternate plugin for the <a href="http://chaijs.com/">Chai</a> assertion
 library to provide jQuery-specific assertions.</p>
 <h2 id="usage">Usage</h2>
-<p>Add <code>chai-jq.js</code> after your Chai script include.</p>
-<pre><code>&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
 <p>You can install <code>chai-jq</code> via the following package managers:</p>
 <ul>
 <li><a href="https://npmjs.org/package/chai-jq">NPM</a>: <code>npm install chai-jq</code></li>
 <li><a href="http://bower.io/">Bower</a>: <code>bower install chai-jq</code></li>
 </ul>
+<p>To use in a standard HTML page, include <code>chai-jq.js</code> after Chai.</p>
+<pre><code class="lang-html">&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p>To use in a RequireJS/AMD page, require in <code>chai-jq</code> which patches Chai from
+the import action.</p>
+<pre><code class="lang-js">require([&quot;chai&quot;, &quot;../chai-jq&quot;], function (chai) { /* test stuff ... */ });</code></pre>
 <p>To see some of the plugin&#39;s assertions in action, see the
 <a href="./test/test.html">test page</a> for the project.</p>
 <h2 id="plugin-api">Plugin API</h2>

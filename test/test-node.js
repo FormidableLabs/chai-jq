@@ -20,4 +20,4 @@ global.expect = chai.expect;
 chai.use(plugin);
 
 // Add tests.
-require("./js/spec/chai-jq.spec")($.create(window), chai);
+require("./js/spec/chai-jq.spec")($.create(window));
