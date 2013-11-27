@@ -4,6 +4,8 @@
  * An alternate jQuery assertion library for Chai.
  */
 (function () {
+  var root = this;
+
   /*!
    * Chai jQuery plugin implementation.
    */
@@ -117,6 +119,7 @@
      * @param {Object} opts             options
      * @param {String} opts.hasArg      takes argument for method
      * @param {String} opts.hasContains is "contains" applicable
+     * @param {String} opts.altGet      alternate function to get value if none
      */
     var _containMethod = function (jqMeth, opts) {
       // Unpack options.
@@ -140,6 +143,12 @@
           have = contains ? "contain" : "have",
           comp = contains ? _contains : _equals;
 
+        // Second chance getter.
+        if (opts.altGet && !act) {
+          act = opts.altGet(this._$el, arg);
+        }
+
+        // Default actual value on undefined.
         if (typeof act === "undefined") {
           act = opts.defaultAct;
         }
@@ -165,6 +174,9 @@
      *
      * Asserts that the element is visible.
      *
+     * *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
+     * hidden parent elements as hidden / visible appropriately.
+     *
      * ```js
      * expect($("<div>&nbsp;</div>"))
      *   .to.be.$visible;
@@ -182,6 +194,9 @@
      * `.$hidden`
      *
      * Asserts that the element is hidden.
+     *
+     * *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
+     * hidden parent elements as hidden / visible appropriately.
      *
      * ```js
      * expect($("<div style=\"display: none\" />"))
@@ -367,7 +382,21 @@
     /**
      * `.$css(name, string)`
      *
-     * Asserts that the target has exactly the given CSS property.
+     * Asserts that the target has exactly the given CSS property, or
+     * asserts the target contains a subset of the CSS when using the
+     * `include` or `contain` modifiers.
+     *
+     * *Node.js/JsDom Note*: Computed CSS properties are not correctly
+     * inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.
+     *
+     * *Browser Note*: Explicit CSS properties are sometimes not matched
+     * (in contrast to Node.js), so the plugin performs an extra check against
+     * explicit `style` properties for a match. May still have other wonky
+     * corner cases.
+     *
+     * *PhantomJS Note*: PhantomJS also is fairly wonky and unpredictable with
+     * respect to CSS / styles, especially those that come from CSS classes
+     * and not explicity `style` attributes.
      *
      * ```js
      * expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
@@ -383,7 +412,11 @@
      * @api public
      */
     var $css = _containMethod("css", {
-      hasArg: true
+      hasArg: true,
+      hasContains: true,
+
+      // Alternate Getter: If no match, go for explicit property.
+      altGet: function ($el, prop) { return $el.prop("style")[prop]; }
     });
 
     chai.Assertion.addMethod("$css", $css);
@@ -394,29 +427,30 @@
    */
   function wrap(plugin) {
     "use strict";
-    /* global module:false */
+    /* global module:false, define:false */
 
     if (typeof require === "function" &&
         typeof exports === "object" &&
         typeof module  === "object") {
       // NodeJS
       module.exports = plugin;
+
     } else if (typeof define === "function" && define.amd) {
-      // AMD: Assumes importing `chai` and `jquery`. Actually **adds** the
-      //      plugin to Chai. (Note that alternate plugin AMD impl's return
-      //      the plugin function, but **don't** add it).
+      // AMD: Assumes importing `chai` and `jquery`. Returns a function to
+      //      inject with `chai.use()`.
       //
       // See: https://github.com/chaijs/chai-jquery/issues/27
-      define(["jquery", "chai"], function ($, chai) {
-        chai.use(function (chai, utils) {
+      define(["jquery"], function ($) {
+        return function (chai, utils) {
           return plugin(chai, utils, $);
-        });
+        };
       });
+
     } else {
       // Other environment (usually <script> tag): plug in to global chai
       // instance directly.
-      chai.use(function (chai, utils) {
-        return plugin(chai, utils, window.jQuery);
+      root.chai.use(function (chai, utils) {
+        return plugin(chai, utils, root.jQuery);
       });
     }
   }

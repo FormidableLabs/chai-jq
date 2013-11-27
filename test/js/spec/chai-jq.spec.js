@@ -1,15 +1,29 @@
-// Make AMD/Non-AMD compatible (boilerplate).
-if (typeof define !== "function") {
-  /*global define:true */
-  var define = function (deps, callback) {
-    // Use global jQuery and Chai for non-AMD shim.
-    callback(window.$, window.chai);
+// Boilerplate and test setup.
+(function () {
+  /*global module:true */
+  var root = this,
+    isNode = typeof require === "function" &&
+             typeof exports === "object" &&
+             typeof module  === "object";
+
+  // Make AMD/Non-AMD compatible (boilerplate).
+  if (typeof define !== "function") {     /*global define:true */
+    define = function (deps, callback) {
+      // Export if node, else actually run.
+      if (isNode) { module.exports = callback; }
+      else        { callback(root.$); }
+    };
+  }
+
+  // Patch Mocha.
+  // Skip node for certain tests.
+  it.skipNode = function () {
+    return (isNode ? it.skip : it).apply(this, arguments);
   };
-}
+}());
 
-define(["jquery", "chai"], function ($, chai) {
+define(["jquery"], function ($) {
   describe("chai-jq", function () {
-
     before(function () {
       this.$base = $("#fixtures");
     });
@@ -18,18 +32,13 @@ define(["jquery", "chai"], function ($, chai) {
       this.$base.empty();
     });
 
-    describe("setup", function () {
-      it("patches native chai", function () {
-        expect(chai).to.be.ok;
-      });
-    });
-
     describe("test meta", function () {
       describe("name", function () {
         it("shows 'Object' with no element name", function () {
           expect(function () {
             expect($("<div />")).to.have.$val("a");
-          }).to.throw("expected [object Object] to have val 'a' but found ''");
+          }).to.throw("expected [object Object] to have val 'a' " +
+                      "but found ''");
         });
 
         it("works with element id", function () {
@@ -210,13 +219,17 @@ define(["jquery", "chai"], function ($, chai) {
         expect(function () {
           expect($fixture).to.be.$hidden;
         }).to.throw("expected '#test' to be hidden");
+      });
 
+      // JsDom doesn't work for zero sizes.
+      it.skipNode("verifies element visibility on zero-sizes", function () {
         expect($("<div style=\"width: 0; height: 0;\" />"))
           .to.be.$hidden.and
           .to.not.be.$visible;
       });
 
-      it("verifies visibility if parent is hidden", function () {
+      // JsDom doesn't work for parent visibility.
+      it.skipNode("verifies visibility if parent is hidden", function () {
         var $fixture = this.$fixture;
 
         $fixture.wrap("<div />");
@@ -402,28 +415,45 @@ define(["jquery", "chai"], function ($, chai) {
 
     describe("$css", function () {
       beforeEach(function () {
-        this.$fixture = $("<div style=\"width: 50px;" +
-          "border: 1px dotted black;\" />").appendTo(this.$base);
+        this.$fixture = $(
+          "<div style=\"width: 50px; border: 1px dotted black;\" />"
+        ).appendTo(this.$base);
       });
 
-      it("matches CSS property", function () {
+      it("matches explicit CSS properties", function () {
         var $fixture = this.$fixture;
 
         expect($fixture)
           .to.have.$css("width", "50px").and
-          .to.have.$css("border-top-style", "dotted").and
           .to.not
-          .have.$css("width", "100px").and
-          .have.$css("border-top-style", "solid");
+            .have.$css("width", "100px").and
+            .have.$css("height", "50px");
 
-        expect(function () {
-          expect($fixture).to.have.$css("width", "100px");
-        }).to.throw("expected [object Object] to have css('width') '100px' " +
-            "but found '50px'");
+        expect($fixture)
+          .to.contain.$css("border", "1px dotted").and
+          .to.contain.$css("border", "dotted").and
+          .to.not
+            .contain.$css("border", "solid").and
+            .contain.$css("border", "2px");
 
         expect($("<p style=\"float: left; display: none;\" />"))
           .to.have.$css("float", "left").and
           .to.have.$css("display", "none");
+      });
+
+      // JsDom doesn't work properly with computed properties.
+      it.skipNode("matches computed CSS properties", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.have.$css("border-top-style", "dotted").and
+          .to.not
+            .have.$css("border-top-style", "solid");
+
+        expect(function () {
+          expect($fixture).to.have.$css("width", "100px");
+        }).to.throw("expected [object Object] to have css('width') '100px' " +
+                    "but found '50px'");
       });
     });
 

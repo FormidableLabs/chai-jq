@@ -28,14 +28,13 @@
 <p><code>chai-jq</code> is an alternate plugin for the <a href="http://chaijs.com/">Chai</a> assertion
 library to provide jQuery-specific assertions.</p>
 <h2 id="usage">Usage</h2>
-<p>Add <code>chai-jq.js</code> after your Chai script include.</p>
-<pre><code>&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
 <p>You can install <code>chai-jq</code> via the following package managers:</p>
 <ul>
 <li><a href="https://npmjs.org/package/chai-jq">NPM</a>: <code>npm install chai-jq</code></li>
 <li><a href="http://bower.io/">Bower</a>: <code>bower install chai-jq</code></li>
 </ul>
+<p>See the <a href="#integration">integration notes</a> below to properly patch Chai with
+the plugin&#39;s asserts in different environments (browser, AMD, Node.js).</p>
 <p>To see some of the plugin&#39;s assertions in action, see the
 <a href="./test/test.html">test page</a> for the project.</p>
 <h2 id="plugin-api">Plugin API</h2>
@@ -52,11 +51,15 @@ library to provide jQuery-specific assertions.</p>
 </ul>
 <h3 id="-visible-"><code>.$visible</code></h3>
 <p>Asserts that the element is visible.</p>
+<p><em>Node.js/JsDom Note</em>: JsDom does not currently infer zero-sized or
+hidden parent elements as hidden / visible appropriately.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div&gt;&amp;nbsp;&lt;/div&gt;&quot;))
   .to.be.$visible;</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/visible-selector/">http://api.jquery.com/visible-selector/</a></a></p>
 <h3 id="-hidden-"><code>.$hidden</code></h3>
 <p>Asserts that the element is hidden.</p>
+<p><em>Node.js/JsDom Note</em>: JsDom does not currently infer zero-sized or
+hidden parent elements as hidden / visible appropriately.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;display: none\&quot; /&gt;&quot;))
   .to.be.$hidden;</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/hidden-selector/">http://api.jquery.com/hidden-selector/</a></a></p>
@@ -103,11 +106,46 @@ asserts the target contains a subset of the text when using the
   .to.contain.$text(&quot;foo&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/text/">http://api.jquery.com/text/</a></a></p>
 <h3 id="-css-name-string-"><code>.$css(name, string)</code></h3>
-<p>Asserts that the target has exactly the given CSS property.</p>
+<p>Asserts that the target has exactly the given CSS property, or
+asserts the target contains a subset of the CSS when using the
+<code>include</code> or <code>contain</code> modifiers.</p>
+<p><em>Node.js/JsDom Note</em>: Computed CSS properties are not correctly
+inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.</p>
+<p><em>Browser Note</em>: Explicit CSS properties are sometimes not matched
+(in contrast to Node.js), so the plugin performs an extra check against
+explicit <code>style</code> properties for a match. May still have other wonky
+corner cases.</p>
+<p><em>PhantomJS Note</em>: PhantomJS also is fairly wonky and unpredictable with
+respect to CSS / styles, especially those that come from CSS classes
+and not explicity <code>style</code> attributes.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;width: 50px; border: 1px dotted black;\&quot; /&gt;&quot;))
   .to.have.$css(&quot;width&quot;, &quot;50px&quot;).and
   .to.have.$css(&quot;border-top-style&quot;, &quot;dotted&quot;);</code></pre>
 <p>See: <a href=""><a href="http://api.jquery.com/css/">http://api.jquery.com/css/</a></a></p>
+<h2 id="integration">Integration</h2>
+<p><code>chai-jq</code> works in your browser, with AMD/RequireJS, and in Node.js with
+JsDom.</p>
+<p><strong>Standard Browser</strong>: To use in a standard HTML page, include <code>chai-jq.js</code>
+after Chai.</p>
+<pre><code class="lang-html">&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p><strong>AMD Browser</strong>: To use in a RequireJS/AMD page, require in <code>chai-jq</code> and
+inject it into Chai before your test imports / runners begin:</p>
+<pre><code class="lang-js">require([&quot;chai&quot;, &quot;../chai-jq&quot;], function (chai, plugin) {
+  // Inject plugin.
+  chai.use(plugin);
+
+  // Rest of your test code here...
+});</code></pre>
+<p><strong>Node.js / JsDom</strong>: To use in Node.js/JsDom, require in <code>chai-jq</code> and
+inject it into Chai before your test imports / runners begin:</p>
+<pre><code class="lang-js">var chai    = require(&quot;chai&quot;);
+var plugin  = require(&quot;chai-jq&quot;);
+
+// Inject plugin.
+chai.use(plugin);
+
+// Rest of test code here...</code></pre>
 <h2 id="contributions">Contributions</h2>
 <p>Please see the <a href="./CONTRIBUTING.md">Contributions Guide</a> for how to help out
 with the plugin.</p>
@@ -144,14 +182,22 @@ license.</p>
 
         </div>
         <div id="history"><h1 id="history">History</h1>
+<h2 id="0-0-3">0.0.3</h2>
+<ul>
+<li>Switch to manual plugin injection for AMD (matches Node.js method).
+[<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+<li>Add fallback to &quot;style&quot; property for <code>$css</code>. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+<li>Add <code>contains</code> support for <code>$css</code> assert. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+<li>Add support for Node.js with JsDom. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+</ul>
 <h2 id="0-0-2">0.0.2</h2>
 <ul>
-<li>Extension of API with: <code>$css</code>, <code>$visible</code>, <code>$hidden</code>.  [<em><a href="https://github.com/atimb">atimb</a></em>]</li>
+<li>Extension of API with: <code>$css</code>, <code>$visible</code>, <code>$hidden</code>. [<em><a href="https://github.com/atimb">@atimb</a></em>]</li>
 </ul>
 <h2 id="0-0-1">0.0.1</h2>
 <ul>
 <li>Initial release with API: <code>$val</code>, <code>$class</code>, <code>$attr</code>, <code>$prop</code>, <code>$html</code>,
-<code>$text</code>. [<em><a href="https://github.com/ryan-roemer">ryan-roemer</a></em>]</li>
+<code>$text</code>. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
 </ul>
 
         </div>

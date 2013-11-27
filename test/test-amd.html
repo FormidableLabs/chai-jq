@@ -25,7 +25,10 @@
         }
       });
       
-      require(["chai", "../chai-jq"], function (chai) {
+      require(["chai", "../chai-jq"], function (chai, plugin) {
+        // Inject plugin.
+        chai.use(plugin);
+        
         // Set up AMD Chai (just make global for test cases).
         window.expect = chai.expect;
         

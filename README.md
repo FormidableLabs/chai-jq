@@ -6,15 +6,13 @@ library to provide jQuery-specific assertions.
 
 ## Usage
 
-Add `chai-jq.js` after your Chai script include.
-
-    <script src="chai.js"></script>
-    <script src="chai-jq.js"></script>
-
 You can install `chai-jq` via the following package managers:
 
 * [NPM](https://npmjs.org/package/chai-jq): `npm install chai-jq`
 * [Bower](http://bower.io/): `bower install chai-jq`
+
+See the [integration notes](#integration) below to properly patch Chai with
+the plugin's asserts in different environments (browser, AMD, Node.js).
 
 To see some of the plugin's assertions in action, see the
 [test page](./test/test.html) for the project.
@@ -35,6 +33,9 @@ To see some of the plugin's assertions in action, see the
 
 Asserts that the element is visible.
 
+*Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
+hidden parent elements as hidden / visible appropriately.
+
 ```js
 expect($("<div>&nbsp;</div>"))
   .to.be.$visible;
@@ -45,6 +46,9 @@ See: [http://api.jquery.com/visible-selector/]()
 ### `.$hidden`
 
 Asserts that the element is hidden.
+
+*Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
+hidden parent elements as hidden / visible appropriately.
 
 ```js
 expect($("<div style=\"display: none\" />"))
@@ -133,7 +137,21 @@ See: [http://api.jquery.com/text/]()
 
 ### `.$css(name, string)`
 
-Asserts that the target has exactly the given CSS property.
+Asserts that the target has exactly the given CSS property, or
+asserts the target contains a subset of the CSS when using the
+`include` or `contain` modifiers.
+
+*Node.js/JsDom Note*: Computed CSS properties are not correctly
+inferred as of JsDom v0.8.8. Explicit ones should get matched exactly.
+
+*Browser Note*: Explicit CSS properties are sometimes not matched
+(in contrast to Node.js), so the plugin performs an extra check against
+explicit `style` properties for a match. May still have other wonky
+corner cases.
+
+*PhantomJS Note*: PhantomJS also is fairly wonky and unpredictable with
+respect to CSS / styles, especially those that come from CSS classes
+and not explicity `style` attributes.
 
 ```js
 expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
@@ -142,6 +160,44 @@ expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
 ```
 
 See: [http://api.jquery.com/css/]()
+
+## Integration
+
+`chai-jq` works in your browser, with AMD/RequireJS, and in Node.js with
+JsDom.
+
+**Standard Browser**: To use in a standard HTML page, include `chai-jq.js`
+after Chai.
+
+```html
+<script src="chai.js"></script>
+<script src="chai-jq.js"></script>
+```
+
+**AMD Browser**: To use in a RequireJS/AMD page, require in `chai-jq` and
+inject it into Chai before your test imports / runners begin:
+
+```js
+require(["chai", "../chai-jq"], function (chai, plugin) {
+  // Inject plugin.
+  chai.use(plugin);
+
+  // Rest of your test code here...
+});
+```
+
+**Node.js / JsDom**: To use in Node.js/JsDom, require in `chai-jq` and
+inject it into Chai before your test imports / runners begin:
+
+```js
+var chai    = require("chai");
+var plugin  = require("chai-jq");
+
+// Inject plugin.
+chai.use(plugin);
+
+// Rest of test code here...
+```
 
 ## Contributions
 

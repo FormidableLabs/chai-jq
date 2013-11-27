@@ -66,7 +66,8 @@ module.exports = function (grunt) {
         options: _jshintCfg(".jshintrc-backend.json"),
         files: {
           src:  [
-            "Gruntfile.js"
+            "*.js",
+            "test/js/test-node.js"
           ]
         }
       }
@@ -113,6 +114,15 @@ module.exports = function (grunt) {
           "test/test.html"
         ],
         dest: ".testem-ci.tap"
+      }
+    },
+
+    mochaTest: {
+      test: {
+        options: {
+          reporter: "spec"
+        },
+        src: ["test/test-node.js"]
       }
     },
 
@@ -189,6 +199,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-mocha-phantomjs");
   grunt.loadNpmTasks("grunt-testem");
+  grunt.loadNpmTasks("grunt-mocha-test");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-jade");
 
@@ -198,7 +209,7 @@ module.exports = function (grunt) {
       buf = grunt.file.read("chai-jq.js"),
       data = dox.parseComments(buf, { raw: true }),
       start = "## Plugin API",
-      end = "## Contributions",
+      end = "## Integration",
       re = new RegExp(start + "(\n|.)*" + end, "m"),
       md = _genApi(data),
       updated = readme.replace(re, start + "\n" + md + end);
@@ -208,7 +219,13 @@ module.exports = function (grunt) {
   grunt.registerTask("build",     ["build:api", "jade"]);
 
   // Tasks.
-  grunt.registerTask("check",     ["jshint", "mocha_phantomjs"]);
-  grunt.registerTask("check:all", ["check", "testem:all"]);
+  grunt.registerTask("test:dev",  ["mocha_phantomjs"]);
+  grunt.registerTask("test:all",  ["testem:all"]);
+  grunt.registerTask("test:ci",   ["testem:ci"]);
+  grunt.registerTask("test:node", ["mochaTest"]);
+
+  grunt.registerTask("check",     ["jshint", "test:dev", "test:node"]);
+  grunt.registerTask("check:ci",  ["check", "test:ci"]);
+  grunt.registerTask("check:all", ["check", "test:all"]);
   grunt.registerTask("default",   ["copy", "check", "build"]);
 };
