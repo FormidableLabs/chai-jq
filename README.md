@@ -19,15 +19,15 @@ To see some of the plugin's assertions in action, see the
 
 ## Plugin API
 
-* [`.$visible`](#-visible-)
-* [`.$hidden`](#-hidden-)
-* [`.$val(string|regexp)`](#-val-string-regexp-)
-* [`.$class(string)`](#-class-string-)
-* [`.$attr(name, string)`](#-attr-name-string-)
-* [`.$prop(name, value)`](#-prop-name-value-)
-* [`.$html(string)`](#-html-string-)
-* [`.$text(string)`](#-text-string-)
-* [`.$css(name, string)`](#-css-name-string-)
+* [`.$visible`](#visible)
+* [`.$hidden`](#hidden)
+* [`.$val(string|regexp)`](#valstring-regexp)
+* [`.$class(string)`](#classstring)
+* [`.$attr(name, string)`](#attrname-string)
+* [`.$prop(name, value)`](#propname-value)
+* [`.$html(string)`](#htmlstring)
+* [`.$text(string)`](#textstring)
+* [`.$css(name, string)`](#cssname-string)
 
 ### `.$visible`
 
