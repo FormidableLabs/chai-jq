@@ -8,6 +8,7 @@ node_modules
 npm-debug\.log
 .testem-dev.tap
 .testem-ci.tap
+testem.*
 
 \.idea
 *.iml
