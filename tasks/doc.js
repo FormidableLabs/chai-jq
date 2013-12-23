@@ -15,9 +15,10 @@ var Section = function (data) {
 
 Section.prototype.tmpl = {
   toc: _.template("* [<%= heading %>](#<%= id %>)\n"),
+  heading: _.template("<%= name %><%= params %>"),
   section: _.template([
-    "### `<%= ctx.name %>`\n\n",
-    "<%= description.body %>\n",
+    "### `<%= heading %>`\n\n",
+    "<%= description.full %>\n",
     "<% _.each(tags, function (t) { %>",
       "<% if (t.type === 'param') { %>",
         "* **<%= t.name %>** (`<%= t.types.join('|') %>`) ",
@@ -37,12 +38,24 @@ Section.prototype.isPublic = function () {
   });
 };
 
+// TODO: Memoize
 Section.prototype.heading = function () {
-  return this.data.description.summary;
+  var params = _.chain(this.data.tags)
+    .filter(function (t) { return t.type === "param"; })
+    .map(function (t) {
+      return t.description === "_optional_" ? "[" + t.name + "]" : t.name;
+    })
+    .value()
+    .join(", ");
+
+  return this.tmpl.heading({
+    name: this.data.ctx.name,
+    params: params ? "(" + params + ")" : null
+  });
 };
 
 Section.prototype.headingId = function () {
-  return this.data.description.summary.toLowerCase().replace(/[^\w]+/g, "-");
+  return this.heading().toLowerCase().replace(/[^\w]+/g, "-");
 };
 
 Section.prototype.renderToc = function () {
@@ -54,7 +67,9 @@ Section.prototype.renderToc = function () {
 
 Section.prototype.renderSection = function () {
   console.log("\n\n\nTODO HERE", JSON.stringify(this.data, null, 2));
-  return this.tmpl.section(this.data);
+  return this.tmpl.section(_.extend({
+    heading: this.heading()
+  }, this.data));
 };
 
 // ----------------------------------------------------------------------------

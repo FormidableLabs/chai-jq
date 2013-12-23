@@ -170,8 +170,6 @@
     // ------------------------------------------------------------------------
 
     /**
-     * `.$visible`
-     *
      * Asserts that the element is visible.
      *
      * *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
@@ -191,8 +189,6 @@
     chai.Assertion.addProperty("$visible", $visible);
 
     /**
-     * `.$hidden`
-     *
      * Asserts that the element is hidden.
      *
      * *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
@@ -212,8 +208,6 @@
     chai.Assertion.addProperty("$hidden", $hidden);
 
     /**
-     * `.$val(string|regexp)`
-     *
      * Asserts that the element value matches a string or regular expression.
      *
      * ```js
@@ -224,9 +218,8 @@
      *
      * @see http://api.jquery.com/val/
      *
-     * @name $val
-     * @param {String|RegExp} expected value
-     * @param {String} message _optional_
+     * @param {String|RegExp} expected  value
+     * @param {String}        message   _optional_
      * @api public
      */
     var $val = _jqAssert(function (exp) {
@@ -245,8 +238,6 @@
     chai.Assertion.addMethod("$val", $val);
 
     /**
-     * `.$class(string)`
-     *
      * Asserts that the element has a class match.
      *
      * ```js
@@ -257,9 +248,8 @@
      *
      * @see http://api.jquery.com/hasClass/
      *
-     * @name $class
      * @param {String} expected class name
-     * @param {String} message _optional_
+     * @param {String} message  _optional_
      * @api public
      */
     var $class = _jqAssert(function (exp) {
@@ -277,8 +267,6 @@
     chai.Assertion.addMethod("$class", $class);
 
     /**
-     * `.$attr(name, string)`
-     *
      * Asserts that the target has exactly the given named attribute, or
      * asserts the target contains a subset of the attribute when using the
      * `include` or `contain` modifiers.
@@ -291,7 +279,7 @@
      *
      * @see http://api.jquery.com/attr/
      *
-     * @name $attr
+     * @param {String} name     attribute name
      * @param {String} expected attribute content
      * @param {String} message _optional_
      * @api public
@@ -304,8 +292,6 @@
     chai.Assertion.addMethod("$attr", $attr);
 
     /**
-     * `.$prop(name, value)`
-     *
      * Asserts that the target has exactly the given named property.
      *
      * ```js
@@ -316,7 +302,7 @@
      *
      * @see http://api.jquery.com/prop/
      *
-     * @name $prop
+     * @param {String} name     property name
      * @param {Object} expected property value
      * @param {String} message _optional_
      * @api public
@@ -328,8 +314,6 @@
     chai.Assertion.addMethod("$prop", $prop);
 
     /**
-     * `.$html(string)`
-     *
      * Asserts that the target has exactly the given HTML, or
      * asserts the target contains a subset of the HTML when using the
      * `include` or `contain` modifiers.
@@ -342,7 +326,6 @@
      *
      * @see http://api.jquery.com/html/
      *
-     * @name $html
      * @param {String} expected HTML content
      * @param {String} message _optional_
      * @api public
@@ -354,8 +337,6 @@
     chai.Assertion.addMethod("$html", $html);
 
     /**
-     * `.$text(string)`
-     *
      * Asserts that the target has exactly the given text, or
      * asserts the target contains a subset of the text when using the
      * `include` or `contain` modifiers.
@@ -380,8 +361,6 @@
     chai.Assertion.addMethod("$text", $text);
 
     /**
-     * `.$css(name, string)`
-     *
      * Asserts that the target has exactly the given CSS property, or
      * asserts the target contains a subset of the CSS when using the
      * `include` or `contain` modifiers.
