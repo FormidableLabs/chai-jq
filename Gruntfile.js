@@ -1,43 +1,7 @@
-/* global module:false */
-var _ = require("grunt").util._,
-  dox = require("dox");
+var _ = require("grunt").util._;
 
 // Add in local node_modules bin for testem.
 process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
-
-// Marked: Process heading text into ID.
-var _headingId = function (text) {
-  return text.toLowerCase().replace(/[^\w]+/g, "-");
-};
-
-// Generate Markdown API snippets from dox object.
-var _genApi = function (obj) {
-  var toc = [],
-    tocTmpl = _.template("* [<%= heading %>](#<%= id %>)\n"),
-    sectionTmpl = _.template("### <%= summary %>\n\n<%= body %>\n");
-
-  // Finesse comment markdown data.
-  // Also, statefully create TOC.
-  var sections = _.chain(obj)
-    .filter(function (c) {
-      return !c.isPrivate && !c.ignore && _.any(c.tags, function (t) {
-        return t.type === "api" && t.visibility === "public";
-      });
-    })
-    .map(function (c) {
-      // Add to TOC.
-      toc.push(tocTmpl({
-        heading: c.description.summary,
-        id: _headingId(c.description.summary)
-      }));
-
-      return sectionTmpl(c.description);
-    })
-    .value()
-    .join("");
-
-  return "\n" + toc.join("") + "\n" + sections;
-};
 
 module.exports = function (grunt) {
   // Strip comments from JsHint JSON files (naive).
@@ -163,13 +127,22 @@ module.exports = function (grunt) {
       }
     },
 
+    doc: {
+      api: {
+        input: "chai-jq.js",
+        output: "README.md",
+        startMarker: "## Plugin API",
+        endMarker: "## Integration"
+      }
+    },
+
     watch: {
       "build-api": {
         files: [
           "chai-jq.js"
         ],
         tasks: [
-          "build:api"
+          "doc:api"
         ],
         options: {
           spawn: false,
@@ -194,6 +167,9 @@ module.exports = function (grunt) {
 
   });
 
+  // Local dependencies.
+  grunt.loadTasks("./tasks");
+
   // Dependencies
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-jshint");
@@ -204,19 +180,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-jade");
 
   // Build.
-  grunt.registerTask("build:api", "Insert API into README", function () {
-    var readme = grunt.file.read("README.md"),
-      buf = grunt.file.read("chai-jq.js"),
-      data = dox.parseComments(buf, { raw: true }),
-      start = "## Plugin API",
-      end = "## Integration",
-      re = new RegExp(start + "(\n|.)*" + end, "m"),
-      md = _genApi(data),
-      updated = readme.replace(re, start + "\n" + md + end);
-
-    grunt.file.write("README.md", updated);
-  });
-  grunt.registerTask("build",     ["build:api", "jade"]);
+  grunt.registerTask("build",     ["doc:api", "jade"]);
 
   // Tasks.
   grunt.registerTask("test:dev",  ["mocha_phantomjs"]);
