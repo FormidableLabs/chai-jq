@@ -41,7 +41,6 @@ Section.prototype.isPublic = function () {
   });
 };
 
-// TODO: Memoize
 Section.prototype.heading = function () {
   var params = _.chain(this.data.tags)
     .filter(function (t) { return t.type === "param"; })
@@ -56,6 +55,10 @@ Section.prototype.heading = function () {
     params: params ? "(" + params + ")" : null
   });
 };
+
+// Memoize.
+Section.prototype.heading = _.memoize(
+  Section.prototype.heading, function () { return this.data.ctx.name; });
 
 Section.prototype.headingId = function () {
   return this.heading().toLowerCase().replace(/[^\w]+/g, "-");
