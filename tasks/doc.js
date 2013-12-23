@@ -14,16 +14,19 @@ var Section = function (data) {
 };
 
 Section.prototype.tmpl = {
-  toc: _.template("* [<%= heading %>](#<%= id %>)\n"),
+  toc: _.template("* [`<%= heading %>`](#<%= id %>)\n"),
   heading: _.template("<%= name %><%= params %>"),
   section: _.template([
-    "### `<%= heading %>`\n\n",
-    "<%= description.full %>\n",
+    "### `<%= heading %>`\n",
     "<% _.each(tags, function (t) { %>",
       "<% if (t.type === 'param') { %>",
         "* **<%= t.name %>** (`<%= t.types.join('|') %>`) ",
         "<%= t.description %>\n",
-      "<% } else if (t.type === 'see') { %>",
+      "<% } %>",
+    "<% }); %>\n\n",
+    "<%= description.full %>\n",
+    "<% _.each(tags, function (t) { %>",
+      "<% if (t.type === 'see') { %>",
         "See: [<%= t.url %>](<%= t.url %>)\n\n",
       "<% } %>",
     "<% }); %>",

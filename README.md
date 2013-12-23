@@ -19,17 +19,18 @@ To see some of the plugin's assertions in action, see the
 
 ## Plugin API
 
-* [$visible](#-visible)
-* [$hidden](#-hidden)
-* [$val(expected, [message])](#-val-expected-message-)
-* [$class(expected, [message])](#-class-expected-message-)
-* [$attr(name, expected, [message])](#-attr-name-expected-message-)
-* [$prop(name, expected, [message])](#-prop-name-expected-message-)
-* [$html(expected, [message])](#-html-expected-message-)
-* [$text(expected, [message])](#-text-expected-message-)
-* [$css(expected, [message])](#-css-expected-message-)
+* [`$visible`](#-visible)
+* [`$hidden`](#-hidden)
+* [`$val(expected, [message])`](#-val-expected-message-)
+* [`$class(expected, [message])`](#-class-expected-message-)
+* [`$attr(name, expected, [message])`](#-attr-name-expected-message-)
+* [`$prop(name, expected, [message])`](#-prop-name-expected-message-)
+* [`$html(expected, [message])`](#-html-expected-message-)
+* [`$text(expected, [message])`](#-text-expected-message-)
+* [`$css(expected, [message])`](#-css-expected-message-)
 
 ### `$visible`
+
 
 Asserts that the element is visible.
 
@@ -46,6 +47,7 @@ See: [http://api.jquery.com/visible-selector/](http://api.jquery.com/visible-sel
 
 ### `$hidden`
 
+
 Asserts that the element is hidden.
 
 *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
@@ -60,6 +62,9 @@ See: [http://api.jquery.com/hidden-selector/](http://api.jquery.com/hidden-selec
 
 
 ### `$val(expected, [message])`
+* **expected** (`String|RegExp`) value
+* **message** (`String`) _optional_
+
 
 Asserts that the element value matches a string or regular expression.
 
@@ -71,10 +76,11 @@ expect($("<input value='foo' />"))
 
 See: [http://api.jquery.com/val/](http://api.jquery.com/val/)
 
-* **expected** (`String|RegExp`) value
-* **message** (`String`) _optional_
 
 ### `$class(expected, [message])`
+* **expected** (`String`) class name
+* **message** (`String`) _optional_
+
 
 Asserts that the element has a class match.
 
@@ -86,10 +92,12 @@ expect($("<div class='foo bar' />"))
 
 See: [http://api.jquery.com/hasClass/](http://api.jquery.com/hasClass/)
 
-* **expected** (`String`) class name
-* **message** (`String`) _optional_
 
 ### `$attr(name, expected, [message])`
+* **name** (`String`) attribute name
+* **expected** (`String`) attribute content
+* **message** (`String`) _optional_
+
 
 Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the
@@ -103,11 +111,12 @@ expect($("<div id=\"hi\" foo=\"bar time\" />"))
 
 See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
 
-* **name** (`String`) attribute name
-* **expected** (`String`) attribute content
-* **message** (`String`) _optional_
 
 ### `$prop(name, expected, [message])`
+* **name** (`String`) property name
+* **expected** (`Object`) property value
+* **message** (`String`) _optional_
+
 
 Asserts that the target has exactly the given named property.
 
@@ -119,11 +128,11 @@ expect($("<input type=\"checkbox\" checked=\"checked\" />"))
 
 See: [http://api.jquery.com/prop/](http://api.jquery.com/prop/)
 
-* **name** (`String`) property name
-* **expected** (`Object`) property value
-* **message** (`String`) _optional_
 
 ### `$html(expected, [message])`
+* **expected** (`String`) HTML content
+* **message** (`String`) _optional_
+
 
 Asserts that the target has exactly the given HTML, or
 asserts the target contains a subset of the HTML when using the
@@ -137,10 +146,11 @@ expect($("<div><span>foo</span></div>"))
 
 See: [http://api.jquery.com/html/](http://api.jquery.com/html/)
 
-* **expected** (`String`) HTML content
-* **message** (`String`) _optional_
 
 ### `$text(expected, [message])`
+* **expected** (`String`) text content
+* **message** (`String`) _optional_
+
 
 Asserts that the target has exactly the given text, or
 asserts the target contains a subset of the text when using the
@@ -154,10 +164,11 @@ expect($("<div><span>foo</span> bar</div>"))
 
 See: [http://api.jquery.com/text/](http://api.jquery.com/text/)
 
-* **expected** (`String`) text content
-* **message** (`String`) _optional_
 
 ### `$css(expected, [message])`
+* **expected** (`String`) CSS property content
+* **message** (`String`) _optional_
+
 
 Asserts that the target has exactly the given CSS property, or
 asserts the target contains a subset of the CSS when using the
@@ -183,8 +194,6 @@ expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
 
 See: [http://api.jquery.com/css/](http://api.jquery.com/css/)
 
-* **expected** (`String`) CSS property content
-* **message** (`String`) _optional_
 
 ## Integration
 
