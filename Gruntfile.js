@@ -1,5 +1,3 @@
-var _ = require("grunt").util._;
-
 // Add in local node_modules bin for testem.
 process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
 
@@ -31,6 +29,7 @@ module.exports = function (grunt) {
         files: {
           src:  [
             "*.js",
+            "tasks/**/*.js",
             "test/js/test-node.js"
           ]
         }
