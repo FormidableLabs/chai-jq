@@ -3,6 +3,9 @@ Tasks
 
 ## Next Up
 
+* Properties: Make `$prop`, `$attr` switch to property if no `expected` param.
+  Also consider `$html`, `$text`, `$css`, `$val`.
+
 ## General
 
 * CI: Add in saucelabs + testem integration.
