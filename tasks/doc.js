@@ -10,28 +10,28 @@ var _ = require("grunt").util._,
  * @param {Object} obj Objectified underlying data.
  */
 var Section = function (data) {
-  this.data = data
+  this.data = data;
 };
 
 Section.prototype.tmpl = {
-  toc: _.template("* [`<%= heading %>`](#<%= id %>)\n"),
+  toc:     _.template("* [`<%= heading %>`](#<%= id %>)\n"),
   heading: _.template("<%= name %><%= params %>"),
-  section: _.template([
+  section: _.template(_.map([
     "### `<%= heading %>`\n",
     "<% _.each(tags, function (t) { %>",
-      "<% if (t.type === 'param') { %>",
-        "* **<%= t.name %>** (`<%= t.types.join('|') %>`) ",
-        "<%= t.description %>\n",
-      "<% } %>",
+    "  <% if (t.type === 'param') { %>",
+    "    * **<%= t.name %>** (`<%= t.types.join('|') %>`) ",
+    "    <%= t.description %>\n",
+    "  <% } %>",
     "<% }); %>\n\n",
     "<%= description.full %>\n",
     "<% _.each(tags, function (t) { %>",
-      "<% if (t.type === 'see') { %>",
-        "See: [<%= t.url %>](<%= t.url %>)\n\n",
-      "<% } %>",
+    "  <% if (t.type === 'see') { %>",
+    "    See: [<%= t.url %>](<%= t.url %>)\n\n",
+    "  <% } %>",
     "<% }); %>",
     "\n"
-  ].join(""))
+  ], function (s) { return s.replace(/^\s+/, ""); }).join(""))
 };
 
 Section.prototype.isPublic = function () {

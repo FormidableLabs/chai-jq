@@ -44,7 +44,6 @@ expect($("<div>&nbsp;</div>"))
 
 See: [http://api.jquery.com/visible-selector/](http://api.jquery.com/visible-selector/)
 
-
 ### `$hidden`
 
 
@@ -59,7 +58,6 @@ expect($("<div style=\"display: none\" />"))
 ```
 
 See: [http://api.jquery.com/hidden-selector/](http://api.jquery.com/hidden-selector/)
-
 
 ### `$val(expected, [message])`
 * **expected** (`String|RegExp`) value
@@ -76,7 +74,6 @@ expect($("<input value='foo' />"))
 
 See: [http://api.jquery.com/val/](http://api.jquery.com/val/)
 
-
 ### `$class(expected, [message])`
 * **expected** (`String`) class name
 * **message** (`String`) _optional_
@@ -91,7 +88,6 @@ expect($("<div class='foo bar' />"))
 ```
 
 See: [http://api.jquery.com/hasClass/](http://api.jquery.com/hasClass/)
-
 
 ### `$attr(name, expected, [message])`
 * **name** (`String`) attribute name
@@ -111,7 +107,6 @@ expect($("<div id=\"hi\" foo=\"bar time\" />"))
 
 See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
 
-
 ### `$prop(name, expected, [message])`
 * **name** (`String`) property name
 * **expected** (`Object`) property value
@@ -127,7 +122,6 @@ expect($("<input type=\"checkbox\" checked=\"checked\" />"))
 ```
 
 See: [http://api.jquery.com/prop/](http://api.jquery.com/prop/)
-
 
 ### `$html(expected, [message])`
 * **expected** (`String`) HTML content
@@ -146,7 +140,6 @@ expect($("<div><span>foo</span></div>"))
 
 See: [http://api.jquery.com/html/](http://api.jquery.com/html/)
 
-
 ### `$text(expected, [message])`
 * **expected** (`String`) text content
 * **message** (`String`) _optional_
@@ -163,7 +156,6 @@ expect($("<div><span>foo</span> bar</div>"))
 ```
 
 See: [http://api.jquery.com/text/](http://api.jquery.com/text/)
-
 
 ### `$css(expected, [message])`
 * **expected** (`String`) CSS property content
@@ -193,7 +185,6 @@ expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
 ```
 
 See: [http://api.jquery.com/css/](http://api.jquery.com/css/)
-
 
 ## Integration
 
