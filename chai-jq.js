@@ -94,7 +94,7 @@
      * Base for the boolean is("selector") method call.
      *
      *
-     * See: [http://api.jquery.com/is/]
+     * @see http://api.jquery.com/is/]
      *
      * @param {String} selector jQuery selector to match against
      */
@@ -182,7 +182,7 @@
      *   .to.be.$visible;
      * ```
      *
-     * See: [http://api.jquery.com/visible-selector/]()
+     * @see http://api.jquery.com/visible-selector/
      *
      * @api public
      */
@@ -203,7 +203,7 @@
      *   .to.be.$hidden;
      * ```
      *
-     * See: [http://api.jquery.com/hidden-selector/]()
+     * @see http://api.jquery.com/hidden-selector/
      *
      * @api public
      */
@@ -222,7 +222,7 @@
      *   .to.have.$val(/^foo/);
      * ```
      *
-     * See: [http://api.jquery.com/val/]()
+     * @see http://api.jquery.com/val/
      *
      * @name $val
      * @param {String|RegExp} expected value
@@ -255,7 +255,7 @@
      *   .to.have.$class("bar");
      * ```
      *
-     * See: [http://api.jquery.com/hasClass/]()
+     * @see http://api.jquery.com/hasClass/
      *
      * @name $class
      * @param {String} expected class name
@@ -289,7 +289,7 @@
      *   .to.contain.$attr("foo", "bar");
      * ```
      *
-     * See: [http://api.jquery.com/attr/]()
+     * @see http://api.jquery.com/attr/
      *
      * @name $attr
      * @param {String} expected attribute content
@@ -314,7 +314,7 @@
      *   .to.have.$prop("type", "checkbox");
      * ```
      *
-     * See: [http://api.jquery.com/prop/]()
+     * @see http://api.jquery.com/prop/
      *
      * @name $prop
      * @param {Object} expected property value
@@ -340,7 +340,7 @@
      *   .to.contain.$html("foo");
      * ```
      *
-     * See: [http://api.jquery.com/html/]()
+     * @see http://api.jquery.com/html/
      *
      * @name $html
      * @param {String} expected HTML content
@@ -366,7 +366,7 @@
      *   .to.contain.$text("foo");
      * ```
      *
-     * See: [http://api.jquery.com/text/]()
+     * @see http://api.jquery.com/text/
      *
      * @name $text
      * @param {String} expected text content
@@ -404,7 +404,7 @@
      *   .to.have.$css("border-top-style", "dotted");
      * ```
      *
-     * See: [http://api.jquery.com/css/]()
+     * @see http://api.jquery.com/css/
      *
      * @name $css
      * @param {String} expected CSS property content

@@ -15,7 +15,19 @@ var Section = function (data) {
 
 Section.prototype.tmpl = {
   toc: _.template("* [<%= heading %>](#<%= id %>)\n"),
-  section: _.template("### <%= summary %>\n\n<%= body %>\n")
+  section: _.template([
+    "### `<%= ctx.name %>`\n\n",
+    "<%= description.body %>\n",
+    "<% _.each(tags, function (t) { %>",
+      "<% if (t.type === 'param') { %>",
+        "* **<%= t.name %>** (`<%= t.types.join('|') %>`) ",
+        "<%= t.description %>\n",
+      "<% } else if (t.type === 'see') { %>",
+        "See: [<%= t.url %>](<%= t.url %>)\n\n",
+      "<% } %>",
+    "<% }); %>",
+    "\n"
+  ].join(""))
 };
 
 Section.prototype.isPublic = function () {
@@ -41,7 +53,8 @@ Section.prototype.renderToc = function () {
 };
 
 Section.prototype.renderSection = function () {
-  return this.tmpl.section(this.data.description);
+  console.log("\n\n\nTODO HERE", JSON.stringify(this.data, null, 2));
+  return this.tmpl.section(this.data);
 };
 
 // ----------------------------------------------------------------------------
