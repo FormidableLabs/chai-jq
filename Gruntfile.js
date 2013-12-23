@@ -128,10 +128,12 @@ module.exports = function (grunt) {
 
     doc: {
       api: {
-        input: "chai-jq.js",
-        output: "README.md",
-        startMarker: "## Plugin API",
-        endMarker: "## Integration"
+        options: {
+          input: "chai-jq.js",
+          output: "README.md",
+          startMarker: "## Plugin API",
+          endMarker: "## Integration"
+        }
       }
     },
 

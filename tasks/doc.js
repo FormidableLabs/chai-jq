@@ -66,7 +66,6 @@ Section.prototype.renderToc = function () {
 };
 
 Section.prototype.renderSection = function () {
-  console.log("\n\n\nTODO HERE", JSON.stringify(this.data, null, 2));
   return this.tmpl.section(_.extend({
     heading: this.heading()
   }, this.data));
@@ -109,17 +108,20 @@ module.exports = function (grunt) {
       endMarker: null
     });
 
+    // Validate.
+    if (!options.startMarker || !options.endMarker) {
+      console.log(options);
+      throw new Error("Markers required");
+    }
+
     var readme = grunt.file.read(options.output),
-      buf = grunt.file.read("chai-jq.js"),
+      buf = grunt.file.read(options.input),
       data = dox.parseComments(buf, { raw: true }),
       start = options.startMarker,
       end = options.endMarker,
       re = new RegExp(start + "(\n|.)*" + end, "m"),
       md = _genApi(data),
       updated = readme.replace(re, start + "\n" + md + end);
-
-    console.log("TODO HERE", md);
-    return;
 
     grunt.file.write(options.output, updated);
   });
