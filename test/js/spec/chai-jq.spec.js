@@ -328,7 +328,6 @@ define(["jquery"], function ($) {
       it("matches property", function () {
         var $fixture = this.$fixture;
 
-        // TODO: Consider whether to abstract "no property" to `not.have`.
         expect($fixture)
           .to.have.$prop("nothave", undefined);
 
@@ -347,6 +346,25 @@ define(["jquery"], function ($) {
         expect($("<input type=\"checkbox\" checked=\"checked\" />"))
           .to.have.$prop("checked", true).and
           .to.have.$prop("type", "checkbox");
+      });
+
+      it("checks presence of property", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.have.$prop("checked").and
+          .to.have.$prop("type").and
+          .to.not
+            .have.$prop("bar").and
+            .have.$prop("baz");
+
+        expect(function () {
+          expect($fixture).to.have.$prop("bar");
+        }).to.throw("expected '#test' to have prop('bar')");
+
+        expect(function () {
+          expect($fixture).to.not.have.$prop("type");
+        }).to.throw("expected '#test' not to have prop('type')");
       });
     });
 
