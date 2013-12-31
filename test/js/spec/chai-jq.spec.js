@@ -294,7 +294,8 @@ define(["jquery"], function ($) {
       it("does not change context for negated attribute", function () {
         expect(this.$fixture).to.not
           .have.$attr("bar").and
-          .have.$attr("baz");
+          .have.$attr("baz").and
+          .have.$attr("boy");
       });
 
       it("matches attribute subsets", function () {
@@ -355,9 +356,7 @@ define(["jquery"], function ($) {
 
         expect($fixture).to.have.$prop("checked");
         expect($fixture).to.have.$prop("type");
-        expect($fixture).to.not
-            .have.$prop("bar").and
-            .have.$prop("baz");
+        expect($fixture).to.not.have.$prop("bar");
 
         expect(function () {
           expect($fixture).to.have.$prop("bar");
@@ -366,6 +365,19 @@ define(["jquery"], function ($) {
         expect(function () {
           expect($fixture).to.not.have.$prop("type");
         }).to.throw("expected '#test' not to have prop('type')");
+      });
+
+      it("changes context to property", function () {
+        expect(this.$fixture).to.have.$prop("type").and
+          .to.equal("checkbox").and
+          .to.match(/^c.*x$/).and
+          .to.not.have.length(2);
+      });
+
+      it("does not change context for negated property", function () {
+        expect(this.$fixture).to.not
+          .have.$prop("bar").and
+          .have.$prop("baz");
       });
     });
 
