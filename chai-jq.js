@@ -64,6 +64,10 @@
       return act.indexOf(exp) !== -1;
     };
 
+    var _exists = function (exp, act) {
+      return act !== undefined;
+    };
+
     var _regExpMatch = function (expRe, act) {
       return expRe.exec(act);
     };
@@ -93,7 +97,6 @@
     /*!
      * Base for the boolean is("selector") method call.
      *
-     *
      * @see http://api.jquery.com/is/]
      *
      * @param {String} selector jQuery selector to match against
@@ -118,15 +121,18 @@
      * @param {String} jQuery           method name.
      * @param {Object} opts             options
      * @param {String} opts.hasArg      takes argument for method
+     * @param {String} opts.isProperty  switch assert context to property if no
+     *                                  expected val
      * @param {String} opts.hasContains is "contains" applicable
      * @param {String} opts.altGet      alternate function to get value if none
      */
     var _containMethod = function (jqMeth, opts) {
       // Unpack options.
       opts || (opts = {});
-      opts.hasArg = !!opts.hasArg;
-      opts.hasContains = !!opts.hasContains;
-      opts.defaultAct = undefined;
+      opts.hasArg       = !!opts.hasArg;
+      opts.isProperty   = !!opts.isProperty;
+      opts.hasContains  = !!opts.hasContains;
+      opts.defaultAct   = undefined;
 
       // Return decorated assert.
       return _jqAssert(function () {
@@ -134,14 +140,25 @@
         var exp = arguments[opts.hasArg ? 1 : 0],
           arg = opts.hasArg ? arguments[0] : undefined,
 
+          // Switch context to property / check mere presence.
+          noExp = arguments.length === (opts.hasArg ? 1 : 0),
+          isProp = opts.isProperty && noExp,
+
           // Method.
           act = (opts.hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()),
           meth = opts.hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
 
           // Assertion type.
-          contains = opts.hasContains && flag(this, "contains"),
+          contains = !isProp && opts.hasContains && flag(this, "contains"),
           have = contains ? "contain" : "have",
-          comp = contains ? _contains : _equals;
+          comp = _equals;
+
+        // Set comparison.
+        if (isProp) {
+          comp = _exists;
+        } else if (contains) {
+          comp = _contains;
+        }
 
         // Second chance getter.
         if (opts.altGet && !act) {
@@ -153,12 +170,13 @@
           act = opts.defaultAct;
         }
 
+        // Same context assertion.
         this.assert(
           comp(exp, act),
           "expected " + this._name + " to " + have + " " + meth +
-            " #{exp} but found #{act}",
+            (isProp ? "" : " #{exp} but found #{act}"),
           "expected " + this._name + " not to " + have + " " + meth +
-            " #{exp}",
+            (isProp ? "" : " #{exp}"),
           exp,
           act
         );
@@ -286,7 +304,8 @@
      */
     var $attr = _containMethod("attr", {
       hasArg: true,
-      hasContains: true
+      hasContains: true,
+      isProperty: true
     });
 
     chai.Assertion.addMethod("$attr", $attr);
@@ -308,7 +327,8 @@
      * @api public
      */
     var $prop = _containMethod("prop", {
-      hasArg: true
+      hasArg: true,
+      isProperty: true
     });
 
     chai.Assertion.addMethod("$prop", $prop);

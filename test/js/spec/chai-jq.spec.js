@@ -7,7 +7,7 @@
              typeof module  === "object";
 
   // Make AMD/Non-AMD compatible (boilerplate).
-  if (typeof define !== "function") {     /*global define:true */
+  if (typeof define !== "function") { /*global define:true */
     define = function (deps, callback) {
       // Export if node, else actually run.
       if (isNode) { module.exports = callback; }
@@ -266,6 +266,25 @@ define(["jquery"], function ($) {
           expect($fixture).to.have.$attr("foo", "fun");
         }).to.throw("expected '#test' to have attr('foo') 'fun' " +
                     "but found '" + "fun time" + "'");
+      });
+
+      it("checks presence of attribute", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.have.$attr("id").and
+          .to.have.$attr("foo").and
+          .to.not
+            .have.$attr("bar").and
+            .have.$attr("baz");
+      });
+
+      it.skip("changes context", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture).to.have.$attr("foo").and
+          .to.equal("fun time").and
+          .to.match(/^f/);
       });
 
       it("matches attribute subsets", function () {
