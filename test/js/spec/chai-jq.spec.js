@@ -271,10 +271,9 @@ define(["jquery"], function ($) {
       it("checks presence of attribute", function () {
         var $fixture = this.$fixture;
 
-        expect($fixture)
-          .to.have.$attr("id").and
-          .to.have.$attr("foo").and
-          .to.not
+        expect($fixture).to.have.$attr("id");
+        expect($fixture).to.have.$attr("foo");
+        expect($fixture).to.not
             .have.$attr("bar").and
             .have.$attr("baz");
 
@@ -351,10 +350,9 @@ define(["jquery"], function ($) {
       it("checks presence of property", function () {
         var $fixture = this.$fixture;
 
-        expect($fixture)
-          .to.have.$prop("checked").and
-          .to.have.$prop("type").and
-          .to.not
+        expect($fixture).to.have.$prop("checked");
+        expect($fixture).to.have.$prop("type");
+        expect($fixture).to.not
             .have.$prop("bar").and
             .have.$prop("baz");
 

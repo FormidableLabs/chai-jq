@@ -180,6 +180,13 @@
           exp,
           act
         );
+
+        // Change context if property and not negated.
+        if (isProp && !flag(this, "negate")) {
+          flag(this, "object", act);
+        }
+
+        // TODO: PROP/ATTR DOCS - 1. presence, 2. context changing if no expected value and not negated.
       });
     };
 
