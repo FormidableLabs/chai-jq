@@ -305,8 +305,8 @@
      * @see http://api.jquery.com/attr/
      *
      * @param {String} name     attribute name
-     * @param {String} expected attribute content
-     * @param {String} message _optional_
+     * @param {String} expected attribute content (_optional_)
+     * @param {String} message  _optional_
      * @api public
      */
     var $attr = _containMethod("attr", {
@@ -329,8 +329,8 @@
      * @see http://api.jquery.com/prop/
      *
      * @param {String} name     property name
-     * @param {Object} expected property value
-     * @param {String} message _optional_
+     * @param {Object} expected property value (_optional_)
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $prop = _containMethod("prop", {
@@ -354,7 +354,7 @@
      * @see http://api.jquery.com/html/
      *
      * @param {String} expected HTML content
-     * @param {String} message _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $html = _containMethod("html", {

@@ -45,7 +45,8 @@ Section.prototype.heading = function () {
   var params = _.chain(this.data.tags)
     .filter(function (t) { return t.type === "param"; })
     .map(function (t) {
-      return t.description === "_optional_" ? "[" + t.name + "]" : t.name;
+      var isOpt = t.description.indexOf("_optional_") !== -1;
+      return isOpt ? "[" + t.name + "]" : t.name;
     })
     .value()
     .join(", ");

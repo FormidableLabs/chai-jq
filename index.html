@@ -102,8 +102,8 @@ value.</p>
 <li><a href="#-hidden"><code>$hidden</code></a></li>
 <li><a href="#-val-expected-message-"><code>$val(expected, [message])</code></a></li>
 <li><a href="#-class-expected-message-"><code>$class(expected, [message])</code></a></li>
-<li><a href="#-attr-name-expected-message-"><code>$attr(name, expected, [message])</code></a></li>
-<li><a href="#-prop-name-expected-message-"><code>$prop(name, expected, [message])</code></a></li>
+<li><a href="#-attr-name-expected-message-"><code>$attr(name, [expected], [message])</code></a></li>
+<li><a href="#-prop-name-expected-message-"><code>$prop(name, [expected], [message])</code></a></li>
 <li><a href="#-html-expected-message-"><code>$html(expected, [message])</code></a></li>
 <li><a href="#-text-expected-message-"><code>$text(expected, [message])</code></a></li>
 <li><a href="#-css-expected-message-"><code>$css(expected, [message])</code></a></li>
@@ -142,10 +142,10 @@ hidden parent elements as hidden / visible appropriately.</p>
   .to.have.$class(&quot;foo&quot;).and
   .to.have.$class(&quot;bar&quot;);</code></pre>
 <p>See: <a href="http://api.jquery.com/hasClass/"><a href="http://api.jquery.com/hasClass/">http://api.jquery.com/hasClass/</a></a></p>
-<h3 id="-attr-name-expected-message-"><code>$attr(name, expected, [message])</code></h3>
+<h3 id="-attr-name-expected-message-"><code>$attr(name, [expected], [message])</code></h3>
 <ul>
 <li><strong>name</strong> (<code>String</code>) attribute name</li>
-<li><strong>expected</strong> (<code>String</code>) attribute content</li>
+<li><strong>expected</strong> (<code>String</code>) attribute content (<em>optional</em>)</li>
 <li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
 </ul>
 <p>Asserts that the target has exactly the given named attribute, or
@@ -155,11 +155,11 @@ asserts the target contains a subset of the attribute when using the
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
 <p>See: <a href="http://api.jquery.com/attr/"><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
-<h3 id="-prop-name-expected-message-"><code>$prop(name, expected, [message])</code></h3>
+<h3 id="-prop-name-expected-message-"><code>$prop(name, [expected], [message])</code></h3>
 <ul>
 <li><strong>name</strong> (<code>String</code>) property name</li>
-<li><strong>expected</strong> (<code>Object</code>) property value</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>expected</strong> (<code>Object</code>) property value (<em>optional</em>)</li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the target has exactly the given named property.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
@@ -169,7 +169,7 @@ asserts the target contains a subset of the attribute when using the
 <h3 id="-html-expected-message-"><code>$html(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) HTML content</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the target has exactly the given HTML, or
 asserts the target contains a subset of the HTML when using the

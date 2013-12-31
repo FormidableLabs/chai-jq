@@ -138,25 +138,14 @@ module.exports = function (grunt) {
     },
 
     watch: {
-      "build-api": {
-        files: [
-          "chai-jq.js"
-        ],
-        tasks: [
-          "doc:api"
-        ],
-        options: {
-          spawn: false,
-          atBegin: true
-        }
-      },
-      jade: {
+      all: {
         files: [
           "_templates/**/*.jade",
           "*.md",
           "chai-jq.js"
         ],
         tasks: [
+          "doc:api",
           "jade"
         ],
         options: {

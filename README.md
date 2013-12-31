@@ -109,8 +109,8 @@ value.
 * [`$hidden`](#-hidden)
 * [`$val(expected, [message])`](#-val-expected-message-)
 * [`$class(expected, [message])`](#-class-expected-message-)
-* [`$attr(name, expected, [message])`](#-attr-name-expected-message-)
-* [`$prop(name, expected, [message])`](#-prop-name-expected-message-)
+* [`$attr(name, [expected], [message])`](#-attr-name-expected-message-)
+* [`$prop(name, [expected], [message])`](#-prop-name-expected-message-)
 * [`$html(expected, [message])`](#-html-expected-message-)
 * [`$text(expected, [message])`](#-text-expected-message-)
 * [`$css(expected, [message])`](#-css-expected-message-)
@@ -175,9 +175,9 @@ expect($("<div class='foo bar' />"))
 
 See: [http://api.jquery.com/hasClass/](http://api.jquery.com/hasClass/)
 
-### `$attr(name, expected, [message])`
+### `$attr(name, [expected], [message])`
 * **name** (`String`) attribute name
-* **expected** (`String`) attribute content
+* **expected** (`String`) attribute content (_optional_)
 * **message** (`String`) _optional_
 
 
@@ -193,10 +193,10 @@ expect($("<div id=\"hi\" foo=\"bar time\" />"))
 
 See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
 
-### `$prop(name, expected, [message])`
+### `$prop(name, [expected], [message])`
 * **name** (`String`) property name
-* **expected** (`Object`) property value
-* **message** (`String`) _optional_
+* **expected** (`Object`) property value (_optional_)
+* **message** (`String`) failure message (_optional_)
 
 
 Asserts that the target has exactly the given named property.
@@ -211,7 +211,7 @@ See: [http://api.jquery.com/prop/](http://api.jquery.com/prop/)
 
 ### `$html(expected, [message])`
 * **expected** (`String`) HTML content
-* **message** (`String`) _optional_
+* **message** (`String`) failure message (_optional_)
 
 
 Asserts that the target has exactly the given HTML, or
