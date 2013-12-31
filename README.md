@@ -120,7 +120,6 @@ value.
 
 ### `$visible`
 
-
 Asserts that the element is visible.
 
 *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
@@ -134,7 +133,6 @@ expect($("<div>&nbsp;</div>"))
 See: [http://api.jquery.com/visible-selector/](http://api.jquery.com/visible-selector/)
 
 ### `$hidden`
-
 
 Asserts that the element is hidden.
 
@@ -152,7 +150,6 @@ See: [http://api.jquery.com/hidden-selector/](http://api.jquery.com/hidden-selec
 * **expected** (`String|RegExp`) value
 * **message** (`String`) failure message (_optional_)
 
-
 Asserts that the element value matches a string or regular expression.
 
 ```js
@@ -166,7 +163,6 @@ See: [http://api.jquery.com/val/](http://api.jquery.com/val/)
 ### `$class(expected, [message])`
 * **expected** (`String`) class name
 * **message** (`String`) failure message (_optional_)
-
 
 Asserts that the element has a class match.
 
@@ -183,7 +179,6 @@ See: [http://api.jquery.com/hasClass/](http://api.jquery.com/hasClass/)
 * **expected** (`String`) attribute content (_optional_)
 * **message** (`String`) failure message (_optional_)
 * **_returns_** current object or attribute string value
-
 
 Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the
@@ -213,7 +208,6 @@ See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
 * **message** (`String`) failure message (_optional_)
 * **_returns_** current object or property string value
 
-
 Asserts that the target has exactly the given named property.
 
 ```js
@@ -238,7 +232,6 @@ See: [http://api.jquery.com/prop/](http://api.jquery.com/prop/)
 * **expected** (`String`) HTML content
 * **message** (`String`) failure message (_optional_)
 
-
 Asserts that the target has exactly the given HTML, or
 asserts the target contains a subset of the HTML when using the
 `include` or `contain` modifiers.
@@ -255,7 +248,6 @@ See: [http://api.jquery.com/html/](http://api.jquery.com/html/)
 * **expected** (`String`) text content
 * **message** (`String`) failure message (_optional_)
 
-
 Asserts that the target has exactly the given text, or
 asserts the target contains a subset of the text when using the
 `include` or `contain` modifiers.
@@ -271,7 +263,6 @@ See: [http://api.jquery.com/text/](http://api.jquery.com/text/)
 ### `$css(expected, [message])`
 * **expected** (`String`) CSS property content
 * **message** (`String`) failure message (_optional_)
-
 
 Asserts that the target has exactly the given CSS property, or
 asserts the target contains a subset of the CSS when using the

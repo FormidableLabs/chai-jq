@@ -25,14 +25,13 @@ Section.prototype.tmpl = {
     "  <% } else if (t.type === 'returns') { %>",
     "    * **_<%= t.type %>_** <%= t.string %>\n",
     "  <% } %>",
-    "<% }); %>\n\n",
+    "<% }); %>\n",
     "<%= description.full %>\n",
     "<% _.each(tags, function (t) { %>",
     "  <% if (t.type === 'see') { %>",
     "    See: [<%= t.url %>](<%= t.url %>)\n\n",
     "  <% } %>",
-    "<% }); %>",
-    "\n"
+    "<% }); %>"
   ], function (s) { return s.replace(/^\s+/, ""); }).join(""))
 };
 
