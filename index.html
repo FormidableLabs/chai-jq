@@ -35,10 +35,34 @@ library to provide jQuery-specific assertions.</p>
 </ul>
 <p>See the <a href="#integration">integration notes</a> below to properly patch Chai with
 the plugin&#39;s asserts in different environments (browser, AMD, Node.js).</p>
-<p>To see some of the plugin&#39;s assertions in action, see the
-<a href="./test/test.html">test page</a> for the project.</p>
+<p>To see a comprehensive collection of the plugin&#39;s assertions in action, see the
+project&#39;s <a href="./test/test.html">test page</a>.</p>
 <h2 id="assertions">Assertions</h2>
 <p><code>chai-jq</code> adds assertions that work more or less like any other Chai assertion.</p>
+<h3 id="integration">Integration</h3>
+<p><code>chai-jq</code> works in your browser, with AMD/RequireJS, and in Node.js with
+JsDom.</p>
+<p><strong>Standard Browser</strong>: To use in a standard HTML page, include <code>chai-jq.js</code>
+after Chai.</p>
+<pre><code class="lang-html">&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p><strong>AMD Browser</strong>: To use in a RequireJS/AMD page, require in <code>chai-jq</code> and
+inject it into Chai before your test imports / runners begin:</p>
+<pre><code class="lang-js">require([&quot;chai&quot;, &quot;../chai-jq&quot;], function (chai, plugin) {
+  // Inject plugin.
+  chai.use(plugin);
+
+  // Rest of your test code here...
+});</code></pre>
+<p><strong>Node.js / JsDom</strong>: To use in Node.js/JsDom, require in <code>chai-jq</code> and
+inject it into Chai before your test imports / runners begin:</p>
+<pre><code class="lang-js">var chai    = require(&quot;chai&quot;);
+var plugin  = require(&quot;chai-jq&quot;);
+
+// Inject plugin.
+chai.use(plugin);
+
+// Rest of test code here...</code></pre>
 <h3 id="object-context-changes">Object Context Changes</h3>
 <p>One slight difference from how assertions in <code>chai-jq</code> work from Chai and other
 plugins is the switching of object context for certain assertions, currently:</p>
@@ -187,30 +211,6 @@ and not explicity <code>style</code> attributes.</p>
   .to.have.$css(&quot;width&quot;, &quot;50px&quot;).and
   .to.have.$css(&quot;border-top-style&quot;, &quot;dotted&quot;);</code></pre>
 <p>See: <a href="http://api.jquery.com/css/"><a href="http://api.jquery.com/css/">http://api.jquery.com/css/</a></a></p>
-<h2 id="integration">Integration</h2>
-<p><code>chai-jq</code> works in your browser, with AMD/RequireJS, and in Node.js with
-JsDom.</p>
-<p><strong>Standard Browser</strong>: To use in a standard HTML page, include <code>chai-jq.js</code>
-after Chai.</p>
-<pre><code class="lang-html">&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
-<p><strong>AMD Browser</strong>: To use in a RequireJS/AMD page, require in <code>chai-jq</code> and
-inject it into Chai before your test imports / runners begin:</p>
-<pre><code class="lang-js">require([&quot;chai&quot;, &quot;../chai-jq&quot;], function (chai, plugin) {
-  // Inject plugin.
-  chai.use(plugin);
-
-  // Rest of your test code here...
-});</code></pre>
-<p><strong>Node.js / JsDom</strong>: To use in Node.js/JsDom, require in <code>chai-jq</code> and
-inject it into Chai before your test imports / runners begin:</p>
-<pre><code class="lang-js">var chai    = require(&quot;chai&quot;);
-var plugin  = require(&quot;chai-jq&quot;);
-
-// Inject plugin.
-chai.use(plugin);
-
-// Rest of test code here...</code></pre>
 <h2 id="contributions">Contributions</h2>
 <p>Please see the <a href="./CONTRIBUTING.md">Contributions Guide</a> for how to help out
 with the plugin.</p>
