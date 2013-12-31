@@ -3,8 +3,8 @@ Tasks
 
 ## Next Up
 
-* Properties: Make `$prop`, `$attr` switch to property if no `expected` param.
-  Also consider `$html`, `$text`, `$css`, `$val`.
+* Properties: Make `$html`, `$text`, `$css`, `$val` switch to property if no
+  `expected` param.
 
 ## General
 

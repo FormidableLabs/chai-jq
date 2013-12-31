@@ -315,6 +315,7 @@
      * @param {String} name     attribute name
      * @param {String} expected attribute content (_optional_)
      * @param {String} message  failure message (_optional_)
+     * @returns current object or attribute string value
      * @api public
      */
     var $attr = _containMethod("attr", {
@@ -349,6 +350,7 @@
      * @param {String} name     property name
      * @param {Object} expected property value (_optional_)
      * @param {String} message  failure message (_optional_)
+     * @returns current object or property string value
      * @api public
      */
     var $prop = _containMethod("prop", {

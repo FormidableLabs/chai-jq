@@ -152,6 +152,7 @@ hidden parent elements as hidden / visible appropriately.</p>
 <li><strong>name</strong> (<code>String</code>) attribute name</li>
 <li><strong>expected</strong> (<code>String</code>) attribute content (<em>optional</em>)</li>
 <li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
+<li><strong><em>returns</em></strong> current object or attribute string value</li>
 </ul>
 <p>Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the
@@ -171,6 +172,7 @@ provided:</p>
 <li><strong>name</strong> (<code>String</code>) property name</li>
 <li><strong>expected</strong> (<code>Object</code>) property value (<em>optional</em>)</li>
 <li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
+<li><strong><em>returns</em></strong> current object or property string value</li>
 </ul>
 <p>Asserts that the target has exactly the given named property.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))

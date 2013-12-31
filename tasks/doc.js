@@ -22,6 +22,8 @@ Section.prototype.tmpl = {
     "  <% if (t.type === 'param') { %>",
     "    * **<%= t.name %>** (`<%= t.types.join('|') %>`) ",
     "    <%= t.description %>\n",
+    "  <% } else if (t.type === 'returns') { %>",
+    "    * **_<%= t.type %>_** <%= t.string %>\n",
     "  <% } %>",
     "<% }); %>\n\n",
     "<%= description.full %>\n",

@@ -184,6 +184,7 @@ See: [http://api.jquery.com/hasClass/](http://api.jquery.com/hasClass/)
 * **name** (`String`) attribute name
 * **expected** (`String`) attribute content (_optional_)
 * **message** (`String`) failure message (_optional_)
+* **_returns_** current object or attribute string value
 
 
 Asserts that the target has exactly the given named attribute, or
@@ -212,6 +213,7 @@ See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
 * **name** (`String`) property name
 * **expected** (`Object`) property value (_optional_)
 * **message** (`String`) failure message (_optional_)
+* **_returns_** current object or property string value
 
 
 Asserts that the target has exactly the given named property.
