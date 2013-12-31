@@ -277,6 +277,14 @@ define(["jquery"], function ($) {
           .to.not
             .have.$attr("bar").and
             .have.$attr("baz");
+
+        expect(function () {
+          expect($fixture).to.have.$attr("bar");
+        }).to.throw("expected '#test' to have attr('bar')");
+
+        expect(function () {
+          expect($fixture).to.not.have.$attr("foo");
+        }).to.throw("expected '#test' not to have attr('foo')");
       });
 
       it.skip("changes context", function () {
