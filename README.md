@@ -6,20 +6,18 @@ library to provide jQuery-specific assertions.
 
 ## Usage
 
-You can install `chai-jq` via the following package managers:
+You can install `chai-jq` with the following package managers:
 
 * [NPM](https://npmjs.org/package/chai-jq): `npm install chai-jq`
 * [Bower](http://bower.io/): `bower install chai-jq`
 
-See the [integration notes](#integration) below to properly patch Chai with
-the plugin's asserts in different environments (browser, AMD, Node.js).
-
-To see a comprehensive collection of the plugin's assertions in action, see the
-project's [test page](./test/test.html).
+The [integration notes](#integration) discuss how to properly patch Chai with
+the plugin in different environments (browser, AMD, Node.js). The
+[API documentation](#plugin-api) and the project's own
+[test page](./test/test.html) are good starting points to learn how to use
+`chai-jq` assertions in your tests.
 
 ## Assertions
-
-`chai-jq` adds assertions that work more or less like any other Chai assertion.
 
 ### Integration
 
