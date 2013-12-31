@@ -130,7 +130,7 @@ hidden parent elements as hidden / visible appropriately.</p>
 <h3 id="-val-expected-message-"><code>$val(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String|RegExp</code>) value</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the element value matches a string or regular expression.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
@@ -140,7 +140,7 @@ hidden parent elements as hidden / visible appropriately.</p>
 <h3 id="-class-expected-message-"><code>$class(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) class name</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the element has a class match.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div class=&#39;foo bar&#39; /&gt;&quot;))
@@ -151,7 +151,7 @@ hidden parent elements as hidden / visible appropriately.</p>
 <ul>
 <li><strong>name</strong> (<code>String</code>) attribute name</li>
 <li><strong>expected</strong> (<code>String</code>) attribute content (<em>optional</em>)</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the
@@ -198,7 +198,7 @@ asserts the target contains a subset of the HTML when using the
 <h3 id="-text-expected-message-"><code>$text(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) text content</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the target has exactly the given text, or
 asserts the target contains a subset of the text when using the
@@ -210,7 +210,7 @@ asserts the target contains a subset of the text when using the
 <h3 id="-css-expected-message-"><code>$css(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) CSS property content</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the target has exactly the given CSS property, or
 asserts the target contains a subset of the CSS when using the

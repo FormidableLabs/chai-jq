@@ -152,7 +152,7 @@ See: [http://api.jquery.com/hidden-selector/](http://api.jquery.com/hidden-selec
 
 ### `$val(expected, [message])`
 * **expected** (`String|RegExp`) value
-* **message** (`String`) _optional_
+* **message** (`String`) failure message (_optional_)
 
 
 Asserts that the element value matches a string or regular expression.
@@ -167,7 +167,7 @@ See: [http://api.jquery.com/val/](http://api.jquery.com/val/)
 
 ### `$class(expected, [message])`
 * **expected** (`String`) class name
-* **message** (`String`) _optional_
+* **message** (`String`) failure message (_optional_)
 
 
 Asserts that the element has a class match.
@@ -183,7 +183,7 @@ See: [http://api.jquery.com/hasClass/](http://api.jquery.com/hasClass/)
 ### `$attr(name, [expected], [message])`
 * **name** (`String`) attribute name
 * **expected** (`String`) attribute content (_optional_)
-* **message** (`String`) _optional_
+* **message** (`String`) failure message (_optional_)
 
 
 Asserts that the target has exactly the given named attribute, or
@@ -253,7 +253,7 @@ See: [http://api.jquery.com/html/](http://api.jquery.com/html/)
 
 ### `$text(expected, [message])`
 * **expected** (`String`) text content
-* **message** (`String`) _optional_
+* **message** (`String`) failure message (_optional_)
 
 
 Asserts that the target has exactly the given text, or
@@ -270,7 +270,7 @@ See: [http://api.jquery.com/text/](http://api.jquery.com/text/)
 
 ### `$css(expected, [message])`
 * **expected** (`String`) CSS property content
-* **message** (`String`) _optional_
+* **message** (`String`) failure message (_optional_)
 
 
 Asserts that the target has exactly the given CSS property, or

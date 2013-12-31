@@ -242,7 +242,7 @@
      * @see http://api.jquery.com/val/
      *
      * @param {String|RegExp} expected  value
-     * @param {String}        message   _optional_
+     * @param {String}        message   failure message (_optional_)
      * @api public
      */
     var $val = _jqAssert(function (exp) {
@@ -272,7 +272,7 @@
      * @see http://api.jquery.com/hasClass/
      *
      * @param {String} expected class name
-     * @param {String} message  _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $class = _jqAssert(function (exp) {
@@ -314,7 +314,7 @@
      *
      * @param {String} name     attribute name
      * @param {String} expected attribute content (_optional_)
-     * @param {String} message  _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $attr = _containMethod("attr", {
@@ -396,7 +396,7 @@
      *
      * @name $text
      * @param {String} expected text content
-     * @param {String} message _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $text = _containMethod("text", {
@@ -432,7 +432,7 @@
      *
      * @name $css
      * @param {String} expected CSS property content
-     * @param {String} message _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $css = _containMethod("css", {
