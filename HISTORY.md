@@ -1,13 +1,23 @@
 History
 =======
 
+## Current
+
+* Add property presence detection and object under assertion context changing
+  for `$prop`, `$attr`.
+* Separate out document generation to Grunt task file and add more JsDoc-style
+  params in Markdown output.
+
+## 0.0.4
+
+* Remove NPM `postinstall` script in normal deployment.
+
 ## 0.0.3
 
 * Switch to manual plugin injection for AMD (matches Node.js method).
-  [*[@ryan-roemer][]*]
-* Add fallback to "style" property for `$css`. [*[@ryan-roemer][]*]
-* Add `contains` support for `$css` assert. [*[@ryan-roemer][]*]
-* Add support for Node.js with JsDom. [*[@ryan-roemer][]*]
+* Add fallback to "style" property for `$css`.
+* Add `contains` support for `$css` assert.
+* Add support for Node.js with JsDom.
 
 ## 0.0.2
 
@@ -16,7 +26,7 @@ History
 ## 0.0.1
 
 * Initial release with API: `$val`, `$class`, `$attr`, `$prop`, `$html`,
-  `$text`. [*[@ryan-roemer][]*]
+  `$text`.
 
 [@atimb]: https://github.com/atimb
 [@ryan-roemer]: https://github.com/ryan-roemer

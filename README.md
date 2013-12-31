@@ -38,7 +38,7 @@ after Chai.
 inject it into Chai before your test imports / runners begin:
 
 ```js
-require(["chai", "../chai-jq"], function (chai, plugin) {
+require(["chai", "chai-jq"], function (chai, plugin) {
   // Inject plugin.
   chai.use(plugin);
 

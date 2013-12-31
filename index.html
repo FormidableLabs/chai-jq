@@ -48,7 +48,7 @@ after Chai.</p>
 &lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
 <p><strong>AMD Browser</strong>: To use in a RequireJS/AMD page, require in <code>chai-jq</code> and
 inject it into Chai before your test imports / runners begin:</p>
-<pre><code class="lang-js">require([&quot;chai&quot;, &quot;../chai-jq&quot;], function (chai, plugin) {
+<pre><code class="lang-js">require([&quot;chai&quot;, &quot;chai-jq&quot;], function (chai, plugin) {
   // Inject plugin.
   chai.use(plugin);
 
@@ -266,13 +266,23 @@ license.</p>
 
         </div>
         <div id="history"><h1 id="history">History</h1>
+<h2 id="current">Current</h2>
+<ul>
+<li>Add property presence detection and object under assertion context changing
+for <code>$prop</code>, <code>$attr</code>.</li>
+<li>Separate out document generation to Grunt task file and add more JsDoc-style
+params in Markdown output.</li>
+</ul>
+<h2 id="0-0-4">0.0.4</h2>
+<ul>
+<li>Remove NPM <code>postinstall</code> script in normal deployment.</li>
+</ul>
 <h2 id="0-0-3">0.0.3</h2>
 <ul>
-<li>Switch to manual plugin injection for AMD (matches Node.js method).
-[<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
-<li>Add fallback to &quot;style&quot; property for <code>$css</code>. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
-<li>Add <code>contains</code> support for <code>$css</code> assert. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
-<li>Add support for Node.js with JsDom. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+<li>Switch to manual plugin injection for AMD (matches Node.js method).</li>
+<li>Add fallback to &quot;style&quot; property for <code>$css</code>.</li>
+<li>Add <code>contains</code> support for <code>$css</code> assert.</li>
+<li>Add support for Node.js with JsDom.</li>
 </ul>
 <h2 id="0-0-2">0.0.2</h2>
 <ul>
@@ -281,7 +291,7 @@ license.</p>
 <h2 id="0-0-1">0.0.1</h2>
 <ul>
 <li>Initial release with API: <code>$val</code>, <code>$class</code>, <code>$attr</code>, <code>$prop</code>, <code>$html</code>,
-<code>$text</code>. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+<code>$text</code>.</li>
 </ul>
 
         </div>
