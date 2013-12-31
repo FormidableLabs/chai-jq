@@ -273,9 +273,7 @@ define(["jquery"], function ($) {
 
         expect($fixture).to.have.$attr("id");
         expect($fixture).to.have.$attr("foo");
-        expect($fixture).to.not
-            .have.$attr("bar").and
-            .have.$attr("baz");
+        expect(this.$fixture).to.not.have.$attr("bar");
 
         expect(function () {
           expect($fixture).to.have.$attr("bar");
@@ -286,12 +284,17 @@ define(["jquery"], function ($) {
         }).to.throw("expected '#test' not to have attr('foo')");
       });
 
-      it.skip("changes context", function () {
-        var $fixture = this.$fixture;
-
-        expect($fixture).to.have.$attr("foo").and
+      it("changes context to attribute", function () {
+        expect(this.$fixture).to.have.$attr("foo").and
           .to.equal("fun time").and
-          .to.match(/^f/);
+          .to.match(/^f/).and
+          .to.not.have.length(2);
+      });
+
+      it("does not change context for negated attribute", function () {
+        expect(this.$fixture).to.not
+          .have.$attr("bar").and
+          .have.$attr("baz");
       });
 
       it("matches attribute subsets", function () {
