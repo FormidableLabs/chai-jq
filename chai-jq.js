@@ -326,6 +326,15 @@
      *   .to.have.$prop("type", "checkbox");
      * ```
      *
+     * Changes context to property *value* when no expected value is provided:
+     *
+     * ```js
+     * expect($("<input type=\"checkbox\" checked=\"checked\" />"))
+     *   .to.have.$prop("type").and
+     *     .to.equal("checkbox").and
+     *     .to.match(/^c.*x$/);
+     * ```
+     *
      * @see http://api.jquery.com/prop/
      *
      * @param {String} name     property name

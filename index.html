@@ -165,6 +165,11 @@ asserts the target contains a subset of the attribute when using the
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
   .to.have.$prop(&quot;checked&quot;, true).and
   .to.have.$prop(&quot;type&quot;, &quot;checkbox&quot;);</code></pre>
+<p>Changes context to property <em>value</em> when no expected value is provided:</p>
+<pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
+  .to.have.$prop(&quot;type&quot;).and
+    .to.equal(&quot;checkbox&quot;).and
+    .to.match(/^c.*x$/);</code></pre>
 <p>See: <a href="http://api.jquery.com/prop/"><a href="http://api.jquery.com/prop/">http://api.jquery.com/prop/</a></a></p>
 <h3 id="-html-expected-message-"><code>$html(expected, [message])</code></h3>
 <ul>
