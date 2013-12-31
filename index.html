@@ -75,7 +75,9 @@ plugins is the switching of object context for certain assertions, currently:</p
 <pre><code class="lang-js">var $elem = $(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;);
 
 expect($elem)
+  // Assertion object is `$elem`
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
+  // Assertion object is still `$elem`
   .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
 <p>In the above example, the jQuery object <code>$elem</code> remains the object under
 assertion for both <code>$attr</code> calls. However, in the special case for one of the
@@ -89,10 +91,13 @@ method called. So, taking our example again, and calling <code>$attr()</code> wi
 an expected value, we would have:</p>
 <pre><code class="lang-js">var $elem = $(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;);
 
-expect($elem).to.have.$attr(&quot;foo&quot;).and
-  .to.equal(&quot;bar time&quot;).and
-  .to.match(/^b/).and
-  .to.not.have.length(2);</code></pre>
+expect($elem)
+  // Assertion object is `$elem`
+  .to.have.$attr(&quot;foo&quot;).and
+    // Assertion object now changed to `$attr()` value: `&quot;bar time&quot;`
+    .to.equal(&quot;bar time&quot;).and
+    .to.match(/^b/).and
+    .to.not.have.length(2);</code></pre>
 <p>In the above example here, the object under assertion becomes the string
 <code>&quot;bar time&quot;</code> immediately after the call to <code>$attr(&quot;foo&quot;)</code> with no expected
 value.</p>
@@ -154,6 +159,11 @@ asserts the target contains a subset of the attribute when using the
 <pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
+<p>Changes context to attribute <em>value</em> when no expected value is provided:</p>
+<pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;))
+  .to.have.$attr(&quot;foo&quot;).and
+    .to.equal(&quot;bar time&quot;).and
+    .to.match(/^b/);</code></pre>
 <p>See: <a href="http://api.jquery.com/attr/"><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
 <h3 id="-prop-name-expected-message-"><code>$prop(name, [expected], [message])</code></h3>
 <ul>

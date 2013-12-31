@@ -302,6 +302,15 @@
      *   .to.contain.$attr("foo", "bar");
      * ```
      *
+     * Changes context to attribute *value* when no expected value is provided:
+     *
+     * ```js
+     * expect($("<div id=\"hi\" foo=\"bar time\" />"))
+     *   .to.have.$attr("foo").and
+     *     .to.equal("bar time").and
+     *     .to.match(/^b/);
+     * ```
+     *
      * @see http://api.jquery.com/attr/
      *
      * @param {String} name     attribute name

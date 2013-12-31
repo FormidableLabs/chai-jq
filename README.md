@@ -74,7 +74,9 @@ In general usage, the object under test (e.g., the thing wrapped in an
 var $elem = $("<div id=\"hi\" foo=\"bar time\" />");
 
 expect($elem)
+  // Assertion object is `$elem`
   .to.have.$attr("id", "hi").and
+  // Assertion object is still `$elem`
   .to.contain.$attr("foo", "bar");
 ```
 
@@ -92,10 +94,13 @@ an expected value, we would have:
 ```js
 var $elem = $("<div id=\"hi\" foo=\"bar time\" />");
 
-expect($elem).to.have.$attr("foo").and
-  .to.equal("bar time").and
-  .to.match(/^b/).and
-  .to.not.have.length(2);
+expect($elem)
+  // Assertion object is `$elem`
+  .to.have.$attr("foo").and
+    // Assertion object now changed to `$attr()` value: `"bar time"`
+    .to.equal("bar time").and
+    .to.match(/^b/).and
+    .to.not.have.length(2);
 ```
 
 In the above example here, the object under assertion becomes the string
@@ -189,6 +194,15 @@ asserts the target contains a subset of the attribute when using the
 expect($("<div id=\"hi\" foo=\"bar time\" />"))
   .to.have.$attr("id", "hi").and
   .to.contain.$attr("foo", "bar");
+```
+
+Changes context to attribute *value* when no expected value is provided:
+
+```js
+expect($("<div id=\"hi\" foo=\"bar time\" />"))
+  .to.have.$attr("foo").and
+    .to.equal("bar time").and
+    .to.match(/^b/);
 ```
 
 See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
