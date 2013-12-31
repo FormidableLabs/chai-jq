@@ -132,7 +132,7 @@ module.exports = function (grunt) {
           input: "chai-jq.js",
           output: "README.md",
           startMarker: "## Plugin API",
-          endMarker: "## Integration"
+          endMarker: "## Contributions"
         }
       }
     },

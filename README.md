@@ -14,12 +14,50 @@ You can install `chai-jq` via the following package managers:
 See the [integration notes](#integration) below to properly patch Chai with
 the plugin's asserts in different environments (browser, AMD, Node.js).
 
-To see some of the plugin's assertions in action, see the
-[test page](./test/test.html) for the project.
+To see a comprehensive collection of the plugin's assertions in action, see the
+project's [test page](./test/test.html).
 
 ## Assertions
 
 `chai-jq` adds assertions that work more or less like any other Chai assertion.
+
+### Integration
+
+`chai-jq` works in your browser, with AMD/RequireJS, and in Node.js with
+JsDom.
+
+**Standard Browser**: To use in a standard HTML page, include `chai-jq.js`
+after Chai.
+
+```html
+<script src="chai.js"></script>
+<script src="chai-jq.js"></script>
+```
+
+**AMD Browser**: To use in a RequireJS/AMD page, require in `chai-jq` and
+inject it into Chai before your test imports / runners begin:
+
+```js
+require(["chai", "../chai-jq"], function (chai, plugin) {
+  // Inject plugin.
+  chai.use(plugin);
+
+  // Rest of your test code here...
+});
+```
+
+**Node.js / JsDom**: To use in Node.js/JsDom, require in `chai-jq` and
+inject it into Chai before your test imports / runners begin:
+
+```js
+var chai    = require("chai");
+var plugin  = require("chai-jq");
+
+// Inject plugin.
+chai.use(plugin);
+
+// Rest of test code here...
+```
 
 ### Object Context Changes
 
@@ -233,44 +271,6 @@ expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
 ```
 
 See: [http://api.jquery.com/css/](http://api.jquery.com/css/)
-
-## Integration
-
-`chai-jq` works in your browser, with AMD/RequireJS, and in Node.js with
-JsDom.
-
-**Standard Browser**: To use in a standard HTML page, include `chai-jq.js`
-after Chai.
-
-```html
-<script src="chai.js"></script>
-<script src="chai-jq.js"></script>
-```
-
-**AMD Browser**: To use in a RequireJS/AMD page, require in `chai-jq` and
-inject it into Chai before your test imports / runners begin:
-
-```js
-require(["chai", "../chai-jq"], function (chai, plugin) {
-  // Inject plugin.
-  chai.use(plugin);
-
-  // Rest of your test code here...
-});
-```
-
-**Node.js / JsDom**: To use in Node.js/JsDom, require in `chai-jq` and
-inject it into Chai before your test imports / runners begin:
-
-```js
-var chai    = require("chai");
-var plugin  = require("chai-jq");
-
-// Inject plugin.
-chai.use(plugin);
-
-// Rest of test code here...
-```
 
 ## Contributions
 
