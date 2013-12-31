@@ -17,6 +17,54 @@ the plugin's asserts in different environments (browser, AMD, Node.js).
 To see some of the plugin's assertions in action, see the
 [test page](./test/test.html) for the project.
 
+## Assertions
+
+`chai-jq` adds assertions that work more or less like any other Chai assertion.
+
+### Object Context Changes
+
+One slight difference from how assertions in `chai-jq` work from Chai and other
+plugins is the switching of object context for certain assertions, currently:
+
+* `$attr`
+* `$prop`
+
+In general usage, the object under test (e.g., the thing wrapped in an
+`expect()`) remains the current context, so you can do something like:
+
+```js
+var $elem = $("<div id=\"hi\" foo=\"bar time\" />");
+
+expect($elem)
+  .to.have.$attr("id", "hi").and
+  .to.contain.$attr("foo", "bar");
+```
+
+In the above example, the jQuery object `$elem` remains the object under
+assertion for both `$attr` calls. However, in the special case for one of the
+enumerated assertions above where:
+
+* There is no **expected** assertion value given; **and**,
+* There are no negations (e.g., `not`) used in a chain.
+
+Then, the object under assertion switches to the **value** of the effective
+method called. So, taking our example again, and calling `$attr()` without
+an expected value, we would have:
+
+```js
+var $elem = $("<div id=\"hi\" foo=\"bar time\" />");
+
+expect($elem).to.have.$attr("foo").and
+  .to.equal("bar time").and
+  .to.match(/^b/).and
+  .to.not.have.length(2);
+```
+
+In the above example here, the object under assertion becomes the string
+`"bar time"` immediately after the call to `$attr("foo")` with no expected
+value.
+
+
 ## Plugin API
 
 * [`$visible`](#-visible)
