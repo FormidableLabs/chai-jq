@@ -185,8 +185,6 @@
         if (isProp && !flag(this, "negate")) {
           flag(this, "object", act);
         }
-
-        // TODO: PROP/ATTR DOCS - 1. presence, 2. context changing if no expected value and not negated.
       });
     };
 
@@ -302,7 +300,8 @@
      *   .to.contain.$attr("foo", "bar");
      * ```
      *
-     * Changes context to attribute *value* when no expected value is provided:
+     * Changes context to attribute string *value* when no expected value is
+     * provided:
      *
      * ```js
      * expect($("<div id=\"hi\" foo=\"bar time\" />"))
@@ -335,7 +334,8 @@
      *   .to.have.$prop("type", "checkbox");
      * ```
      *
-     * Changes context to property *value* when no expected value is provided:
+     * Changes context to property string *value* when no expected value is
+     * provided:
      *
      * ```js
      * expect($("<input type=\"checkbox\" checked=\"checked\" />"))

@@ -196,7 +196,8 @@ expect($("<div id=\"hi\" foo=\"bar time\" />"))
   .to.contain.$attr("foo", "bar");
 ```
 
-Changes context to attribute *value* when no expected value is provided:
+Changes context to attribute string *value* when no expected value is
+provided:
 
 ```js
 expect($("<div id=\"hi\" foo=\"bar time\" />"))
@@ -221,7 +222,8 @@ expect($("<input type=\"checkbox\" checked=\"checked\" />"))
   .to.have.$prop("type", "checkbox");
 ```
 
-Changes context to property *value* when no expected value is provided:
+Changes context to property string *value* when no expected value is
+provided:
 
 ```js
 expect($("<input type=\"checkbox\" checked=\"checked\" />"))

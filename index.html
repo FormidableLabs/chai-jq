@@ -159,7 +159,8 @@ asserts the target contains a subset of the attribute when using the
 <pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
-<p>Changes context to attribute <em>value</em> when no expected value is provided:</p>
+<p>Changes context to attribute string <em>value</em> when no expected value is
+provided:</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$attr(&quot;foo&quot;).and
     .to.equal(&quot;bar time&quot;).and
@@ -175,7 +176,8 @@ asserts the target contains a subset of the attribute when using the
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
   .to.have.$prop(&quot;checked&quot;, true).and
   .to.have.$prop(&quot;type&quot;, &quot;checkbox&quot;);</code></pre>
-<p>Changes context to property <em>value</em> when no expected value is provided:</p>
+<p>Changes context to property string <em>value</em> when no expected value is
+provided:</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
   .to.have.$prop(&quot;type&quot;).and
     .to.equal(&quot;checkbox&quot;).and
