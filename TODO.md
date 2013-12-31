@@ -3,6 +3,8 @@ Tasks
 
 ## Next Up
 
+* GFM Headings/TOC: Switch pre-processing in grunt to use GFM headings / anchors
+  and add extra output in HTML (?).
 * Properties: Make `$html`, `$text`, `$css`, `$val` switch to property if no
   `expected` param.
 
