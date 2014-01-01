@@ -1,7 +1,7 @@
 History
 =======
 
-## Current
+## 0.0.5
 
 * Add property presence detection and object under assertion context changing
   for `$prop`, `$attr`.
