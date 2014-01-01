@@ -32,10 +32,10 @@ code {
           border-radius: 2px;
 }
 
-
 h3 code {
+  display: block;
   background-color: #fff;
-  border: 1px solid #999;
+  border: 1px solid #ccc;
 }
 
 pre code {

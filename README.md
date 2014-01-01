@@ -6,16 +6,105 @@ library to provide jQuery-specific assertions.
 
 ## Usage
 
-You can install `chai-jq` via the following package managers:
+You can install `chai-jq` with the following package managers:
 
 * [NPM](https://npmjs.org/package/chai-jq): `npm install chai-jq`
 * [Bower](http://bower.io/): `bower install chai-jq`
 
-See the [integration notes](#integration) below to properly patch Chai with
-the plugin's asserts in different environments (browser, AMD, Node.js).
+The [integration notes](#integration) discuss how to properly patch Chai with
+the plugin in different environments (browser, AMD, Node.js). The
+[API documentation](#plugin-api) and the project's own
+[test page](./test/test.html) are good starting points to learn how to use
+`chai-jq` assertions in your tests.
 
-To see some of the plugin's assertions in action, see the
-[test page](./test/test.html) for the project.
+## Assertions
+
+### Integration
+
+`chai-jq` works in your browser, with AMD/RequireJS, and in Node.js with
+JsDom.
+
+**Standard Browser**: To use in a standard HTML page, include `chai-jq.js`
+after Chai.
+
+```html
+<script src="chai.js"></script>
+<script src="chai-jq.js"></script>
+```
+
+**AMD Browser**: To use in a RequireJS/AMD page, require in `chai-jq` and
+inject it into Chai before your test imports / runners begin:
+
+```js
+require(["chai", "chai-jq"], function (chai, plugin) {
+  // Inject plugin.
+  chai.use(plugin);
+
+  // Rest of your test code here...
+});
+```
+
+**Node.js / JsDom**: To use in Node.js/JsDom, require in `chai-jq` and
+inject it into Chai before your test imports / runners begin:
+
+```js
+var chai    = require("chai");
+var plugin  = require("chai-jq");
+
+// Inject plugin.
+chai.use(plugin);
+
+// Rest of test code here...
+```
+
+### Object Context Changes
+
+One slight difference from how assertions in `chai-jq` work from Chai and other
+plugins is the switching of object context for certain assertions, currently:
+
+* `$attr`
+* `$prop`
+
+In general usage, the object under test (e.g., the thing wrapped in an
+`expect()`) remains the current context, so you can do something like:
+
+```js
+var $elem = $("<div id=\"hi\" foo=\"bar time\" />");
+
+expect($elem)
+  // Assertion object is `$elem`
+  .to.have.$attr("id", "hi").and
+  // Assertion object is still `$elem`
+  .to.contain.$attr("foo", "bar");
+```
+
+In the above example, the jQuery object `$elem` remains the object under
+assertion for both `$attr` calls. However, in the special case for one of the
+enumerated assertions above where:
+
+* There is no **expected** assertion value given; **and**,
+* There are no negations (e.g., `not`) used in a chain.
+
+Then, the object under assertion switches to the **value** of the effective
+method called. So, taking our example again, and calling `$attr()` without
+an expected value, we would have:
+
+```js
+var $elem = $("<div id=\"hi\" foo=\"bar time\" />");
+
+expect($elem)
+  // Assertion object is `$elem`
+  .to.have.$attr("foo").and
+    // Assertion object now changed to `$attr()` value: `"bar time"`
+    .to.equal("bar time").and
+    .to.match(/^b/).and
+    .to.not.have.length(2);
+```
+
+In the above example here, the object under assertion becomes the string
+`"bar time"` immediately after the call to `$attr("foo")` with no expected
+value.
+
 
 ## Plugin API
 
@@ -23,14 +112,13 @@ To see some of the plugin's assertions in action, see the
 * [`$hidden`](#-hidden)
 * [`$val(expected, [message])`](#-val-expected-message-)
 * [`$class(expected, [message])`](#-class-expected-message-)
-* [`$attr(name, expected, [message])`](#-attr-name-expected-message-)
-* [`$prop(name, expected, [message])`](#-prop-name-expected-message-)
+* [`$attr(name, [expected], [message])`](#-attr-name-expected-message-)
+* [`$prop(name, [expected], [message])`](#-prop-name-expected-message-)
 * [`$html(expected, [message])`](#-html-expected-message-)
 * [`$text(expected, [message])`](#-text-expected-message-)
 * [`$css(expected, [message])`](#-css-expected-message-)
 
 ### `$visible`
-
 
 Asserts that the element is visible.
 
@@ -46,7 +134,6 @@ See: [http://api.jquery.com/visible-selector/](http://api.jquery.com/visible-sel
 
 ### `$hidden`
 
-
 Asserts that the element is hidden.
 
 *Node.js/JsDom Note*: JsDom does not currently infer zero-sized or
@@ -61,8 +148,7 @@ See: [http://api.jquery.com/hidden-selector/](http://api.jquery.com/hidden-selec
 
 ### `$val(expected, [message])`
 * **expected** (`String|RegExp`) value
-* **message** (`String`) _optional_
-
+* **message** (`String`) failure message (_optional_)
 
 Asserts that the element value matches a string or regular expression.
 
@@ -76,8 +162,7 @@ See: [http://api.jquery.com/val/](http://api.jquery.com/val/)
 
 ### `$class(expected, [message])`
 * **expected** (`String`) class name
-* **message** (`String`) _optional_
-
+* **message** (`String`) failure message (_optional_)
 
 Asserts that the element has a class match.
 
@@ -89,11 +174,11 @@ expect($("<div class='foo bar' />"))
 
 See: [http://api.jquery.com/hasClass/](http://api.jquery.com/hasClass/)
 
-### `$attr(name, expected, [message])`
+### `$attr(name, [expected], [message])`
 * **name** (`String`) attribute name
-* **expected** (`String`) attribute content
-* **message** (`String`) _optional_
-
+* **expected** (`String`) attribute content (_optional_)
+* **message** (`String`) failure message (_optional_)
+* **_returns_** current object or attribute string value
 
 Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the
@@ -105,13 +190,23 @@ expect($("<div id=\"hi\" foo=\"bar time\" />"))
   .to.contain.$attr("foo", "bar");
 ```
 
+Changes context to attribute string *value* when no expected value is
+provided:
+
+```js
+expect($("<div id=\"hi\" foo=\"bar time\" />"))
+  .to.have.$attr("foo").and
+    .to.equal("bar time").and
+    .to.match(/^b/);
+```
+
 See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
 
-### `$prop(name, expected, [message])`
+### `$prop(name, [expected], [message])`
 * **name** (`String`) property name
-* **expected** (`Object`) property value
-* **message** (`String`) _optional_
-
+* **expected** (`Object`) property value (_optional_)
+* **message** (`String`) failure message (_optional_)
+* **_returns_** current object or property string value
 
 Asserts that the target has exactly the given named property.
 
@@ -121,12 +216,21 @@ expect($("<input type=\"checkbox\" checked=\"checked\" />"))
   .to.have.$prop("type", "checkbox");
 ```
 
+Changes context to property string *value* when no expected value is
+provided:
+
+```js
+expect($("<input type=\"checkbox\" checked=\"checked\" />"))
+  .to.have.$prop("type").and
+    .to.equal("checkbox").and
+    .to.match(/^c.*x$/);
+```
+
 See: [http://api.jquery.com/prop/](http://api.jquery.com/prop/)
 
 ### `$html(expected, [message])`
 * **expected** (`String`) HTML content
-* **message** (`String`) _optional_
-
+* **message** (`String`) failure message (_optional_)
 
 Asserts that the target has exactly the given HTML, or
 asserts the target contains a subset of the HTML when using the
@@ -142,8 +246,7 @@ See: [http://api.jquery.com/html/](http://api.jquery.com/html/)
 
 ### `$text(expected, [message])`
 * **expected** (`String`) text content
-* **message** (`String`) _optional_
-
+* **message** (`String`) failure message (_optional_)
 
 Asserts that the target has exactly the given text, or
 asserts the target contains a subset of the text when using the
@@ -159,8 +262,7 @@ See: [http://api.jquery.com/text/](http://api.jquery.com/text/)
 
 ### `$css(expected, [message])`
 * **expected** (`String`) CSS property content
-* **message** (`String`) _optional_
-
+* **message** (`String`) failure message (_optional_)
 
 Asserts that the target has exactly the given CSS property, or
 asserts the target contains a subset of the CSS when using the
@@ -185,44 +287,6 @@ expect($("<div style=\"width: 50px; border: 1px dotted black;\" />"))
 ```
 
 See: [http://api.jquery.com/css/](http://api.jquery.com/css/)
-
-## Integration
-
-`chai-jq` works in your browser, with AMD/RequireJS, and in Node.js with
-JsDom.
-
-**Standard Browser**: To use in a standard HTML page, include `chai-jq.js`
-after Chai.
-
-```html
-<script src="chai.js"></script>
-<script src="chai-jq.js"></script>
-```
-
-**AMD Browser**: To use in a RequireJS/AMD page, require in `chai-jq` and
-inject it into Chai before your test imports / runners begin:
-
-```js
-require(["chai", "../chai-jq"], function (chai, plugin) {
-  // Inject plugin.
-  chai.use(plugin);
-
-  // Rest of your test code here...
-});
-```
-
-**Node.js / JsDom**: To use in Node.js/JsDom, require in `chai-jq` and
-inject it into Chai before your test imports / runners begin:
-
-```js
-var chai    = require("chai");
-var plugin  = require("chai-jq");
-
-// Inject plugin.
-chai.use(plugin);
-
-// Rest of test code here...
-```
 
 ## Contributions
 

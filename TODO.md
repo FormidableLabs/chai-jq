@@ -3,8 +3,10 @@ Tasks
 
 ## Next Up
 
-* Properties: Make `$prop`, `$attr` switch to property if no `expected` param.
-  Also consider `$html`, `$text`, `$css`, `$val`.
+* GFM Headings/TOC: Switch pre-processing in grunt to use GFM headings / anchors
+  and add extra output in HTML (?).
+* Properties: Make `$html`, `$text`, `$css`, `$val` switch to property if no
+  `expected` param.
 
 ## General
 

@@ -28,23 +28,87 @@
 <p><code>chai-jq</code> is an alternate plugin for the <a href="http://chaijs.com/">Chai</a> assertion
 library to provide jQuery-specific assertions.</p>
 <h2 id="usage">Usage</h2>
-<p>You can install <code>chai-jq</code> via the following package managers:</p>
+<p>You can install <code>chai-jq</code> with the following package managers:</p>
 <ul>
 <li><a href="https://npmjs.org/package/chai-jq">NPM</a>: <code>npm install chai-jq</code></li>
 <li><a href="http://bower.io/">Bower</a>: <code>bower install chai-jq</code></li>
 </ul>
-<p>See the <a href="#integration">integration notes</a> below to properly patch Chai with
-the plugin&#39;s asserts in different environments (browser, AMD, Node.js).</p>
-<p>To see some of the plugin&#39;s assertions in action, see the
-<a href="./test/test.html">test page</a> for the project.</p>
+<p>The <a href="#integration">integration notes</a> discuss how to properly patch Chai with
+the plugin in different environments (browser, AMD, Node.js). The
+<a href="#plugin-api">API documentation</a> and the project&#39;s own
+<a href="./test/test.html">test page</a> are good starting points to learn how to use
+<code>chai-jq</code> assertions in your tests.</p>
+<h2 id="assertions">Assertions</h2>
+<h3 id="integration">Integration</h3>
+<p><code>chai-jq</code> works in your browser, with AMD/RequireJS, and in Node.js with
+JsDom.</p>
+<p><strong>Standard Browser</strong>: To use in a standard HTML page, include <code>chai-jq.js</code>
+after Chai.</p>
+<pre><code class="lang-html">&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p><strong>AMD Browser</strong>: To use in a RequireJS/AMD page, require in <code>chai-jq</code> and
+inject it into Chai before your test imports / runners begin:</p>
+<pre><code class="lang-js">require([&quot;chai&quot;, &quot;chai-jq&quot;], function (chai, plugin) {
+  // Inject plugin.
+  chai.use(plugin);
+
+  // Rest of your test code here...
+});</code></pre>
+<p><strong>Node.js / JsDom</strong>: To use in Node.js/JsDom, require in <code>chai-jq</code> and
+inject it into Chai before your test imports / runners begin:</p>
+<pre><code class="lang-js">var chai    = require(&quot;chai&quot;);
+var plugin  = require(&quot;chai-jq&quot;);
+
+// Inject plugin.
+chai.use(plugin);
+
+// Rest of test code here...</code></pre>
+<h3 id="object-context-changes">Object Context Changes</h3>
+<p>One slight difference from how assertions in <code>chai-jq</code> work from Chai and other
+plugins is the switching of object context for certain assertions, currently:</p>
+<ul>
+<li><code>$attr</code></li>
+<li><code>$prop</code></li>
+</ul>
+<p>In general usage, the object under test (e.g., the thing wrapped in an
+<code>expect()</code>) remains the current context, so you can do something like:</p>
+<pre><code class="lang-js">var $elem = $(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;);
+
+expect($elem)
+  // Assertion object is `$elem`
+  .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
+  // Assertion object is still `$elem`
+  .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
+<p>In the above example, the jQuery object <code>$elem</code> remains the object under
+assertion for both <code>$attr</code> calls. However, in the special case for one of the
+enumerated assertions above where:</p>
+<ul>
+<li>There is no <strong>expected</strong> assertion value given; <strong>and</strong>,</li>
+<li>There are no negations (e.g., <code>not</code>) used in a chain.</li>
+</ul>
+<p>Then, the object under assertion switches to the <strong>value</strong> of the effective
+method called. So, taking our example again, and calling <code>$attr()</code> without
+an expected value, we would have:</p>
+<pre><code class="lang-js">var $elem = $(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;);
+
+expect($elem)
+  // Assertion object is `$elem`
+  .to.have.$attr(&quot;foo&quot;).and
+    // Assertion object now changed to `$attr()` value: `&quot;bar time&quot;`
+    .to.equal(&quot;bar time&quot;).and
+    .to.match(/^b/).and
+    .to.not.have.length(2);</code></pre>
+<p>In the above example here, the object under assertion becomes the string
+<code>&quot;bar time&quot;</code> immediately after the call to <code>$attr(&quot;foo&quot;)</code> with no expected
+value.</p>
 <h2 id="plugin-api">Plugin API</h2>
 <ul>
 <li><a href="#-visible"><code>$visible</code></a></li>
 <li><a href="#-hidden"><code>$hidden</code></a></li>
 <li><a href="#-val-expected-message-"><code>$val(expected, [message])</code></a></li>
 <li><a href="#-class-expected-message-"><code>$class(expected, [message])</code></a></li>
-<li><a href="#-attr-name-expected-message-"><code>$attr(name, expected, [message])</code></a></li>
-<li><a href="#-prop-name-expected-message-"><code>$prop(name, expected, [message])</code></a></li>
+<li><a href="#-attr-name-expected-message-"><code>$attr(name, [expected], [message])</code></a></li>
+<li><a href="#-prop-name-expected-message-"><code>$prop(name, [expected], [message])</code></a></li>
 <li><a href="#-html-expected-message-"><code>$html(expected, [message])</code></a></li>
 <li><a href="#-text-expected-message-"><code>$text(expected, [message])</code></a></li>
 <li><a href="#-css-expected-message-"><code>$css(expected, [message])</code></a></li>
@@ -66,7 +130,7 @@ hidden parent elements as hidden / visible appropriately.</p>
 <h3 id="-val-expected-message-"><code>$val(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String|RegExp</code>) value</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the element value matches a string or regular expression.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
@@ -76,18 +140,19 @@ hidden parent elements as hidden / visible appropriately.</p>
 <h3 id="-class-expected-message-"><code>$class(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) class name</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the element has a class match.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div class=&#39;foo bar&#39; /&gt;&quot;))
   .to.have.$class(&quot;foo&quot;).and
   .to.have.$class(&quot;bar&quot;);</code></pre>
 <p>See: <a href="http://api.jquery.com/hasClass/"><a href="http://api.jquery.com/hasClass/">http://api.jquery.com/hasClass/</a></a></p>
-<h3 id="-attr-name-expected-message-"><code>$attr(name, expected, [message])</code></h3>
+<h3 id="-attr-name-expected-message-"><code>$attr(name, [expected], [message])</code></h3>
 <ul>
 <li><strong>name</strong> (<code>String</code>) attribute name</li>
-<li><strong>expected</strong> (<code>String</code>) attribute content</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>expected</strong> (<code>String</code>) attribute content (<em>optional</em>)</li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
+<li><strong><em>returns</em></strong> current object or attribute string value</li>
 </ul>
 <p>Asserts that the target has exactly the given named attribute, or
 asserts the target contains a subset of the attribute when using the
@@ -95,22 +160,35 @@ asserts the target contains a subset of the attribute when using the
 <pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
+<p>Changes context to attribute string <em>value</em> when no expected value is
+provided:</p>
+<pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;))
+  .to.have.$attr(&quot;foo&quot;).and
+    .to.equal(&quot;bar time&quot;).and
+    .to.match(/^b/);</code></pre>
 <p>See: <a href="http://api.jquery.com/attr/"><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
-<h3 id="-prop-name-expected-message-"><code>$prop(name, expected, [message])</code></h3>
+<h3 id="-prop-name-expected-message-"><code>$prop(name, [expected], [message])</code></h3>
 <ul>
 <li><strong>name</strong> (<code>String</code>) property name</li>
-<li><strong>expected</strong> (<code>Object</code>) property value</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>expected</strong> (<code>Object</code>) property value (<em>optional</em>)</li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
+<li><strong><em>returns</em></strong> current object or property string value</li>
 </ul>
 <p>Asserts that the target has exactly the given named property.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
   .to.have.$prop(&quot;checked&quot;, true).and
   .to.have.$prop(&quot;type&quot;, &quot;checkbox&quot;);</code></pre>
+<p>Changes context to property string <em>value</em> when no expected value is
+provided:</p>
+<pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
+  .to.have.$prop(&quot;type&quot;).and
+    .to.equal(&quot;checkbox&quot;).and
+    .to.match(/^c.*x$/);</code></pre>
 <p>See: <a href="http://api.jquery.com/prop/"><a href="http://api.jquery.com/prop/">http://api.jquery.com/prop/</a></a></p>
 <h3 id="-html-expected-message-"><code>$html(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) HTML content</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the target has exactly the given HTML, or
 asserts the target contains a subset of the HTML when using the
@@ -122,7 +200,7 @@ asserts the target contains a subset of the HTML when using the
 <h3 id="-text-expected-message-"><code>$text(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) text content</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the target has exactly the given text, or
 asserts the target contains a subset of the text when using the
@@ -134,7 +212,7 @@ asserts the target contains a subset of the text when using the
 <h3 id="-css-expected-message-"><code>$css(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) CSS property content</li>
-<li><strong>message</strong> (<code>String</code>) <em>optional</em></li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 </ul>
 <p>Asserts that the target has exactly the given CSS property, or
 asserts the target contains a subset of the CSS when using the
@@ -152,30 +230,6 @@ and not explicity <code>style</code> attributes.</p>
   .to.have.$css(&quot;width&quot;, &quot;50px&quot;).and
   .to.have.$css(&quot;border-top-style&quot;, &quot;dotted&quot;);</code></pre>
 <p>See: <a href="http://api.jquery.com/css/"><a href="http://api.jquery.com/css/">http://api.jquery.com/css/</a></a></p>
-<h2 id="integration">Integration</h2>
-<p><code>chai-jq</code> works in your browser, with AMD/RequireJS, and in Node.js with
-JsDom.</p>
-<p><strong>Standard Browser</strong>: To use in a standard HTML page, include <code>chai-jq.js</code>
-after Chai.</p>
-<pre><code class="lang-html">&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
-<p><strong>AMD Browser</strong>: To use in a RequireJS/AMD page, require in <code>chai-jq</code> and
-inject it into Chai before your test imports / runners begin:</p>
-<pre><code class="lang-js">require([&quot;chai&quot;, &quot;../chai-jq&quot;], function (chai, plugin) {
-  // Inject plugin.
-  chai.use(plugin);
-
-  // Rest of your test code here...
-});</code></pre>
-<p><strong>Node.js / JsDom</strong>: To use in Node.js/JsDom, require in <code>chai-jq</code> and
-inject it into Chai before your test imports / runners begin:</p>
-<pre><code class="lang-js">var chai    = require(&quot;chai&quot;);
-var plugin  = require(&quot;chai-jq&quot;);
-
-// Inject plugin.
-chai.use(plugin);
-
-// Rest of test code here...</code></pre>
 <h2 id="contributions">Contributions</h2>
 <p>Please see the <a href="./CONTRIBUTING.md">Contributions Guide</a> for how to help out
 with the plugin.</p>
@@ -212,13 +266,23 @@ license.</p>
 
         </div>
         <div id="history"><h1 id="history">History</h1>
+<h2 id="current">Current</h2>
+<ul>
+<li>Add property presence detection and object under assertion context changing
+for <code>$prop</code>, <code>$attr</code>.</li>
+<li>Separate out document generation to Grunt task file and add more JsDoc-style
+params in Markdown output.</li>
+</ul>
+<h2 id="0-0-4">0.0.4</h2>
+<ul>
+<li>Remove NPM <code>postinstall</code> script in normal deployment.</li>
+</ul>
 <h2 id="0-0-3">0.0.3</h2>
 <ul>
-<li>Switch to manual plugin injection for AMD (matches Node.js method).
-[<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
-<li>Add fallback to &quot;style&quot; property for <code>$css</code>. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
-<li>Add <code>contains</code> support for <code>$css</code> assert. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
-<li>Add support for Node.js with JsDom. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+<li>Switch to manual plugin injection for AMD (matches Node.js method).</li>
+<li>Add fallback to &quot;style&quot; property for <code>$css</code>.</li>
+<li>Add <code>contains</code> support for <code>$css</code> assert.</li>
+<li>Add support for Node.js with JsDom.</li>
 </ul>
 <h2 id="0-0-2">0.0.2</h2>
 <ul>
@@ -227,7 +291,7 @@ license.</p>
 <h2 id="0-0-1">0.0.1</h2>
 <ul>
 <li>Initial release with API: <code>$val</code>, <code>$class</code>, <code>$attr</code>, <code>$prop</code>, <code>$html</code>,
-<code>$text</code>. [<em><a href="https://github.com/ryan-roemer">@ryan-roemer</a></em>]</li>
+<code>$text</code>.</li>
 </ul>
 
         </div>

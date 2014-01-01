@@ -7,7 +7,7 @@
              typeof module  === "object";
 
   // Make AMD/Non-AMD compatible (boilerplate).
-  if (typeof define !== "function") {     /*global define:true */
+  if (typeof define !== "function") { /*global define:true */
     define = function (deps, callback) {
       // Export if node, else actually run.
       if (isNode) { module.exports = callback; }
@@ -268,6 +268,36 @@ define(["jquery"], function ($) {
                     "but found '" + "fun time" + "'");
       });
 
+      it("checks presence of attribute", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture).to.have.$attr("id");
+        expect($fixture).to.have.$attr("foo");
+        expect(this.$fixture).to.not.have.$attr("bar");
+
+        expect(function () {
+          expect($fixture).to.have.$attr("bar");
+        }).to.throw("expected '#test' to have attr('bar')");
+
+        expect(function () {
+          expect($fixture).to.not.have.$attr("foo");
+        }).to.throw("expected '#test' not to have attr('foo')");
+      });
+
+      it("changes context to attribute", function () {
+        expect(this.$fixture).to.have.$attr("foo").and
+          .to.equal("fun time").and
+          .to.match(/^f/).and
+          .to.not.have.length(2);
+      });
+
+      it("does not change context for negated attribute", function () {
+        expect(this.$fixture).to.not
+          .have.$attr("bar").and
+          .have.$attr("baz").and
+          .have.$attr("boy");
+      });
+
       it("matches attribute subsets", function () {
         var $fixture = this.$fixture;
 
@@ -301,7 +331,6 @@ define(["jquery"], function ($) {
       it("matches property", function () {
         var $fixture = this.$fixture;
 
-        // TODO: Consider whether to abstract "no property" to `not.have`.
         expect($fixture)
           .to.have.$prop("nothave", undefined);
 
@@ -320,6 +349,35 @@ define(["jquery"], function ($) {
         expect($("<input type=\"checkbox\" checked=\"checked\" />"))
           .to.have.$prop("checked", true).and
           .to.have.$prop("type", "checkbox");
+      });
+
+      it("checks presence of property", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture).to.have.$prop("checked");
+        expect($fixture).to.have.$prop("type");
+        expect($fixture).to.not.have.$prop("bar");
+
+        expect(function () {
+          expect($fixture).to.have.$prop("bar");
+        }).to.throw("expected '#test' to have prop('bar')");
+
+        expect(function () {
+          expect($fixture).to.not.have.$prop("type");
+        }).to.throw("expected '#test' not to have prop('type')");
+      });
+
+      it("changes context to property", function () {
+        expect(this.$fixture).to.have.$prop("type").and
+          .to.equal("checkbox").and
+          .to.match(/^c.*x$/).and
+          .to.not.have.length(2);
+      });
+
+      it("does not change context for negated property", function () {
+        expect(this.$fixture).to.not
+          .have.$prop("bar").and
+          .have.$prop("baz");
       });
     });
 

@@ -64,6 +64,10 @@
       return act.indexOf(exp) !== -1;
     };
 
+    var _exists = function (exp, act) {
+      return act !== undefined;
+    };
+
     var _regExpMatch = function (expRe, act) {
       return expRe.exec(act);
     };
@@ -93,7 +97,6 @@
     /*!
      * Base for the boolean is("selector") method call.
      *
-     *
      * @see http://api.jquery.com/is/]
      *
      * @param {String} selector jQuery selector to match against
@@ -118,15 +121,18 @@
      * @param {String} jQuery           method name.
      * @param {Object} opts             options
      * @param {String} opts.hasArg      takes argument for method
+     * @param {String} opts.isProperty  switch assert context to property if no
+     *                                  expected val
      * @param {String} opts.hasContains is "contains" applicable
      * @param {String} opts.altGet      alternate function to get value if none
      */
     var _containMethod = function (jqMeth, opts) {
       // Unpack options.
       opts || (opts = {});
-      opts.hasArg = !!opts.hasArg;
-      opts.hasContains = !!opts.hasContains;
-      opts.defaultAct = undefined;
+      opts.hasArg       = !!opts.hasArg;
+      opts.isProperty   = !!opts.isProperty;
+      opts.hasContains  = !!opts.hasContains;
+      opts.defaultAct   = undefined;
 
       // Return decorated assert.
       return _jqAssert(function () {
@@ -134,14 +140,25 @@
         var exp = arguments[opts.hasArg ? 1 : 0],
           arg = opts.hasArg ? arguments[0] : undefined,
 
+          // Switch context to property / check mere presence.
+          noExp = arguments.length === (opts.hasArg ? 1 : 0),
+          isProp = opts.isProperty && noExp,
+
           // Method.
           act = (opts.hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()),
           meth = opts.hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
 
           // Assertion type.
-          contains = opts.hasContains && flag(this, "contains"),
+          contains = !isProp && opts.hasContains && flag(this, "contains"),
           have = contains ? "contain" : "have",
-          comp = contains ? _contains : _equals;
+          comp = _equals;
+
+        // Set comparison.
+        if (isProp) {
+          comp = _exists;
+        } else if (contains) {
+          comp = _contains;
+        }
 
         // Second chance getter.
         if (opts.altGet && !act) {
@@ -153,15 +170,21 @@
           act = opts.defaultAct;
         }
 
+        // Same context assertion.
         this.assert(
           comp(exp, act),
           "expected " + this._name + " to " + have + " " + meth +
-            " #{exp} but found #{act}",
+            (isProp ? "" : " #{exp} but found #{act}"),
           "expected " + this._name + " not to " + have + " " + meth +
-            " #{exp}",
+            (isProp ? "" : " #{exp}"),
           exp,
           act
         );
+
+        // Change context if property and not negated.
+        if (isProp && !flag(this, "negate")) {
+          flag(this, "object", act);
+        }
       });
     };
 
@@ -219,7 +242,7 @@
      * @see http://api.jquery.com/val/
      *
      * @param {String|RegExp} expected  value
-     * @param {String}        message   _optional_
+     * @param {String}        message   failure message (_optional_)
      * @api public
      */
     var $val = _jqAssert(function (exp) {
@@ -249,7 +272,7 @@
      * @see http://api.jquery.com/hasClass/
      *
      * @param {String} expected class name
-     * @param {String} message  _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $class = _jqAssert(function (exp) {
@@ -277,16 +300,28 @@
      *   .to.contain.$attr("foo", "bar");
      * ```
      *
+     * Changes context to attribute string *value* when no expected value is
+     * provided:
+     *
+     * ```js
+     * expect($("<div id=\"hi\" foo=\"bar time\" />"))
+     *   .to.have.$attr("foo").and
+     *     .to.equal("bar time").and
+     *     .to.match(/^b/);
+     * ```
+     *
      * @see http://api.jquery.com/attr/
      *
      * @param {String} name     attribute name
-     * @param {String} expected attribute content
-     * @param {String} message _optional_
+     * @param {String} expected attribute content (_optional_)
+     * @param {String} message  failure message (_optional_)
+     * @returns current object or attribute string value
      * @api public
      */
     var $attr = _containMethod("attr", {
       hasArg: true,
-      hasContains: true
+      hasContains: true,
+      isProperty: true
     });
 
     chai.Assertion.addMethod("$attr", $attr);
@@ -300,15 +335,27 @@
      *   .to.have.$prop("type", "checkbox");
      * ```
      *
+     * Changes context to property string *value* when no expected value is
+     * provided:
+     *
+     * ```js
+     * expect($("<input type=\"checkbox\" checked=\"checked\" />"))
+     *   .to.have.$prop("type").and
+     *     .to.equal("checkbox").and
+     *     .to.match(/^c.*x$/);
+     * ```
+     *
      * @see http://api.jquery.com/prop/
      *
      * @param {String} name     property name
-     * @param {Object} expected property value
-     * @param {String} message _optional_
+     * @param {Object} expected property value (_optional_)
+     * @param {String} message  failure message (_optional_)
+     * @returns current object or property string value
      * @api public
      */
     var $prop = _containMethod("prop", {
-      hasArg: true
+      hasArg: true,
+      isProperty: true
     });
 
     chai.Assertion.addMethod("$prop", $prop);
@@ -327,7 +374,7 @@
      * @see http://api.jquery.com/html/
      *
      * @param {String} expected HTML content
-     * @param {String} message _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $html = _containMethod("html", {
@@ -351,7 +398,7 @@
      *
      * @name $text
      * @param {String} expected text content
-     * @param {String} message _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $text = _containMethod("text", {
@@ -387,7 +434,7 @@
      *
      * @name $css
      * @param {String} expected CSS property content
-     * @param {String} message _optional_
+     * @param {String} message  failure message (_optional_)
      * @api public
      */
     var $css = _containMethod("css", {

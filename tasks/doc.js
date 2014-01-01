@@ -22,15 +22,16 @@ Section.prototype.tmpl = {
     "  <% if (t.type === 'param') { %>",
     "    * **<%= t.name %>** (`<%= t.types.join('|') %>`) ",
     "    <%= t.description %>\n",
+    "  <% } else if (t.type === 'returns') { %>",
+    "    * **_<%= t.type %>_** <%= t.string %>\n",
     "  <% } %>",
-    "<% }); %>\n\n",
+    "<% }); %>\n",
     "<%= description.full %>\n",
     "<% _.each(tags, function (t) { %>",
     "  <% if (t.type === 'see') { %>",
     "    See: [<%= t.url %>](<%= t.url %>)\n\n",
     "  <% } %>",
-    "<% }); %>",
-    "\n"
+    "<% }); %>"
   ], function (s) { return s.replace(/^\s+/, ""); }).join(""))
 };
 
@@ -45,7 +46,8 @@ Section.prototype.heading = function () {
   var params = _.chain(this.data.tags)
     .filter(function (t) { return t.type === "param"; })
     .map(function (t) {
-      return t.description === "_optional_" ? "[" + t.name + "]" : t.name;
+      var isOpt = t.description.indexOf("_optional_") !== -1;
+      return isOpt ? "[" + t.name + "]" : t.name;
     })
     .value()
     .join(", ");

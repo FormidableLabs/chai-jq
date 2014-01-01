@@ -132,31 +132,20 @@ module.exports = function (grunt) {
           input: "chai-jq.js",
           output: "README.md",
           startMarker: "## Plugin API",
-          endMarker: "## Integration"
+          endMarker: "## Contributions"
         }
       }
     },
 
     watch: {
-      "build-api": {
-        files: [
-          "chai-jq.js"
-        ],
-        tasks: [
-          "doc:api"
-        ],
-        options: {
-          spawn: false,
-          atBegin: true
-        }
-      },
-      jade: {
+      all: {
         files: [
           "_templates/**/*.jade",
           "*.md",
           "chai-jq.js"
         ],
         tasks: [
+          "doc:api",
           "jade"
         ],
         options: {
