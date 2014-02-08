@@ -20,7 +20,8 @@ module.exports = function (grunt) {
           src:  [
             "test/js/spec/**/*.js",
             "*.js",
-            "!Gruntfile.js"
+            "!Gruntfile.js",
+            "!gulpfile.js"
           ]
         }
       },

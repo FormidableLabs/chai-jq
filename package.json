@@ -22,7 +22,10 @@
     "mocha": "~1.14.0",
     "jsdom": "~0.8.8",
     "jquery": "~1.8.3",
-    "grunt-mocha-test": "~0.7.0"
+    "grunt-mocha-test": "~0.7.0",
+    "gulp-util": "~2.2.14",
+    "gulp": "~3.5.2",
+    "gulp-jshint": "~1.4.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/grunt check"
