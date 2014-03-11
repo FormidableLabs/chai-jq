@@ -121,14 +121,26 @@ var gulpDoximator = function (opts) {
     endMarker: null
   }, opts);
 
+//     // Validate.
+//     if (!opts.startMarker || !opts.endMarker) {
+//       throw new PluginError(PLUGIN_NAME, "Markers required");
+//     }
+
   // Return the stream.
   return through.obj(function (file, enc, callback) {
     if (file.isBuffer()) {
+      var data = dox.parseComments(file.contents.toString(), { raw: true }),
+        md = _genApi(data);
+
       // TODO: BUFFER
-      console.log("TODO: BUFFER");
+      // TODO: Need to retool this to buffer parsed data, extend,
+      //       and **then** generate the MD/API/TOC...
+      console.log("TODO: md", md);
+
     } else if (file.isStream()) {
-      // TODO: STREAM
-      console.log("TODO: STREAM");
+      this.emit("error",
+        new PluginError(PLUGIN_NAME, "Streams are not supported!"));
+      return callback();
     }
 
     this.push(file);
