@@ -122,8 +122,7 @@ var gulpDoximator = function (opts) {
   }
 
   // Variables.
-  var buffer = [],
-    firstFile = null;
+  var buffer = [];
 
   // Buffer incoming `src` JS files.
   var bufferSources = function (file) {
@@ -167,34 +166,3 @@ var gulpDoximator = function (opts) {
 };
 
 module.exports = gulpDoximator;
-
-// var OLD = function (grunt) {
-
-//   // Build.
-//   grunt.registerMultiTask("doc", "Inject API MD into README", function () {
-//     // Merge options.
-//     var options = this.options({
-//       input: "index.js",
-//       output: "README.md",
-//       startMarker: null,
-//       endMarker: null
-//     });
-
-//     // Validate.
-//     if (!options.startMarker || !options.endMarker) {
-//       console.log(options);
-//       throw new Error("Markers required");
-//     }
-
-//     var readme = grunt.file.read(options.output),
-//       buf = grunt.file.read(options.input),
-//       data = dox.parseComments(buf, { raw: true }),
-//       start = options.startMarker,
-//       end = options.endMarker,
-//       re = new RegExp(start + "(\n|.)*" + end, "m"),
-//       md = _genApi(data),
-//       updated = readme.replace(re, start + "\n" + md + end);
-
-//     grunt.file.write(options.output, updated);
-//   });
-// };
