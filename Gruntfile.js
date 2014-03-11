@@ -1,41 +1,41 @@
-// Add in local node_modules bin for testem.
-process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
+// // Add in local node_modules bin for testem.
+// process.env.PATH = [process.env.PATH || "", "./node_modules/.bin"].join(":");
 
 module.exports = function (grunt) {
-  // Strip comments from JsHint JSON files (naive).
-  var _jshintCfg = function (name) {
-    if (!grunt.file.exists(name)) { return "{}"; }
+  // // Strip comments from JsHint JSON files (naive).
+  // var _jshintCfg = function (name) {
+  //   if (!grunt.file.exists(name)) { return "{}"; }
 
-    var raw = grunt.file.read(name);
-    return JSON.parse(raw.replace(/\/\/.*\n/g, ""));
-  };
+  //   var raw = grunt.file.read(name);
+  //   return JSON.parse(raw.replace(/\/\/.*\n/g, ""));
+  // };
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON("package.json"),
+    // pkg: grunt.file.readJSON("package.json"),
 
-    jshint: {
-      options: _jshintCfg(".jshintrc-frontend.json"),
-      "frontend-frontend": {
-        files: {
-          src:  [
-            "test/js/spec/**/*.js",
-            "*.js",
-            "!Gruntfile.js",
-            "!gulpfile.js"
-          ]
-        }
-      },
-      "frontend-backend": {
-        options: _jshintCfg(".jshintrc-backend.json"),
-        files: {
-          src:  [
-            "*.js",
-            "tasks/**/*.js",
-            "test/js/test-node.js"
-          ]
-        }
-      }
-    },
+    // jshint: {
+    //   options: _jshintCfg(".jshintrc-frontend.json"),
+    //   "frontend-frontend": {
+    //     files: {
+    //       src:  [
+    //         "test/js/spec/**/*.js",
+    //         "*.js",
+    //         "!Gruntfile.js",
+    //         "!gulpfile.js"
+    //       ]
+    //     }
+    //   },
+    //   "frontend-backend": {
+    //     options: _jshintCfg(".jshintrc-backend.json"),
+    //     files: {
+    //       src:  [
+    //         "*.js",
+    //         "tasks/**/*.js",
+    //         "test/js/test-node.js"
+    //       ]
+    //     }
+    //   }
+    // },
 
     "mocha_phantomjs": {
       test: [
@@ -46,40 +46,40 @@ module.exports = function (grunt) {
       ]
     },
 
-    testem: {
-      // Everything!
-      all: {
-        src: [
-          "test/test.html"
-        ],
-        dest: ".testem-dev.tap"
-      },
-      // Dev.
-      dev: {
-        options: {
-          "launch_in_ci": [
-            "PhantomJS"
-          ]
-        },
-        src: [
-          "test/test.html"
-        ],
-        dest: ".testem-dev.tap"
-      },
-      // Travis. (Only FF and PhantomJS right now).
-      ci: {
-        options: {
-          "launch_in_ci": [
-            "Firefox",
-            "PhantomJS"
-          ]
-        },
-        src: [
-          "test/test.html"
-        ],
-        dest: ".testem-ci.tap"
-      }
-    },
+    // testem: {
+    //   // Everything!
+    //   all: {
+    //     src: [
+    //       "test/test.html"
+    //     ],
+    //     dest: ".testem-dev.tap"
+    //   },
+    //   // Dev.
+    //   dev: {
+    //     options: {
+    //       "launch_in_ci": [
+    //         "PhantomJS"
+    //       ]
+    //     },
+    //     src: [
+    //       "test/test.html"
+    //     ],
+    //     dest: ".testem-dev.tap"
+    //   },
+    //   // Travis. (Only FF and PhantomJS right now).
+    //   ci: {
+    //     options: {
+    //       "launch_in_ci": [
+    //         "Firefox",
+    //         "PhantomJS"
+    //       ]
+    //     },
+    //     src: [
+    //       "test/test.html"
+    //     ],
+    //     dest: ".testem-ci.tap"
+    //   }
+    // },
 
     mochaTest: {
       test: {

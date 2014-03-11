@@ -11,6 +11,7 @@ Tasks
     * https://saucelabs.com/opensauce
     * https://saucelabs.com/opensource/travis
 * Upgrade all libs.
+* Add coverage.
 
 ## Next Up
 

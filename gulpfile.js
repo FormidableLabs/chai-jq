@@ -104,4 +104,5 @@ gulp.task("test:frontend:all", testFrontend({
 // Test - Backend
 // ----------------------------------------------------------------------------
 
-gulp.task("default", ["jshint", "test:frontend:dev"]);
+gulp.task("check",      ["jshint", "test:frontend:ci"]);
+gulp.task("check:all",  ["jshint", "test:frontend:all"]);
