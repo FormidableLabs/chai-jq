@@ -3,7 +3,8 @@
  */
 var fs = require("fs"),
   gulp = require("gulp"),
-  jshint = require("gulp-jshint");
+  jshint = require("gulp-jshint"),
+  karma = require("gulp-karma");
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -41,5 +42,37 @@ gulp.task("jshint:backend", function () {
 });
 
 gulp.task("jshint", ["jshint:frontend", "jshint:backend"]);
+
+gulp.task("test", function () {
+  var files = [
+    // Libraries
+    "test/js/lib/sinon.js",
+    "test/js/lib/jquery.js",
+    "test/js/lib/chai.js",
+    "test/js/chai-jq.js",
+
+    // Test setup,
+    "test/test-karma.js",
+
+    // Tests
+    "test/js/spec/chai-jq.spec.js"
+  ];
+
+  return gulp
+    .src(files)
+    .pipe(karma({
+      frameworks: ["mocha"],
+      runnerPort: 9999,
+      client: {
+        mocha: {
+          ui: "bdd"
+        }
+      }
+    }))
+    .on('error', function(err) {
+      // Make sure failed tests cause gulp to exit non-zero
+      throw err;
+    });
+});
 
 gulp.task("default", [""]);

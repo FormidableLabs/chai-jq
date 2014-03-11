@@ -15,6 +15,7 @@
     <!-- Test Setup-->
     <script>
       // Testem integration.
+      // TODO: REMOVE
       if (location.hash === "#testem") {
         document.write('<script src="/testem.js"></'+'script>')
       }
@@ -23,7 +24,7 @@
       // Set up Chai and Mocha.
       window.expect = chai.expect;
       mocha.setup("bdd");
-      
+
       // Run tests on window load.
       window.onload = function () {
         (window.mochaPhantomJS || mocha).run();
