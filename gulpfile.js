@@ -6,7 +6,8 @@ var fs = require("fs"),
   gulp = require("gulp"),
   jshint = require("gulp-jshint"),
   karma = require("gulp-karma"),
-  mocha = require("gulp-mocha");
+  mocha = require("gulp-mocha"),
+  jade = require("gulp-jade");
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -117,6 +118,18 @@ gulp.task("test:backend", function () {
     .on("error", function (err) {
       throw err;
     });
+});
+
+// ----------------------------------------------------------------------------
+// Templates
+// ----------------------------------------------------------------------------
+gulp.task("templates", function () {
+  gulp
+    .src("_templates/**/*.jade")
+    .pipe(jade({
+      pretty: true
+    }))
+    .pipe(gulp.dest("./"));
 });
 
 // ----------------------------------------------------------------------------

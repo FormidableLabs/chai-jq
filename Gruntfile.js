@@ -81,14 +81,14 @@ module.exports = function (grunt) {
     //   }
     // },
 
-    mochaTest: {
-      test: {
-        options: {
-          reporter: "spec"
-        },
-        src: ["test/test-node.js"]
-      }
-    },
+    // mochaTest: {
+    //   test: {
+    //     options: {
+    //       reporter: "spec"
+    //     },
+    //     src: ["test/test-node.js"]
+    //   }
+    // },
 
     jade: {
       compile: {

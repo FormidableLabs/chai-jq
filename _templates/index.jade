@@ -1,4 +1,4 @@
-!!! 5
+doctype html
 //if lt IE 7
   html.no-js.lt-ie9.lt-ie8.lt-ie7(lang='en')
 //if IE 7
@@ -39,13 +39,13 @@ html.no-js(lang='en')
 
       .content.pure-u-1
         #main
-          include ../README.md
+          include:md ../README.md
 
         #history
-          include ../HISTORY.md
+          include:md ../HISTORY.md
 
         #contributing
-          include ../CONTRIBUTING.md
+          include:md ../CONTRIBUTING.md
 
     //- JavaScript
     script(src="test/js/lib/jquery.js")
