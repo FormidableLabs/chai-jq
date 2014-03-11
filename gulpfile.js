@@ -2,6 +2,7 @@
  * Gulp file.
  */
 var fs = require("fs"),
+  _ = require("lodash"),
   gulp = require("gulp"),
   jshint = require("gulp-jshint"),
   karma = require("gulp-karma");
@@ -16,7 +17,7 @@ var _jshintCfg = function (name) {
 };
 
 // ----------------------------------------------------------------------------
-// Tasks
+// JsHint
 // ----------------------------------------------------------------------------
 gulp.task("jshint:frontend", function () {
   gulp
@@ -43,7 +44,14 @@ gulp.task("jshint:backend", function () {
 
 gulp.task("jshint", ["jshint:frontend", "jshint:backend"]);
 
-gulp.task("test", function () {
+// ----------------------------------------------------------------------------
+// Test - Frontend
+// ----------------------------------------------------------------------------
+// Use `node_modules` Phantom
+process.env.PHANTOMJS_BIN = "./node_modules/.bin/phantomjs";
+
+// Test wrapper.
+var testFrontend = function (opts) {
   var files = [
     // Libraries
     "test/js/lib/sinon.js",
@@ -58,24 +66,42 @@ gulp.task("test", function () {
     "test/js/spec/chai-jq.spec.js"
   ];
 
-  return gulp
-    .src(files)
-    .pipe(karma({
-      frameworks: ["mocha"],
-      runnerPort: 9999,
-      singleRun: true,
-      browsers: ["PhantomJS", "Firefox"],
-      reporters: "mocha",
-      client: {
-        mocha: {
-          ui: "bdd"
+  return function () {
+    return gulp
+      .src(files)
+      .pipe(karma(_.extend({
+        frameworks: ["mocha"],
+        port: 9999,
+        reporters: "mocha",
+        client: {
+          mocha: {
+            ui: "bdd"
+          }
         }
-      }
-    }))
-    .on('error', function(err) {
-      // Make sure failed tests cause gulp to exit non-zero
-      throw err;
-    });
-});
+      }, opts)))
+      .on("error", function (err) {
+        throw err;
+      });
+  };
+};
 
-gulp.task("default", [""]);
+gulp.task("test:frontend:dev", testFrontend({
+  singleRun: true,
+  browsers: ["PhantomJS"]
+}));
+
+gulp.task("test:frontend:ci", testFrontend({
+  singleRun: true,
+  browsers: ["PhantomJS", "Firefox"]
+}));
+
+gulp.task("test:frontend:all", testFrontend({
+  port: 9998,
+  browsers: ["PhantomJS", "Firefox", "Chrome", "Safari"]
+}));
+
+// ----------------------------------------------------------------------------
+// Test - Backend
+// ----------------------------------------------------------------------------
+
+gulp.task("default", ["jshint", "test:frontend:dev"]);
