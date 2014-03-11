@@ -5,8 +5,8 @@ var fs = require("fs"),
   _ = require("lodash"),
   gulp = require("gulp"),
   jshint = require("gulp-jshint"),
-  karma = require("gulp-karma");
-  // ,  mocha = require("gulp-mocha")
+  karma = require("gulp-karma"),
+  mocha = require("gulp-mocha");
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -107,13 +107,20 @@ gulp.task("test:frontend:all", testFrontend({
 // ----------------------------------------------------------------------------
 // Test - Backend
 // ----------------------------------------------------------------------------
-// gulp.task("test:backend", function () {
-//   gulp.src("test/js/spec/chai-jq.spec.js")
-//     .pipe(mocha({reporter: 'nyan'}));
-// });
+gulp.task("test:backend", function () {
+  gulp
+    .src("test/test-node.js")
+    .pipe(mocha({
+      ui: "bdd",
+      reporter: "spec"
+    }))
+    .on("error", function (err) {
+      throw err;
+    });
+});
 
 // ----------------------------------------------------------------------------
 // Aggregated Tasks
 // ----------------------------------------------------------------------------
-gulp.task("check",      ["jshint", "test:frontend:ci"]);
-gulp.task("check:all",  ["jshint", "test:frontend:all"]);
+gulp.task("check",      ["jshint", "test:backend", "test:frontend:ci"]);
+gulp.task("check:all",  ["jshint", "test:backend", "test:frontend:all"]);
