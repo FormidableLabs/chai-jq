@@ -63,6 +63,9 @@ gulp.task("test", function () {
     .pipe(karma({
       frameworks: ["mocha"],
       runnerPort: 9999,
+      singleRun: true,
+      browsers: ["PhantomJS", "Firefox"],
+      reporters: "mocha",
       client: {
         mocha: {
           ui: "bdd"
