@@ -127,7 +127,12 @@ gulp.task("test:backend", function () {
 gulp.task("docs:api", function () {
   gulp
     .src("chai-jq.js")
-    .pipe(doc({}));
+    .pipe(doc({
+      src: "README.md",
+      startMarker: "## Plugin API",
+      endMarker: "## Contributions"
+    }))
+    .pipe(gulp.dest("./"));
 });
 
 gulp.task("templates", function () {

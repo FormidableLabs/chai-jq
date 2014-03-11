@@ -1,6 +1,7 @@
 var _ = require("grunt").util._,
   dox = require("dox"),
-  through = require("through2"),
+  through = require("through"),
+  es = require("event-stream"),
   gutil = require("gulp-util"),
   PluginError = gutil.PluginError,
   PLUGIN_NAME = "gulp-doximator";
@@ -87,7 +88,7 @@ Section.prototype.renderSection = function () {
 // Helpers
 // ----------------------------------------------------------------------------
 // Generate Markdown API snippets from dox object.
-var _genApi = function (obj) {
+var _generateMdApi = function (obj) {
   var toc = [];
 
   // Finesse comment markdown data.
@@ -108,12 +109,6 @@ var _genApi = function (obj) {
 // ----------------------------------------------------------------------------
 // Stream
 // ----------------------------------------------------------------------------
-var insertStream = function (insertText) {
-  var stream = through();
-  stream.write(insertText);
-  return stream;
-};
-
 var gulpDoximator = function (opts) {
   // Set up options.
   opts = _.extend({
@@ -121,31 +116,62 @@ var gulpDoximator = function (opts) {
     endMarker: null
   }, opts);
 
-//     // Validate.
-//     if (!opts.startMarker || !opts.endMarker) {
-//       throw new PluginError(PLUGIN_NAME, "Markers required");
-//     }
+  // Validate.
+  if (!opts.src || !opts.startMarker || !opts.endMarker) {
+    throw new PluginError(PLUGIN_NAME, "Source and markers required");
+  }
 
-  // Return the stream.
-  return through.obj(function (file, enc, callback) {
+  // Variables.
+  var buffer = [];
+
+  // Buffer incoming `src` JS files.
+  var bufferSources = function (file) {
     if (file.isBuffer()) {
-      var data = dox.parseComments(file.contents.toString(), { raw: true }),
-        md = _genApi(data);
-
-      // TODO: BUFFER
-      // TODO: Need to retool this to buffer parsed data, extend,
-      //       and **then** generate the MD/API/TOC...
-      console.log("TODO: md", md);
-
+      buffer.push(file.contents.toString("utf8"));
     } else if (file.isStream()) {
-      this.emit("error",
+      return this.emit("error",
         new PluginError(PLUGIN_NAME, "Streams are not supported!"));
-      return callback();
+    }
+  };
+
+  // Join everything at end.
+  var convertToDocs = function () {
+    if (buffer.length === 0) {
+      return this.emit("end");
     }
 
-    this.push(file);
-    return callback();
-  });
+    var data = dox.parseComments(buffer.toString(), { raw: true });
+    var mdApi = _generateMdApi(data);
+
+    this.emit("data", new gutil.File({
+      path: opts.src + "-TODO-DELETE",
+      contents: new Buffer(mdApi)
+    }));
+    this.emit("end");
+  };
+
+  return through(bufferSources, convertToDocs);
+
+  // // Return the stream.
+  // return through.obj(function (file, enc, callback) {
+  //   if (file.isBuffer()) {
+  //     var data = dox.parseComments(file.contents.toString(), { raw: true }),
+  //       md = _genApi(data);
+
+  //     // TODO: BUFFER
+  //     // TODO: Need to retool this to buffer parsed data, extend,
+  //     //       and **then** generate the MD/API/TOC...
+  //     console.log("TODO: md", md);
+
+  //   } else if (file.isStream()) {
+  //     this.emit("error",
+  //       new PluginError(PLUGIN_NAME, "Streams are not supported!"));
+  //     return callback();
+  //   }
+
+  //   this.push(file);
+  //   return callback();
+  // });
 };
 
 module.exports = gulpDoximator;

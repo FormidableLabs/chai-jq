@@ -7,6 +7,7 @@ Tasks
 * Docs: Add to gulp.
 * Remove all traces of Testem.
 * Remove grunt.
+* Add AMD tests.
 * CI: Add in saucelabs + karma integration.
     * https://saucelabs.com/opensauce
     * https://saucelabs.com/opensource/travis
