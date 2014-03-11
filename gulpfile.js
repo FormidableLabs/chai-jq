@@ -135,5 +135,7 @@ gulp.task("templates", function () {
 // ----------------------------------------------------------------------------
 // Aggregated Tasks
 // ----------------------------------------------------------------------------
-gulp.task("check",      ["jshint", "test:backend", "test:frontend:ci"]);
+gulp.task("check:dev",  ["jshint", "test:backend", "test:frontend:dev"]);
+gulp.task("check:ci",   ["jshint", "test:backend", "test:frontend:ci"]);
 gulp.task("check:all",  ["jshint", "test:backend", "test:frontend:all"]);
+gulp.task("check:",     ["check:dev"]);

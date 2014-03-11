@@ -9,4 +9,4 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
-  - ./node_modules/.bin/grunt check:ci
+  - ./node_modules/.bin/gulp check:ci
