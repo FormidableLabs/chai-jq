@@ -6,6 +6,7 @@ var fs = require("fs"),
   gulp = require("gulp"),
   jshint = require("gulp-jshint"),
   karma = require("gulp-karma");
+  // ,  mocha = require("gulp-mocha")
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -28,18 +29,21 @@ gulp.task("jshint:frontend", function () {
       "!gulpfile.js"
     ])
     .pipe(jshint(_jshintCfg(".jshintrc-frontend.json")))
-    .pipe(jshint.reporter("default"));
+    .pipe(jshint.reporter("default"))
+    .pipe(jshint.reporter("fail"));
 });
 
 gulp.task("jshint:backend", function () {
   gulp
     .src([
       "*.js",
+      "!Gruntfile.js", // TODO REMOVE
       "tasks/**/*.js",
       "test/js/test-node.js"
     ])
     .pipe(jshint(_jshintCfg(".jshintrc-backend.json")))
-    .pipe(jshint.reporter("default"));
+    .pipe(jshint.reporter("default"))
+    .pipe(jshint.reporter("fail"));
 });
 
 gulp.task("jshint", ["jshint:frontend", "jshint:backend"]);
@@ -103,6 +107,13 @@ gulp.task("test:frontend:all", testFrontend({
 // ----------------------------------------------------------------------------
 // Test - Backend
 // ----------------------------------------------------------------------------
+// gulp.task("test:backend", function () {
+//   gulp.src("test/js/spec/chai-jq.spec.js")
+//     .pipe(mocha({reporter: 'nyan'}));
+// });
 
+// ----------------------------------------------------------------------------
+// Aggregated Tasks
+// ----------------------------------------------------------------------------
 gulp.task("check",      ["jshint", "test:frontend:ci"]);
 gulp.task("check:all",  ["jshint", "test:frontend:all"]);
