@@ -1,5 +1,9 @@
 var _ = require("grunt").util._,
-  dox = require("dox");
+  dox = require("dox"),
+  through = require("through2"),
+  gutil = require("gulp-util"),
+  PluginError = gutil.PluginError,
+  PLUGIN_NAME = "gulp-doximator";
 
 // ----------------------------------------------------------------------------
 // Section
@@ -102,35 +106,65 @@ var _genApi = function (obj) {
 };
 
 // ----------------------------------------------------------------------------
-// Task
+// Stream
 // ----------------------------------------------------------------------------
-module.exports = function (grunt) {
+var insertStream = function (insertText) {
+  var stream = through();
+  stream.write(insertText);
+  return stream;
+};
 
-  // Build.
-  grunt.registerMultiTask("doc", "Inject API MD into README", function () {
-    // Merge options.
-    var options = this.options({
-      input: "index.js",
-      output: "README.md",
-      startMarker: null,
-      endMarker: null
-    });
+var gulpDoximator = function (opts) {
+  // Set up options.
+  opts = _.extend({
+    startMarker: null,
+    endMarker: null
+  }, opts);
 
-    // Validate.
-    if (!options.startMarker || !options.endMarker) {
-      console.log(options);
-      throw new Error("Markers required");
+  // Return the stream.
+  return through.obj(function (file, enc, callback) {
+    if (file.isBuffer()) {
+      // TODO: BUFFER
+      console.log("TODO: BUFFER");
+    } else if (file.isStream()) {
+      // TODO: STREAM
+      console.log("TODO: STREAM");
     }
 
-    var readme = grunt.file.read(options.output),
-      buf = grunt.file.read(options.input),
-      data = dox.parseComments(buf, { raw: true }),
-      start = options.startMarker,
-      end = options.endMarker,
-      re = new RegExp(start + "(\n|.)*" + end, "m"),
-      md = _genApi(data),
-      updated = readme.replace(re, start + "\n" + md + end);
-
-    grunt.file.write(options.output, updated);
+    this.push(file);
+    return callback();
   });
 };
+
+module.exports = gulpDoximator;
+
+// var OLD = function (grunt) {
+
+//   // Build.
+//   grunt.registerMultiTask("doc", "Inject API MD into README", function () {
+//     // Merge options.
+//     var options = this.options({
+//       input: "index.js",
+//       output: "README.md",
+//       startMarker: null,
+//       endMarker: null
+//     });
+
+//     // Validate.
+//     if (!options.startMarker || !options.endMarker) {
+//       console.log(options);
+//       throw new Error("Markers required");
+//     }
+
+//     var readme = grunt.file.read(options.output),
+//       buf = grunt.file.read(options.input),
+//       data = dox.parseComments(buf, { raw: true }),
+//       start = options.startMarker,
+//       end = options.endMarker,
+//       re = new RegExp(start + "(\n|.)*" + end, "m"),
+//       md = _genApi(data),
+//       updated = readme.replace(re, start + "\n" + md + end);
+
+//     grunt.file.write(options.output, updated);
+//   });
+// };

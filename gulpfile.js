@@ -7,7 +7,8 @@ var fs = require("fs"),
   jshint = require("gulp-jshint"),
   karma = require("gulp-karma"),
   mocha = require("gulp-mocha"),
-  jade = require("gulp-jade");
+  jade = require("gulp-jade"),
+  doc = require("./tasks/doc");
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -121,8 +122,16 @@ gulp.task("test:backend", function () {
 });
 
 // ----------------------------------------------------------------------------
-// Templates
+// Docs
 // ----------------------------------------------------------------------------
+gulp.task("docs:api", function () {
+  gulp
+    .src("chai-jq.js")
+    .pipe(doc({
+
+    }));
+});
+
 gulp.task("templates", function () {
   gulp
     .src("_templates/**/*.jade")
@@ -138,4 +147,8 @@ gulp.task("templates", function () {
 gulp.task("check:dev",  ["jshint", "test:backend", "test:frontend:dev"]);
 gulp.task("check:ci",   ["jshint", "test:backend", "test:frontend:ci"]);
 gulp.task("check:all",  ["jshint", "test:backend", "test:frontend:all"]);
-gulp.task("check:",     ["check:dev"]);
+gulp.task("check",      ["check:dev"]);
+
+gulp.task("build",      ["templates"]);
+
+gulp.task("default",    ["check", "build"]);

@@ -37,14 +37,14 @@ module.exports = function (grunt) {
     //   }
     // },
 
-    "mocha_phantomjs": {
-      test: [
-        "test/test.html",
-      ],
-      amd: [
-        "test/test-amd.html"
-      ]
-    },
+    // "mocha_phantomjs": {
+    //   test: [
+    //     "test/test.html",
+    //   ],
+    //   amd: [
+    //     "test/test-amd.html"
+    //   ]
+    // },
 
     // testem: {
     //   // Everything!
@@ -90,18 +90,18 @@ module.exports = function (grunt) {
     //   }
     // },
 
-    jade: {
-      compile: {
-        options: {
-          pretty: true
-        },
-        files: {
-          "index.html":         ["_templates/index.jade"],
-          "test/test.html":     ["_templates/test/test.jade"],
-          "test/test-amd.html": ["_templates/test/test-amd.jade"]
-        }
-      }
-    },
+    // jade: {
+    //   compile: {
+    //     options: {
+    //       pretty: true
+    //     },
+    //     files: {
+    //       "index.html":         ["_templates/index.jade"],
+    //       "test/test.html":     ["_templates/test/test.jade"],
+    //       "test/test-amd.html": ["_templates/test/test-amd.jade"]
+    //     }
+    //   }
+    // },
 
     copy: {
       test: {
