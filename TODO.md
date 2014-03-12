@@ -4,6 +4,7 @@ Tasks
 ## Current
 
 * Add gulp AMD tests.
+* Add blanket to HTML tests.
 * CI: Add in saucelabs + karma integration.
     * https://saucelabs.com/opensauce
     * https://saucelabs.com/opensource/travis
