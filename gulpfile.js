@@ -8,6 +8,7 @@ var fs = require("fs"),
   karma = require("gulp-karma"),
   mocha = require("gulp-mocha"),
   jade = require("gulp-jade"),
+  rename = require("gulp-rename"),
   doc = require("./tasks/doc");
 
 // ----------------------------------------------------------------------------
@@ -142,6 +143,31 @@ gulp.task("templates", function () {
       pretty: true
     }))
     .pipe(gulp.dest("./"));
+});
+
+// ----------------------------------------------------------------------------
+// Copy
+// ----------------------------------------------------------------------------
+gulp.task("copy", function () {
+  gulp
+    .src([
+      "bower_components/mocha/mocha.js",
+      "bower_components/mocha/mocha.css",
+      "bower_components/chai/chai.js",
+      "bower_components/jquery/jquery.js",
+      "bower_components/requirejs/require.js",
+      "bower_components/pure/pure-min.css"
+    ])
+    .pipe(gulp.dest("./test/js/lib"));
+
+  gulp
+    .src([
+      "bower_components/sinon/index.js"
+    ])
+    .pipe(rename({
+      basename: "sinon"
+    }))
+    .pipe(gulp.dest("./test/js/lib"));
 });
 
 // ----------------------------------------------------------------------------

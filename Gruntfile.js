@@ -138,23 +138,23 @@ module.exports = function (grunt) {
     //   }
     // },
 
-    watch: {
-      all: {
-        files: [
-          "_templates/**/*.jade",
-          "*.md",
-          "chai-jq.js"
-        ],
-        tasks: [
-          "doc:api",
-          "jade"
-        ],
-        options: {
-          spawn: false,
-          atBegin: true
-        }
-      }
-    }
+    // watch: {
+    //   all: {
+    //     files: [
+    //       "_templates/**/*.jade",
+    //       "*.md",
+    //       "chai-jq.js"
+    //     ],
+    //     tasks: [
+    //       "doc:api",
+    //       "jade"
+    //     ],
+    //     options: {
+    //       spawn: false,
+    //       atBegin: true
+    //     }
+    //   }
+    // }
 
   });
 
