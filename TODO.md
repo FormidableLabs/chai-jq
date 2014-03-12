@@ -3,17 +3,19 @@ Tasks
 
 ## Current
 
-* Add gulp AMD tests.
-* Add blanket to HTML tests.
 * CI: Add in saucelabs + karma integration.
     * https://saucelabs.com/opensauce
     * https://saucelabs.com/opensource/travis
-* Upgrade all NPM libs.
-* Bower cleanup and upgrades.
-* Add coverage.
-* Refactor all of the files in `test/**` -- ugly now.
+
+## POC Branch
+
+* Add gulp AMD tests. [feature-karma-amd](https://github.com/FormidableLabs/chai-jq/compare/feature-karma-amd)
+* Add blanket to HTML tests. [chore-blanket](https://github.com/FormidableLabs/chai-jq/compare/chore-blanket)
 
 ## Next Up
+
+* Upgrade all NPM libs.
+* Bower cleanup and upgrades.
 
 * GFM Headings/TOC: Switch pre-processing in grunt to use GFM headings / anchors
   and add extra output in HTML (?).

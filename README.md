@@ -18,7 +18,7 @@ the plugin in different environments (browser, AMD, Node.js). The
 The site's own test suites also provide a decent introduction to the API:
 
 * [Basic Tests](./test/test.html)
-* [AMD Tests](./test/test.html)
+* [AMD Tests](./test/test-amd.html)
 
 ## Assertions
 
