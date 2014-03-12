@@ -127,16 +127,16 @@ module.exports = function (grunt) {
       }
     },
 
-    doc: {
-      api: {
-        options: {
-          input: "chai-jq.js",
-          output: "README.md",
-          startMarker: "## Plugin API",
-          endMarker: "## Contributions"
-        }
-      }
-    },
+    // doc: {
+    //   api: {
+    //     options: {
+    //       input: "chai-jq.js",
+    //       output: "README.md",
+    //       startMarker: "## Plugin API",
+    //       endMarker: "## Contributions"
+    //     }
+    //   }
+    // },
 
     watch: {
       all: {

@@ -145,6 +145,17 @@ gulp.task("templates", function () {
 });
 
 // ----------------------------------------------------------------------------
+// Watch
+// ----------------------------------------------------------------------------
+gulp.task("watch", function () {
+  gulp.watch([
+    "_templates/**/*.jade",
+    "*.md",
+    "chai-jq.js"
+  ], ["docs:api", "templates"]);
+});
+
+// ----------------------------------------------------------------------------
 // Aggregated Tasks
 // ----------------------------------------------------------------------------
 gulp.task("check:dev",  ["jshint", "test:backend", "test:frontend:dev"]);
@@ -152,6 +163,6 @@ gulp.task("check:ci",   ["jshint", "test:backend", "test:frontend:ci"]);
 gulp.task("check:all",  ["jshint", "test:backend", "test:frontend:all"]);
 gulp.task("check",      ["check:dev"]);
 
-gulp.task("build",      ["templates"]);
+gulp.task("build",      ["docs:api", "templates"]);
 
 gulp.task("default",    ["check", "build"]);
