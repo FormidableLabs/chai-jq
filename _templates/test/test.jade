@@ -4,23 +4,46 @@ html
     meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
 
-    // Test styles and libraries.
+    //- Test styles and libraries.
     link(rel="stylesheet", href="js/lib/mocha.css")
     script(src="js/lib/mocha.js")
     script(src="js/lib/sinon.js")
 
-    // Plugin deps and library.
+    //- Plugin deps and library.
     block libs
       script(src="js/lib/jquery.js")
       script(src="js/lib/chai.js")
-      script(src="../chai-jq.js")
+      script(src="../chai-jq.js", data-cover)
 
-    // Test Setup
+    //- Test Setup
     block setup
+      //- Code Coverage: Only for "js/app" application files.
+      script(src="js/lib/blanket.js",
+             data-cover-flags="branchTracking")
+      //- Test setup
       script.
         // Set up Chai and Mocha.
         window.expect = chai.expect;
         mocha.setup("bdd");
+
+        // Set up Mocha with custom Blanket.js reporter.
+        (function (_reporter) {
+          mocha.reporter(function (runner) {
+            // Listeners.
+            runner.on("start",  function () { blanket.setupCoverage(); });
+            runner.on("suite",  function () { blanket.onModuleStart(); });
+            runner.on("test",   function () { blanket.onTestStart(); });
+            runner.on("test end", function (test) {
+              blanket.onTestDone(test.parent.tests.length, test.state === "passed");
+            });
+            runner.on("end",    function () {
+              blanket.onTestsDone();
+              $("#blanket-main").show();
+            });
+
+            _reporter(runner);
+          });
+        }(mocha._reporter));
 
         // Run tests on window load.
         window.onload = function () {
@@ -28,10 +51,11 @@ html
         };
       //-
 
-    // Tests.
+    //- Tests.
     block specs
       script(src="js/spec/chai-jq.spec.js")
 
   body
     #mocha
+    #blanket-main
     #fixtures(style="position: absolute; bottom: 0;")

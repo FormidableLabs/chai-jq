@@ -157,7 +157,8 @@ gulp.task("copy", function () {
       "bower_components/chai/chai.js",
       "bower_components/jquery/jquery.js",
       "bower_components/requirejs/require.js",
-      "bower_components/pure/pure-min.css"
+      "bower_components/pure/pure-min.css",
+      "bower_components/blanket/dist/qunit/blanket.js"
     ])
     .pipe(gulp.dest("./test/js/lib"));
 
