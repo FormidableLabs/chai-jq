@@ -189,6 +189,6 @@ gulp.task("check:ci",   ["jshint", "test:backend", "test:frontend:ci"]);
 gulp.task("check:all",  ["jshint", "test:backend", "test:frontend:all"]);
 gulp.task("check",      ["check:dev"]);
 
-gulp.task("build",      ["docs:api", "templates"]);
+gulp.task("build",      ["copy", "docs:api", "templates"]);
 
 gulp.task("default",    ["check", "build"]);
