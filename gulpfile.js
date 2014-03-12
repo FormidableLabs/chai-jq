@@ -5,6 +5,8 @@ var fs = require("fs"),
   _ = require("lodash"),
   gulp = require("gulp"),
   jshint = require("gulp-jshint"),
+  // TODO: Switch back to https://github.com/lazd/gulp-karma when
+  // https://github.com/lazd/gulp-karma/pull/22 is merged.
   karma = require("gulp-karma"),
   mocha = require("gulp-mocha"),
   jade = require("gulp-jade"),

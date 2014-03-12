@@ -13,9 +13,13 @@ You can install `chai-jq` with the following package managers:
 
 The [integration notes](#integration) discuss how to properly patch Chai with
 the plugin in different environments (browser, AMD, Node.js). The
-[API documentation](#plugin-api) and the project's own
-[test page](./test/test.html) are good starting points to learn how to use
+[API documentation](#plugin-api) is a good starting point to learn how to use
 `chai-jq` assertions in your tests.
+
+The site's own test suites also provide a decent introduction to the API:
+
+* [Basic Tests](./test/test.html)
+* [AMD Tests](./test/test.html)
 
 ## Assertions
 
