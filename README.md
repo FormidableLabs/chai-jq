@@ -15,7 +15,6 @@ The [integration notes](#integration) discuss how to properly patch Chai with
 the plugin in different environments (browser, AMD, Node.js). The
 [API documentation](#plugin-api) is a good starting point to learn how to use
 `chai-jq` assertions in your tests.
-
 The site's own test suites also provide a decent introduction to the API:
 
 * [Basic Tests](./test/test.html)

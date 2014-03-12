@@ -29,6 +29,7 @@ gulp.task("jshint:frontend", function () {
   gulp
     .src([
       "test/js/spec/**/*.js",
+      "test/js/adapters/karma.js",
       "*.js",
       "!gulpfile.js"
     ])
@@ -42,7 +43,7 @@ gulp.task("jshint:backend", function () {
     .src([
       "*.js",
       "tasks/**/*.js",
-      "test/js/test-node.js"
+      "test/js/adapters/node.js"
     ])
     .pipe(jshint(_jshintCfg(".jshintrc-backend.json")))
     .pipe(jshint.reporter("default"))
@@ -64,10 +65,10 @@ var testFrontend = function (opts) {
     "test/js/lib/sinon.js",
     "test/js/lib/jquery.js",
     "test/js/lib/chai.js",
-    "test/js/chai-jq.js",
+    "chai-jq.js",
 
     // Test setup,
-    "test/test-karma.js",
+    "test/adapters/karma.js",
 
     // Tests
     "test/js/spec/chai-jq.spec.js"
@@ -112,7 +113,7 @@ gulp.task("test:frontend:all", testFrontend({
 // ----------------------------------------------------------------------------
 gulp.task("test:backend", function () {
   gulp
-    .src("test/test-node.js")
+    .src("test/adapters/node.js")
     .pipe(mocha({
       ui: "bdd",
       reporter: "spec"

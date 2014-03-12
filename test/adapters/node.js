@@ -2,7 +2,7 @@
  * Mocha bridge and test runner.
  */
 // Imports
-var plugin  = require("../chai-jq");
+var plugin  = require("../../chai-jq");
 var jsdom   = require("jsdom");
 var chai    = require("chai");
 var $       = require("jquery");
@@ -20,4 +20,4 @@ global.expect = chai.expect;
 chai.use(plugin);
 
 // Add tests.
-require("./js/spec/chai-jq.spec")($.create(window));
+require("../js/spec/chai-jq.spec")($.create(window));
