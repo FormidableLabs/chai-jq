@@ -1,6 +1,6 @@
 {
   "name": "chai-jq",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://github.com/FormidableLabs/chai-jq",
   "authors": [
     "Ryan Roemer <ryan.roemer@formidablelabs.com>"

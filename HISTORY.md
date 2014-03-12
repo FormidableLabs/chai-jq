@@ -1,7 +1,8 @@
 History
 =======
 
-## Current
+## 0.0.6
+
 * Switch over to Gulp, removing Grunt.
 
 ## 0.0.5
