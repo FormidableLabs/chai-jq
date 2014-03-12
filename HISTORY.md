@@ -1,6 +1,9 @@
 History
 =======
 
+## Current
+* Switch over to Gulp, removing Grunt.
+
 ## 0.0.5
 
 * Add property presence detection and object under assertion context changing

@@ -1,5 +1,10 @@
-var _ = require("grunt").util._,
-  dox = require("dox");
+var fs = require("fs"),
+  _ = require("lodash"),
+  dox = require("dox"),
+  es = require("event-stream"),
+  gutil = require("gulp-util"),
+  PluginError = gutil.PluginError,
+  PLUGIN_NAME = "gulp-doximator";
 
 // ----------------------------------------------------------------------------
 // Section
@@ -83,7 +88,7 @@ Section.prototype.renderSection = function () {
 // Helpers
 // ----------------------------------------------------------------------------
 // Generate Markdown API snippets from dox object.
-var _genApi = function (obj) {
+var _generateMdApi = function (obj) {
   var toc = [];
 
   // Finesse comment markdown data.
@@ -102,35 +107,62 @@ var _genApi = function (obj) {
 };
 
 // ----------------------------------------------------------------------------
-// Task
+// Stream
 // ----------------------------------------------------------------------------
-module.exports = function (grunt) {
+var gulpDoximator = function (opts) {
+  // Set up options.
+  opts = _.extend({
+    startMarker: null,
+    endMarker: null
+  }, opts);
 
-  // Build.
-  grunt.registerMultiTask("doc", "Inject API MD into README", function () {
-    // Merge options.
-    var options = this.options({
-      input: "index.js",
-      output: "README.md",
-      startMarker: null,
-      endMarker: null
-    });
+  // Validate.
+  if (!opts.src || !opts.startMarker || !opts.endMarker) {
+    throw new PluginError(PLUGIN_NAME, "Source and markers required");
+  }
 
-    // Validate.
-    if (!options.startMarker || !options.endMarker) {
-      console.log(options);
-      throw new Error("Markers required");
+  // Variables.
+  var buffer = [];
+
+  // Buffer incoming `src` JS files.
+  var bufferSources = function (file) {
+    if (file.isBuffer()) {
+      buffer.push(file.contents.toString("utf8"));
+    } else if (file.isStream()) {
+      return this.emit("error",
+        new PluginError(PLUGIN_NAME, "Streams are not supported!"));
+    }
+  };
+
+  // Join everything at end.
+  var convertToDocs = function () {
+    if (buffer.length === 0) {
+      return this.emit("end");
     }
 
-    var readme = grunt.file.read(options.output),
-      buf = grunt.file.read(options.input),
-      data = dox.parseComments(buf, { raw: true }),
-      start = options.startMarker,
-      end = options.endMarker,
-      re = new RegExp(start + "(\n|.)*" + end, "m"),
-      md = _genApi(data),
-      updated = readme.replace(re, start + "\n" + md + end);
+    var data = dox.parseComments(buffer.toString(), { raw: true });
+    var mdApi = _generateMdApi(data);
 
-    grunt.file.write(options.output, updated);
-  });
+    // TODO: Switch to a streams-friendly version.
+    // For the life of me, I cannot figure out how to inject the README as
+    // a separate stream into the mix here...
+    var src = fs.readFileSync(opts.src).toString("utf8");
+    var re = new RegExp(opts.startMarker + "(\n|.)*" + opts.endMarker, "m");
+    var updated = src.replace(re, [
+      opts.startMarker,
+      "\n",
+      mdApi,
+      opts.endMarker
+    ].join(""));
+
+    this.emit("data", new gutil.File({
+      path: opts.src,
+      contents: new Buffer(updated)
+    }));
+    this.emit("end");
+  };
+
+  return es.through(bufferSources, convertToDocs);
 };
+
+module.exports = gulpDoximator;
