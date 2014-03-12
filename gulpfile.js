@@ -93,7 +93,43 @@ var testFrontend = function (opts) {
   };
 };
 
+// Test wrapper.
+var testAmd = function (opts) {
+  // See: http://karma-runner.github.io/0.8/plus/RequireJS.html
+  var files = [
+    // Libraries
+    "test/js/lib/sinon.js",
+    "test/js/lib/require.js",
+
+    // Test setup,
+    "test/adapters/karma-amd.js"
+  ];
+
+  return function () {
+    return gulp
+      .src(files)
+      .pipe(karma(_.extend({
+        frameworks: ["mocha"],
+        port: 9999,
+        reporters: "mocha",
+        client: {
+          mocha: {
+            ui: "bdd"
+          }
+        }
+      }, opts)))
+      .on("error", function (err) {
+        throw err;
+      });
+  };
+};
+
 gulp.task("test:frontend:dev", testFrontend({
+  singleRun: true,
+  browsers: ["PhantomJS"]
+}));
+
+gulp.task("test:amd:dev", testAmd({
   singleRun: true,
   browsers: ["PhantomJS"]
 }));
