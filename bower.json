@@ -18,7 +18,7 @@
   "ignore": [
     "**/.*",
     "*.html",
-    "Gruntfile.js",
+    "gulpfile.js",
     "package.json",
     "node_modules",
     "bower_components",
@@ -26,11 +26,11 @@
     "_templates"
   ],
   "devDependencies": {
-    "mocha": "~1.13.0",
+    "mocha": "1.13.0",
     "sinon": "http://sinonjs.org/releases/sinon-1.7.3.js",
-    "chai": "~1.8.1",
-    "jquery": "~2.0.3",
-    "requirejs": "~2.1.9",
-    "pure": "~0.3.0"
+    "chai": "1.8.1",
+    "jquery": "2.0.3",
+    "requirejs": "2.1.9",
+    "pure": "0.3.0"
   }
 }

@@ -1,5 +1,5 @@
 var fs = require("fs"),
-  _ = require("grunt").util._,
+  _ = require("lodash"),
   dox = require("dox"),
   es = require("event-stream"),
   gutil = require("gulp-util"),

@@ -3,15 +3,12 @@ Tasks
 
 ## Current
 
-* Bower cleanup
-* Docs: Add to gulp.
-* Remove all traces of Testem.
-* Remove grunt.
-* Add AMD tests.
+* Add gulp AMD tests.
 * CI: Add in saucelabs + karma integration.
     * https://saucelabs.com/opensauce
     * https://saucelabs.com/opensource/travis
-* Upgrade all libs.
+* Upgrade all NPM libs.
+* Bower cleanup and upgrades.
 * Add coverage.
 
 ## Next Up

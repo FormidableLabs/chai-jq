@@ -28,7 +28,6 @@ gulp.task("jshint:frontend", function () {
     .src([
       "test/js/spec/**/*.js",
       "*.js",
-      "!Gruntfile.js",
       "!gulpfile.js"
     ])
     .pipe(jshint(_jshintCfg(".jshintrc-frontend.json")))
@@ -40,7 +39,6 @@ gulp.task("jshint:backend", function () {
   gulp
     .src([
       "*.js",
-      "!Gruntfile.js", // TODO REMOVE
       "tasks/**/*.js",
       "test/js/test-node.js"
     ])
