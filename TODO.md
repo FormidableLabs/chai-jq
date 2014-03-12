@@ -10,6 +10,7 @@ Tasks
 * Upgrade all NPM libs.
 * Bower cleanup and upgrades.
 * Add coverage.
+* Refactor all of the files in `test/**` -- ugly now.
 
 ## Next Up
 
