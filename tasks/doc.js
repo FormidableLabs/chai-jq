@@ -107,7 +107,7 @@ var _generateMdApi = function (obj) {
 };
 
 // ----------------------------------------------------------------------------
-// Stream
+// Task
 // ----------------------------------------------------------------------------
 var gulpDoximator = function (opts) {
   // Set up options.
@@ -121,48 +121,72 @@ var gulpDoximator = function (opts) {
     throw new PluginError(PLUGIN_NAME, "Source and markers required");
   }
 
-  // Variables.
-  var buffer = [];
+  // --------------------------------------------------------------------------
+  // Stream: JS Sources
+  // --------------------------------------------------------------------------
+  var convert = {
+    // Internal buffer
+    _buffer: [],
 
-  // Buffer incoming `src` JS files.
-  var bufferSources = function (file) {
-    if (file.isBuffer()) {
-      buffer.push(file.contents.toString("utf8"));
-    } else if (file.isStream()) {
-      return this.emit("error",
-        new PluginError(PLUGIN_NAME, "Streams are not supported!"));
+    // DATA: Buffer incoming `src` JS files.
+    buffer: function (file) {
+      if (file.isBuffer()) {
+        convert._buffer.push(file.contents.toString("utf8"));
+      } else if (file.isStream()) {
+        return this.emit("error",
+          new PluginError(PLUGIN_NAME, "Streams are not supported!"));
+      }
+    },
+
+    // END: Convert to Markdown format and pass on to destination stream.
+    toDocs: function () {
+      var data = dox.parseComments(convert._buffer.toString(), { raw: true });
+      var mdApi = _generateMdApi(data);
+
+      this.emit("data", new gutil.File({
+        path: opts.src,
+        contents: convert.insertTextStream(mdApi)
+      }));
+
+      this.emit("end");
+    },
+
+    // Create stream for destination and insert text appropriately.
+    insertTextStream: function (text) {
+      var inApiSection = false;
+
+      return fs.createReadStream(opts.src)
+        .pipe(es.split("\n"))
+        .pipe(es.through(function (line) {
+          // Hit the start marker.
+          if (line === opts.startMarker) {
+            // Emit our line (it **is** included).
+            this.emit("data", line);
+
+            // Emit our the processed API data.
+            this.emit("data", text);
+
+            // Mark that we are **within** API section.
+            inApiSection = true;
+          }
+
+          // End marker.
+          if (line === opts.endMarker) {
+            // Mark that we have **exited** API section.
+            inApiSection = false;
+          }
+
+          // Re-emit lines only if we are not within API section.
+          if (!inApiSection) {
+            this.emit("data", line);
+          }
+        }))
+        .pipe(es.join("\n"))
+        .pipe(es.wait());
     }
   };
 
-  // Join everything at end.
-  var convertToDocs = function () {
-    if (buffer.length === 0) {
-      return this.emit("end");
-    }
-
-    var data = dox.parseComments(buffer.toString(), { raw: true });
-    var mdApi = _generateMdApi(data);
-
-    // TODO: Switch to a streams-friendly version.
-    // For the life of me, I cannot figure out how to inject the README as
-    // a separate stream into the mix here...
-    var src = fs.readFileSync(opts.src).toString("utf8");
-    var re = new RegExp(opts.startMarker + "(\n|.)*" + opts.endMarker, "m");
-    var updated = src.replace(re, [
-      opts.startMarker,
-      "\n",
-      mdApi,
-      opts.endMarker
-    ].join(""));
-
-    this.emit("data", new gutil.File({
-      path: opts.src,
-      contents: new Buffer(updated)
-    }));
-    this.emit("end");
-  };
-
-  return es.through(bufferSources, convertToDocs);
+  return es.through(convert.buffer, convert.toDocs);
 };
 
 module.exports = gulpDoximator;
