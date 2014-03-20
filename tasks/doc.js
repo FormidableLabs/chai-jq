@@ -124,14 +124,14 @@ var gulpDoximator = function (opts) {
   // --------------------------------------------------------------------------
   // Stream: JS Sources
   // --------------------------------------------------------------------------
-  var jsSrcs = {
+  var convert = {
     // Internal buffer
     _buffer: [],
 
     // DATA: Buffer incoming `src` JS files.
     buffer: function (file) {
       if (file.isBuffer()) {
-        jsSrcs._buffer.push(file.contents.toString("utf8"));
+        convert._buffer.push(file.contents.toString("utf8"));
       } else if (file.isStream()) {
         return this.emit("error",
           new PluginError(PLUGIN_NAME, "Streams are not supported!"));
@@ -139,12 +139,12 @@ var gulpDoximator = function (opts) {
     },
 
     // END: Convert to Markdown format and pass on to destination stream.
-    convertToDocs: function () {
-      if (jsSrcs._buffer.length === 0) {
+    toDocs: function () {
+      if (convert._buffer.length === 0) {
         return this.emit("end");
       }
 
-      var data = dox.parseComments(jsSrcs._buffer.toString(), { raw: true });
+      var data = dox.parseComments(convert._buffer.toString(), { raw: true });
       var mdApi = _generateMdApi(data);
 
       // TODO: Switch to a streams-friendly version.
@@ -161,14 +161,25 @@ var gulpDoximator = function (opts) {
 
       this.emit("data", new gutil.File({
         path: opts.src + ".tmp",
-        contents: new Buffer(updated)
+        contents: convert.destStream(updated)
       }));
 
       this.emit("end");
+    },
+
+    // Create stream for destination.
+    destStream: function (text) {
+      return fs.createReadStream(opts.src)
+        .pipe(es.split())
+        .pipe(es.through(function (line) {
+          // Re-emit lines **and** dump out the text at the appropriate point.
+          this.emit("data", line);
+          this.emit("data", "TODO_WOW\n");
+        }));
     }
   };
 
-  return es.through(jsSrcs.buffer, jsSrcs.convertToDocs);
+  return es.through(convert.buffer, convert.toDocs);
 
   // //var src = fs.createReadStream(opts.src).toString("utf8");
 
