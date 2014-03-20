@@ -147,21 +147,9 @@ var gulpDoximator = function (opts) {
       var data = dox.parseComments(convert._buffer.toString(), { raw: true });
       var mdApi = _generateMdApi(data);
 
-      // TODO: Switch to a streams-friendly version.
-      // For the life of me, I cannot figure out how to inject the README as
-      // a separate stream into the mix here...
-      var src = fs.readFileSync(opts.src).toString("utf8");
-      var re = new RegExp(opts.startMarker + "(\n|.)*" + opts.endMarker, "m");
-      var updated = src.replace(re, [
-        opts.startMarker,
-        "\n",
-        mdApi,
-        opts.endMarker
-      ].join(""));
-
       this.emit("data", new gutil.File({
         path: opts.src + ".tmp",
-        contents: convert.destStream(updated)
+        contents: convert.destStream(mdApi)
       }));
 
       this.emit("end");
@@ -169,13 +157,36 @@ var gulpDoximator = function (opts) {
 
     // Create stream for destination.
     destStream: function (text) {
+      var inApiSection = false;
+
       return fs.createReadStream(opts.src)
-        .pipe(es.split())
+        .pipe(es.split("\n"))
         .pipe(es.through(function (line) {
-          // Re-emit lines **and** dump out the text at the appropriate point.
-          this.emit("data", line);
-          this.emit("data", "TODO_WOW\n");
-        }));
+          // Hit the start marker.
+          if (line === opts.startMarker) {
+            // Emit our line (it **is** included).
+            this.emit("data", line);
+
+            // Emit our the processed API data.
+            this.emit("data", text);
+
+            // Mark that we are **within** API section.
+            inApiSection = true;
+          }
+
+          // End marker.
+          if (line === opts.endMarker) {
+            // Mark that we have **exited** API section.
+            inApiSection = false;
+          }
+
+          // Re-emit lines only if we are not within API section.
+          if (!inApiSection) {
+            this.emit("data", line);
+          }
+        }))
+        .pipe(es.join("\n"))
+        .pipe(es.wait());
     }
   };
 
