@@ -140,23 +140,19 @@ var gulpDoximator = function (opts) {
 
     // END: Convert to Markdown format and pass on to destination stream.
     toDocs: function () {
-      if (convert._buffer.length === 0) {
-        return this.emit("end");
-      }
-
       var data = dox.parseComments(convert._buffer.toString(), { raw: true });
       var mdApi = _generateMdApi(data);
 
       this.emit("data", new gutil.File({
-        path: opts.src + ".tmp",
-        contents: convert.destStream(mdApi)
+        path: opts.src,
+        contents: convert.insertTextStream(mdApi)
       }));
 
       this.emit("end");
     },
 
-    // Create stream for destination.
-    destStream: function (text) {
+    // Create stream for destination and insert text appropriately.
+    insertTextStream: function (text) {
       var inApiSection = false;
 
       return fs.createReadStream(opts.src)
@@ -191,28 +187,6 @@ var gulpDoximator = function (opts) {
   };
 
   return es.through(convert.buffer, convert.toDocs);
-
-  // //var src = fs.createReadStream(opts.src).toString("utf8");
-
-  // var LookForIncludes = through2(function () {
-  //   // is this the insert point?
-  //   // IF YES. then push onto new stream.  this.push(MY_MD_DATA_TO_INSERT)
-  //   // RYAN: Is that equivalent to this.emit("data", MY_MD_DATA_TO_INSERT).
-
-  // })
-
-  // fs.createReadStream(opts.src)
-  //   .pipe(lines)
-  //   .pipe(LookForIncludes())
-
-
-  // return es.through(function () {}, function () {
-  //   this.emit("data", new gutil.File({
-  //     path: opts.src + ".tmp",
-  //     contents: fs.createReadStream(opts.src)
-  //   }));
-  //   this.emit("end");
-  // });
 };
 
 module.exports = gulpDoximator;
