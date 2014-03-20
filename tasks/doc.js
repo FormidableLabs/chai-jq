@@ -116,6 +116,8 @@ var gulpDoximator = function (opts) {
     endMarker: null
   }, opts);
 
+  var src = fs.readFileSync(opts.src).toString("utf8");
+
   // Validate.
   if (!opts.src || !opts.startMarker || !opts.endMarker) {
     throw new PluginError(PLUGIN_NAME, "Source and markers required");
@@ -124,45 +126,66 @@ var gulpDoximator = function (opts) {
   // Variables.
   var buffer = [];
 
-  // Buffer incoming `src` JS files.
-  var bufferSources = function (file) {
-    if (file.isBuffer()) {
-      buffer.push(file.contents.toString("utf8"));
-    } else if (file.isStream()) {
-      return this.emit("error",
-        new PluginError(PLUGIN_NAME, "Streams are not supported!"));
-    }
-  };
+  // // Buffer incoming `src` JS files.
+  // var bufferSources = function (file) {
+  //   if (file.isBuffer()) {
+  //     buffer.push(file.contents.toString("utf8"));
+  //   } else if (file.isStream()) {
+  //     return this.emit("error",
+  //       new PluginError(PLUGIN_NAME, "Streams are not supported!"));
+  //   }
+  // };
 
-  // Join everything at end.
-  var convertToDocs = function () {
-    if (buffer.length === 0) {
-      return this.emit("end");
-    }
+  // // Join everything at end.
+  // var convertToDocs = function () {
+  //   if (buffer.length === 0) {
+  //     return this.emit("end");
+  //   }
 
-    var data = dox.parseComments(buffer.toString(), { raw: true });
-    var mdApi = _generateMdApi(data);
+  //   var data = dox.parseComments(buffer.toString(), { raw: true });
+  //   var mdApi = _generateMdApi(data);
 
-    // TODO: Switch to a streams-friendly version.
-    // For the life of me, I cannot figure out how to inject the README as
-    // a separate stream into the mix here...
-    var src = fs.readFileSync(opts.src).toString("utf8");
-    var re = new RegExp(opts.startMarker + "(\n|.)*" + opts.endMarker, "m");
-    var updated = src.replace(re, [
-      opts.startMarker,
-      "\n",
-      mdApi,
-      opts.endMarker
-    ].join(""));
+  //   // TODO: Switch to a streams-friendly version.
+  //   // For the life of me, I cannot figure out how to inject the README as
+  //   // a separate stream into the mix here...
+  //   var src = fs.readFileSync(opts.src).toString("utf8");
+  //   var re = new RegExp(opts.startMarker + "(\n|.)*" + opts.endMarker, "m");
+  //   var updated = src.replace(re, [
+  //     opts.startMarker,
+  //     "\n",
+  //     mdApi,
+  //     opts.endMarker
+  //   ].join(""));
 
+  //   this.emit("data", new gutil.File({
+  //     path: opts.src,
+  //     contents: new Buffer(updated)
+  //   }));
+  //   this.emit("end");
+  // };
+
+
+  //var src = fs.createReadStream(opts.src).toString("utf8");
+
+  var LookForIncludes = through2(function () {
+    // is this the insert point?
+    // IF YES. then push onto new stream.  this.push(MY_MD_DATA_TO_INSERT)
+    // RYAN: Is that equivalent to this.emit("data", MY_MD_DATA_TO_INSERT).
+
+  })
+
+  fs.createReadStream(opts.src)
+    .pipe(lines)
+    .pipe(LookForIncludes())
+
+
+  return es.through(function () {}, function () {
     this.emit("data", new gutil.File({
-      path: opts.src,
-      contents: new Buffer(updated)
+      path: opts.src + ".tmp",
+      contents: fs.createReadStream(opts.src)
     }));
     this.emit("end");
-  };
-
-  return es.through(bufferSources, convertToDocs);
+  });
 };
 
 module.exports = gulpDoximator;
