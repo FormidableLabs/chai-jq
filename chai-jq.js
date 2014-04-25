@@ -327,6 +327,44 @@
     chai.Assertion.addMethod("$attr", $attr);
 
     /**
+     * Asserts that the target has exactly the given named 
+     * data-attribute, or asserts the target contains a subset 
+     * of the data-attribute when using the
+     * `include` or `contain` modifiers.
+     *
+     * ```js
+     * expect($("<div data-id=\"hi\" data-foo=\"bar time\" />"))
+     *   .to.have.$data("id", "hi").and
+     *   .to.contain.$data("foo", "bar");
+     * ```
+     *
+     * Changes context to data-attribute string *value* when no 
+     * expected value is provided:
+     *
+     * ```js
+     * expect($("<div data-id=\"hi\" data-foo=\"bar time\" />"))
+     *   .to.have.$data("foo").and
+     *     .to.equal("bar time").and
+     *     .to.match(/^b/);
+     * ```
+     *
+     * @see http://api.jquery.com/data/
+     *
+     * @param {String} name     data-attribute name
+     * @param {String} expected data-attribute content (_optional_)
+     * @param {String} message  failure message (_optional_)
+     * @returns current object or attribute string value
+     * @api public
+     */
+    var $data = _containMethod("data", {
+      hasArg: true,
+      hasContains: true,
+      isProperty: true
+    });
+
+    chai.Assertion.addMethod("$data", $data);
+
+    /**
      * Asserts that the target has exactly the given named property.
      *
      * ```js
