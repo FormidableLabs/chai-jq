@@ -320,6 +320,89 @@ define(["jquery"], function ($) {
           .to.contain.$attr("foo", "bar");
       });
     });
+    
+    describe("$data", function () {
+      beforeEach(function () {
+        var el = "<div id=\"test\" " +
+          "data-id=\"test\" " +
+          "data-options='{\"name\":\"John\"}' " +
+          "data-foo=\"fun time\" />";
+        this.$fixture = $(el)
+          .appendTo(this.$base);
+      });
+
+      it("matches attribute", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.have.$data("id", "test").and
+          .to.have.$data("foo", "fun time").and
+          .to.not
+            .have.$data("id", "te").and
+            .have.$data("foo", "time");
+
+        expect($fixture)
+          .to.have.$data("options").and
+          .to.have.property("name", "John");
+
+        expect(function () {
+          expect($fixture).to.have.$data("foo", "fun");
+        }).to.throw("expected '#test' to have data('foo') 'fun' " +
+                    "but found '" + "fun time" + "'");
+      });
+
+      it("checks presence of attribute", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture).to.have.$data("id");
+        expect($fixture).to.have.$data("foo");
+        expect(this.$fixture).to.not.have.$data("bar");
+
+        expect(function () {
+          expect($fixture).to.have.$data("bar");
+        }).to.throw("expected '#test' to have data('bar')");
+
+        expect(function () {
+          expect($fixture).to.not.have.$data("foo");
+        }).to.throw("expected '#test' not to have data('foo')");
+      });
+
+      it("changes context to attribute", function () {
+        expect(this.$fixture).to.have.$data("foo").and
+          .to.equal("fun time").and
+          .to.match(/^f/).and
+          .to.not.have.length(2);
+      });
+
+      it("does not change context for negated attribute", function () {
+        expect(this.$fixture).to.not
+          .have.$data("bar").and
+          .have.$data("baz").and
+          .have.$data("boy");
+      });
+
+      it("matches attribute subsets", function () {
+        var $fixture = this.$fixture;
+
+        expect($fixture)
+          .to.contain.$data("id", "test").and
+          .to.contain.$data("id", "te").and
+          .to.contain.$data("foo", "fun time").and
+          .to.contain.$data("foo", "fun").and
+          .to.not
+            .contain.$data("id", "ate").and
+            .contain.$data("foo", "atime");
+
+        expect(function () {
+          expect($fixture).to.contain.$data("foo", "funky");
+        }).to.throw("expected '#test' to contain data('foo') 'funky' " +
+                    "but found '" + "fun time" + "'");
+
+        expect($("<div id=\"test\" data-id=\"hi\" data-foo=\"bar time\" />"))
+          .to.have.$data("id", "hi").and
+          .to.contain.$data("foo", "bar");
+      });
+    });
 
     describe("$prop", function () {
       beforeEach(function () {

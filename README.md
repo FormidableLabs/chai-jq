@@ -116,6 +116,7 @@ value.
 * [`$val(expected, [message])`](#-val-expected-message-)
 * [`$class(expected, [message])`](#-class-expected-message-)
 * [`$attr(name, [expected], [message])`](#-attr-name-expected-message-)
+* [`$data(name, [expected], [message])`](#-data-name-expected-message-)
 * [`$prop(name, [expected], [message])`](#-prop-name-expected-message-)
 * [`$html(expected, [message])`](#-html-expected-message-)
 * [`$text(expected, [message])`](#-text-expected-message-)
@@ -204,6 +205,35 @@ expect($("<div id=\"hi\" foo=\"bar time\" />"))
 ```
 
 See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
+
+### `$data(name, [expected], [message])`
+* **name** (`String`) data-attribute name
+* **expected** (`String`) data-attribute content (_optional_)
+* **message** (`String`) failure message (_optional_)
+* **_returns_** current object or attribute string value
+
+Asserts that the target has exactly the given named 
+data-attribute, or asserts the target contains a subset 
+of the data-attribute when using the
+`include` or `contain` modifiers.
+
+```js
+expect($("<div data-id=\"hi\" data-foo=\"bar time\" />"))
+  .to.have.$data("id", "hi").and
+  .to.contain.$data("foo", "bar");
+```
+
+Changes context to data-attribute string *value* when no 
+expected value is provided:
+
+```js
+expect($("<div data-id=\"hi\" data-foo=\"bar time\" />"))
+  .to.have.$data("foo").and
+    .to.equal("bar time").and
+    .to.match(/^b/);
+```
+
+See: [http://api.jquery.com/data/](http://api.jquery.com/data/)
 
 ### `$prop(name, [expected], [message])`
 * **name** (`String`) property name

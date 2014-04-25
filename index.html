@@ -109,6 +109,7 @@ value.</p>
 <li><a href="#-val-expected-message-"><code>$val(expected, [message])</code></a></li>
 <li><a href="#-class-expected-message-"><code>$class(expected, [message])</code></a></li>
 <li><a href="#-attr-name-expected-message-"><code>$attr(name, [expected], [message])</code></a></li>
+<li><a href="#-data-name-expected-message-"><code>$data(name, [expected], [message])</code></a></li>
 <li><a href="#-prop-name-expected-message-"><code>$prop(name, [expected], [message])</code></a></li>
 <li><a href="#-html-expected-message-"><code>$html(expected, [message])</code></a></li>
 <li><a href="#-text-expected-message-"><code>$text(expected, [message])</code></a></li>
@@ -168,6 +169,27 @@ provided:</p>
     .to.equal(&quot;bar time&quot;).and
     .to.match(/^b/);</code></pre>
 <p>See: <a href="http://api.jquery.com/attr/"><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
+<h3 id="-data-name-expected-message-"><code>$data(name, [expected], [message])</code></h3>
+<ul>
+<li><strong>name</strong> (<code>String</code>) data-attribute name</li>
+<li><strong>expected</strong> (<code>String</code>) data-attribute content (<em>optional</em>)</li>
+<li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
+<li><strong><em>returns</em></strong> current object or attribute string value</li>
+</ul>
+<p>Asserts that the target has exactly the given named 
+data-attribute, or asserts the target contains a subset 
+of the data-attribute when using the
+<code>include</code> or <code>contain</code> modifiers.</p>
+<pre><code class="lang-js">expect($(&quot;&lt;div data-id=\&quot;hi\&quot; data-foo=\&quot;bar time\&quot; /&gt;&quot;))
+  .to.have.$data(&quot;id&quot;, &quot;hi&quot;).and
+  .to.contain.$data(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
+<p>Changes context to data-attribute string <em>value</em> when no 
+expected value is provided:</p>
+<pre><code class="lang-js">expect($(&quot;&lt;div data-id=\&quot;hi\&quot; data-foo=\&quot;bar time\&quot; /&gt;&quot;))
+  .to.have.$data(&quot;foo&quot;).and
+    .to.equal(&quot;bar time&quot;).and
+    .to.match(/^b/);</code></pre>
+<p>See: <a href="http://api.jquery.com/data/"><a href="http://api.jquery.com/data/">http://api.jquery.com/data/</a></a></p>
 <h3 id="-prop-name-expected-message-"><code>$prop(name, [expected], [message])</code></h3>
 <ul>
 <li><strong>name</strong> (<code>String</code>) property name</li>
