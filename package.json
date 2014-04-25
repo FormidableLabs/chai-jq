@@ -1,6 +1,6 @@
 {
   "name": "chai-jq",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "An alternate jQuery assertion library for Chai.",
   "main": "chai-jq.js",
   "dependencies": {},

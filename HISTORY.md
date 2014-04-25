@@ -1,6 +1,10 @@
 History
 =======
 
+## 0.0.7
+
+* API: Add `$data`. [*[@niki4810][]*]
+
 ## 0.0.6
 
 * Switch over to Gulp, removing Grunt.
@@ -33,4 +37,5 @@ History
   `$text`.
 
 [@atimb]: https://github.com/atimb
+[@niki4810]: https://github.com/niki4810
 [@ryan-roemer]: https://github.com/ryan-roemer
