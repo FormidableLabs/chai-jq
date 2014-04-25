@@ -320,7 +320,7 @@ define(["jquery"], function ($) {
           .to.contain.$attr("foo", "bar");
       });
     });
-    
+
     describe("$data", function () {
       beforeEach(function () {
         var el = "<div id=\"test\" " +
@@ -331,7 +331,7 @@ define(["jquery"], function ($) {
           .appendTo(this.$base);
       });
 
-      it("matches attribute", function () {
+      it("matches data attribute", function () {
         var $fixture = this.$fixture;
 
         expect($fixture)
@@ -351,7 +351,7 @@ define(["jquery"], function ($) {
                     "but found '" + "fun time" + "'");
       });
 
-      it("checks presence of attribute", function () {
+      it("checks presence of data attribute", function () {
         var $fixture = this.$fixture;
 
         expect($fixture).to.have.$data("id");
@@ -367,21 +367,21 @@ define(["jquery"], function ($) {
         }).to.throw("expected '#test' not to have data('foo')");
       });
 
-      it("changes context to attribute", function () {
+      it("changes context to data attribute", function () {
         expect(this.$fixture).to.have.$data("foo").and
           .to.equal("fun time").and
           .to.match(/^f/).and
           .to.not.have.length(2);
       });
 
-      it("does not change context for negated attribute", function () {
+      it("does not change context for negated data attribute", function () {
         expect(this.$fixture).to.not
           .have.$data("bar").and
           .have.$data("baz").and
           .have.$data("boy");
       });
 
-      it("matches attribute subsets", function () {
+      it("matches data attribute subsets", function () {
         var $fixture = this.$fixture;
 
         expect($fixture)
