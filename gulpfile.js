@@ -11,7 +11,7 @@ var fs = require("fs"),
   mocha = require("gulp-mocha"),
   jade = require("gulp-jade"),
   rename = require("gulp-rename"),
-  doc = require("./tasks/doc");
+  mdox = require("gulp-mdox");
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -129,10 +129,11 @@ gulp.task("test:backend", function () {
 gulp.task("docs:api", function () {
   gulp
     .src("chai-jq.js")
-    .pipe(doc({
+    .pipe(mdox({
       src: "README.md",
-      startMarker: "## Plugin API",
-      endMarker: "## Contributions"
+      name: "README.md",
+      start: "## Plugin API",
+      end: "## Contributions"
     }))
     .pipe(gulp.dest("./"));
 });
