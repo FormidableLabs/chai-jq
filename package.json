@@ -11,7 +11,6 @@
     "gulp-jshint": "1.4.0",
     "gulp-karma": "https://github.com/FormidableLabs/gulp-karma/tarball/9535488a28fdef909e7cc221e2d02a3cdf684c9d",
     "gulp-mocha": "0.4.1",
-    "gulp-util": "2.2.14",
     "jquery": "1.8.3",
     "jsdom": "0.8.8",
     "lodash": "2.4.1",
