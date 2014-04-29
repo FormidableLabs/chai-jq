@@ -28,7 +28,8 @@
     "karma-chrome-launcher": "0.1.2",
     "gulp-jade": "0.4.2",
     "event-stream": "3.1.0",
-    "gulp-rename": "1.2.0"
+    "gulp-rename": "1.2.0",
+    "gulp-mdox": "0.0.2"
   },
   "scripts": {
     "test": "./node_modules/.bin/gulp check"
