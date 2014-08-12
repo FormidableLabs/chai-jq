@@ -19,13 +19,14 @@ var fs = require("fs"),
 // Sauce labs environments.
 var SAUCE_ENVS = {
   /*jshint camelcase:false */
+  // Already tested in Travis.
+  // sl_firefox: {
+  //   base: "SauceLabs",
+  //   browserName: "firefox"
+  // },
   sl_chrome: {
     base: "SauceLabs",
     browserName: "chrome"
-  },
-  sl_firefox: {
-    base: "SauceLabs",
-    browserName: "firefox"
   },
   sl_safari: {
     base: "SauceLabs",
@@ -150,9 +151,9 @@ gulp.task("test:frontend:sauce", testFrontend({
     testName: "chai-jq - Frontend Unit Tests",
     public: "public"
   },
-  // Timeouts: Allow 2 minutes before saying "good enough". See also:
+  // Timeouts: Allow "n" minutes before saying "good enough". See also:
   // https://github.com/angular/angular.js/blob/master/karma-shared.conf.js
-  captureTimeout: 2 * 60 * 1000,
+  captureTimeout: 0, // Pass through to SL.
   customLaunchers: SAUCE_ENVS,
   browsers: Object.keys(SAUCE_ENVS)
 }));
