@@ -150,9 +150,9 @@ gulp.task("test:frontend:sauce", testFrontend({
     testName: "chai-jq - Frontend Unit Tests",
     public: "public"
   },
-  // Timeouts: Rely on SL timeout
+  // Timeouts: Allow 2 minutes before saying "good enough". See also:
   // https://github.com/angular/angular.js/blob/master/karma-shared.conf.js
-  captureTimeout: 0,
+  captureTimeout: 2 * 60 * 1000,
   customLaunchers: SAUCE_ENVS,
   browsers: Object.keys(SAUCE_ENVS)
 }));
