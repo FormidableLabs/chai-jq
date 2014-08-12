@@ -1,6 +1,10 @@
 History
 =======
 
+## Current
+
+* Add Sauce Labs integration.
+
 ## 0.0.7
 
 * API: Add `$data`. [*[@niki4810][]*]
