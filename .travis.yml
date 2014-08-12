@@ -1,12 +1,13 @@
 language: node_js
-
 node_js:
   - 0.10
-
 before_install:
-  # GUI for real browsers.
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 script:
   - ./node_modules/.bin/gulp check:ci
+  - ./node_modules/.bin/gulp test:frontend:sauce
+env:
+  global:
+  - secure: GUzDAvlbRX+xII7nNDzGw72XDz2GX3b4tGwZiV/LR3N+oWQMR7Kv4D8p4x/K9RR2NVgYvWc4EW1NHF/X28B7SWnxFH2W8znteyx6cyV2InVmAUAUMXP5sW4msEN/tQuEusyzkzm9me5n8uHPGbkm6g30bmyEB8+NE3lQgQk3B8w=
+  - secure: So1D+mAFc3HhlZqskQ+Dft4T4BjzQIuIbW4gl/y5R3THd8qwaV9R5KJCo0hz+b+X/ThuerOlgN1xPk0Y66mwExsV2JhvRH+l3R+ALlIat4YZiy7EBnJ9cqjUHA1NdY56dJr3MQ8Ce6O0YaROts9TY12ml88MhGXdMW7sMIwYPg0=
