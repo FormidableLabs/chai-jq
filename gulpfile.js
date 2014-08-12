@@ -150,6 +150,9 @@ gulp.task("test:frontend:sauce", testFrontend({
     testName: "chai-jq - Frontend Unit Tests",
     public: "public"
   },
+  // Timeouts: Rely on SL timeout
+  // https://github.com/angular/angular.js/blob/master/karma-shared.conf.js
+  captureTimeout: 0,
   customLaunchers: SAUCE_ENVS,
   browsers: Object.keys(SAUCE_ENVS)
 }));
