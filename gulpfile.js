@@ -36,7 +36,7 @@ var SAUCE_ENVS = {
     base: "SauceLabs",
     browserName: "internet explorer",
     platform: "Windows 7",
-    version: "10"
+    version: "9"
   },
   sl_ie_10: {
     base: "SauceLabs",
