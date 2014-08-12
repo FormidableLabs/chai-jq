@@ -80,7 +80,7 @@ var testFrontend = function (opts) {
       .pipe(karma(_.extend({
         frameworks: ["mocha"],
         port: 9999,
-        reporters: "mocha",
+        reporters: ["mocha"],
         client: {
           mocha: {
             ui: "bdd"
