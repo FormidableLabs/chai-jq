@@ -332,9 +332,17 @@ We test all changes with [Travis CI][trav]. Here's our current
 
 [![Build Status][trav_img]][trav_site]
 
+We also do multi-browser testing of the frontend code using [Sauce Labs][sauce].
+Here's out [build matrix][sauce_site]:
+
+[![Sauce Test Status][sauce_img]][sauce_site]
+
 [trav]: https://travis-ci.org/
 [trav_img]: https://api.travis-ci.org/FormidableLabs/chai-jq.png
 [trav_site]: https://travis-ci.org/FormidableLabs/chai-jq
+[sauce]: https://saucelabs.com
+[sauce_img]: https://saucelabs.com/browser-matrix/chai-jq.svg
+[sauce_site]: https://saucelabs.com/u/chai-jq
 
 ## Licenses
 All code not otherwise specified is Copyright 2013 Ryan Roemer.

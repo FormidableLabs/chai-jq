@@ -14,6 +14,46 @@ var fs = require("fs"),
   mdox = require("gulp-mdox");
 
 // ----------------------------------------------------------------------------
+// Globals
+// ----------------------------------------------------------------------------
+// Sauce labs environments.
+var SAUCE_ENVS = {
+  /*jshint camelcase:false */
+  sl_chrome: {
+    base: "SauceLabs",
+    browserName: "chrome"
+  },
+  sl_firefox: {
+    base: "SauceLabs",
+    browserName: "firefox"
+  },
+  sl_safari: {
+    base: "SauceLabs",
+    browserName: "safari",
+    platform: "OS X 10.9"
+  },
+  sl_ie_9: {
+    base: "SauceLabs",
+    browserName: "internet explorer",
+    platform: "Windows 7",
+    version: "10"
+  },
+  sl_ie_10: {
+    base: "SauceLabs",
+    browserName: "internet explorer",
+    platform: "Windows 7",
+    version: "10"
+  },
+  sl_ie_11: {
+    base: "SauceLabs",
+    browserName: "internet explorer",
+    platform: "Windows 7",
+    version: "11"
+  }
+  /*jshint camelcase:true */
+};
+
+// ----------------------------------------------------------------------------
 // Helpers
 // ----------------------------------------------------------------------------
 // Strip comments from JsHint JSON files (naive).
@@ -107,17 +147,11 @@ gulp.task("test:frontend:sauce", testFrontend({
   singleRun: true,
   reporters: ["mocha", "saucelabs"],
   sauceLabs: {
-    testName: "chai-jq - Frontend Unit Tests"
+    testName: "chai-jq - Frontend Unit Tests",
+    public: "public"
   },
-  customLaunchers: {
-    sl_ie_11: {
-      base: "SauceLabs",
-      browserName: "internet explorer",
-      platform: "Windows 7",
-      version: "11"
-    }
-  },
-  browsers: ["sl_ie_11"]
+  customLaunchers: SAUCE_ENVS,
+  browsers: Object.keys(SAUCE_ENVS)
 }));
 
 gulp.task("test:frontend:all", testFrontend({
