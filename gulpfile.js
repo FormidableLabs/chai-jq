@@ -103,6 +103,23 @@ gulp.task("test:frontend:ci", testFrontend({
   browsers: ["PhantomJS", "Firefox"]
 }));
 
+gulp.task("test:frontend:sauce", testFrontend({
+  singleRun: true,
+  reporters: ["mocha", "saucelabs"],
+  sauceLabs: {
+    testName: "chai-jq - Frontend Unit Tests"
+  },
+  customLaunchers: {
+    sl_ie_11: {
+      base: "SauceLabs",
+      browserName: "internet explorer",
+      platform: "Windows 7",
+      version: "11"
+    }
+  },
+  browsers: ["sl_ie_11"]
+}));
+
 gulp.task("test:frontend:all", testFrontend({
   port: 9998,
   browsers: ["PhantomJS", "Firefox", "Chrome", "Safari"]

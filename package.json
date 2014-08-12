@@ -30,8 +30,8 @@
     "phantomjs": "1.9.7-1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/gulp check",
-    "sauce-local": "echo TODO"
+    "test": "gulp check",
+    "sauce-local": "gulp test:frontend:sauce"
   },
   "repository": {
     "type": "git",
