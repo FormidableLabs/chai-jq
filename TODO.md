@@ -1,13 +1,7 @@
 Tasks
 =====
 
-## Current
-
-* CI: Add in saucelabs + karma integration.
-    * https://saucelabs.com/opensauce
-    * https://saucelabs.com/opensource/travis
-
-## POC Branch
+## POC Branches
 
 * Add gulp AMD tests. [feature-karma-amd](https://github.com/FormidableLabs/chai-jq/compare/feature-karma-amd)
 * Add blanket to HTML tests. [chore-blanket](https://github.com/FormidableLabs/chai-jq/compare/chore-blanket)
