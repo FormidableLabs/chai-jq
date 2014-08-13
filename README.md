@@ -333,7 +333,7 @@ We test all changes with [Travis CI][trav]. Here's our current
 [![Build Status][trav_img]][trav_site]
 
 We also do multi-browser testing of the frontend code using [Sauce Labs][sauce].
-Here's out [build matrix][sauce_site]:
+Here's our [build matrix][sauce_site]:
 
 [![Sauce Test Status][sauce_img]][sauce_site]
 
