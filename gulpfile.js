@@ -54,6 +54,10 @@ var SAUCE_ENVS = {
   /*jshint camelcase:true */
 };
 
+// SauceLabs tag.
+var SAUCE_BRANCH = process.env.TRAVIS_BRANCH || "local";
+var SAUCE_TAG = process.env.SAUCE_USERNAME + "@" + SAUCE_BRANCH;
+
 // ----------------------------------------------------------------------------
 // Helpers
 // ----------------------------------------------------------------------------
@@ -149,6 +153,7 @@ gulp.task("test:frontend:sauce", testFrontend({
   reporters: ["mocha", "saucelabs"],
   sauceLabs: {
     testName: "chai-jq - Frontend Unit Tests",
+    tags: [SAUCE_TAG],
     public: "public"
   },
   // Timeouts: Allow "n" minutes before saying "good enough". See also:
