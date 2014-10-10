@@ -126,13 +126,17 @@ var testFrontend = function (opts) {
         frameworks: ["mocha"],
         port: 9999,
         reporters: ["mocha", "coverage"],
-        preprocessors: {
-          "chai-jq.js": ["coverage"]
-        },
         client: {
           mocha: {
             ui: "bdd"
           }
+        },
+        preprocessors: {
+          "chai-jq.js": ["coverage"]
+        },
+        coverageReporter: {
+          type: "lcov",
+          dir: "coverage/"
         }
       }, opts)))
       .on("error", function (err) {
