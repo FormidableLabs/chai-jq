@@ -14,3 +14,4 @@ testem.*
 *.iml
 
 local
+coverage
