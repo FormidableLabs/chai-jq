@@ -340,7 +340,7 @@ Here's our [build matrix][sauce_site]:
 [![Sauce Test Status][sauce_img]][sauce_site]
 
 [trav]: https://travis-ci.org/
-[trav_img]: https://api.travis-ci.org/FormidableLabs/chai-jq.png
+[trav_img]: https://api.travis-ci.org/FormidableLabs/chai-jq.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/chai-jq
 [cov]: https://coveralls.io
 [cov_img]: https://img.shields.io/coveralls/FormidableLabs/chai-jq.svg

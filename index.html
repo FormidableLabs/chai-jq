@@ -176,14 +176,14 @@ provided:</p>
 <li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 <li><strong><em>returns</em></strong> current object or attribute string value</li>
 </ul>
-<p>Asserts that the target has exactly the given named 
-data-attribute, or asserts the target contains a subset 
+<p>Asserts that the target has exactly the given named
+data-attribute, or asserts the target contains a subset
 of the data-attribute when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div data-id=\&quot;hi\&quot; data-foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$data(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$data(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
-<p>Changes context to data-attribute string <em>value</em> when no 
+<p>Changes context to data-attribute string <em>value</em> when no
 expected value is provided:</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div data-id=\&quot;hi\&quot; data-foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$data(&quot;foo&quot;).and
@@ -259,7 +259,7 @@ with the plugin.</p>
 <p>We test all changes with <a href="https://travis-ci.org/">Travis CI</a> and report internal test coverage
 with <a href="https://coveralls.io">Coveralls</a>. Here is the status for our current
 <a href="https://travis-ci.org/FormidableLabs/chai-jq">build</a> and <a href="https://coveralls.io/r/FormidableLabs/chai-jq">coverage</a>:</p>
-<p><a href="https://travis-ci.org/FormidableLabs/chai-jq"><img src="https://api.travis-ci.org/FormidableLabs/chai-jq.png" alt="Build Status"></a>
+<p><a href="https://travis-ci.org/FormidableLabs/chai-jq"><img src="https://api.travis-ci.org/FormidableLabs/chai-jq.svg" alt="Build Status"></a>
 <a href="https://coveralls.io/r/FormidableLabs/chai-jq"><img src="https://img.shields.io/coveralls/FormidableLabs/chai-jq.svg" alt="Coverage Status"></a></p>
 <p>We also do multi-browser testing of the frontend code using <a href="https://saucelabs.com">Sauce Labs</a>.
 Here&#39;s our <a href="https://saucelabs.com/u/chai-jq">build matrix</a>:</p>
