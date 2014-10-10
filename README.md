@@ -327,10 +327,12 @@ See: [http://api.jquery.com/css/](http://api.jquery.com/css/)
 Please see the [Contributions Guide](./CONTRIBUTING.md) for how to help out
 with the plugin.
 
-We test all changes with [Travis CI][trav]. Here's our current
-[build status][trav_site]:
+We test all changes with [Travis CI][trav] and report internal test coverage
+with [Coveralls][cov]. Here is the status for our current
+[build][trav_site] and [coverage][cov_site]:
 
 [![Build Status][trav_img]][trav_site]
+[![Coverage Status][cov_img]][cov_site]
 
 We also do multi-browser testing of the frontend code using [Sauce Labs][sauce].
 Here's our [build matrix][sauce_site]:
@@ -340,6 +342,9 @@ Here's our [build matrix][sauce_site]:
 [trav]: https://travis-ci.org/
 [trav_img]: https://api.travis-ci.org/FormidableLabs/chai-jq.png
 [trav_site]: https://travis-ci.org/FormidableLabs/chai-jq
+[cov]: https://coveralls.io
+[cov_img]: https://img.shields.io/coveralls/FormidableLabs/chai-jq.svg
+[cov_site]: https://coveralls.io/r/FormidableLabs/chai-jq
 [sauce]: https://saucelabs.com
 [sauce_img]: https://saucelabs.com/browser-matrix/chai-jq.svg
 [sauce_site]: https://saucelabs.com/u/chai-jq

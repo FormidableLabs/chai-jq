@@ -145,7 +145,15 @@ gulp.task("test:frontend:dev", testFrontend({
 
 gulp.task("test:frontend:ci", testFrontend({
   singleRun: true,
-  browsers: ["PhantomJS", "Firefox"]
+  browsers: ["PhantomJS", "Firefox"],
+  reporters: ["mocha", "coverage", "coveralls"],
+  preprocessors: {
+    "chai-jq.js": ["coverage"]
+  },
+  coverageReporter: {
+    type: "lcov",
+    dir: "coverage/"
+  }
 }));
 
 gulp.task("test:frontend:sauce", testFrontend({
