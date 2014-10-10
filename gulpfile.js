@@ -125,18 +125,11 @@ var testFrontend = function (opts) {
       .pipe(karma(_.extend({
         frameworks: ["mocha"],
         port: 9999,
-        reporters: ["mocha", "coverage"],
+        reporters: ["mocha"],
         client: {
           mocha: {
             ui: "bdd"
           }
-        },
-        preprocessors: {
-          "chai-jq.js": ["coverage"]
-        },
-        coverageReporter: {
-          type: "lcov",
-          dir: "coverage/"
         }
       }, opts)))
       .on("error", function (err) {
@@ -152,7 +145,15 @@ gulp.task("test:frontend:dev", testFrontend({
 
 gulp.task("test:frontend:ci", testFrontend({
   singleRun: true,
-  browsers: ["PhantomJS", "Firefox"]
+  browsers: ["PhantomJS", "Firefox"],
+  reporters: ["mocha", "coverage", "coveralls"],
+  preprocessors: {
+    "chai-jq.js": ["coverage"]
+  },
+  coverageReporter: {
+    type: "lcov",
+    dir: "coverage/"
+  }
 }));
 
 gulp.task("test:frontend:sauce", testFrontend({
