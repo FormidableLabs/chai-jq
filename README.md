@@ -327,12 +327,14 @@ See: [http://api.jquery.com/css/](http://api.jquery.com/css/)
 Please see the [Contributions Guide](./CONTRIBUTING.md) for how to help out
 with the plugin.
 
-We test all changes with [Travis CI][trav] and report internal test coverage
-with [Coveralls][cov]. Here is the status for our current
-[build][trav_site] and [coverage][cov_site]:
+We test all changes with [Travis CI][trav], report internal test coverage
+with [Coveralls][cov] and check complexity / static analysis with
+[Code Climate][cc]. Here is the status for our
+[build][trav_site], [coverage][cov_site], and [complexity](cc_site):
 
 [![Build Status][trav_img]][trav_site]
 [![Coverage Status][cov_img]][cov_site]
+[![Code Climate][cc_img]][cc_site]
 
 We also do multi-browser testing of the frontend code using [Sauce Labs][sauce].
 Here's our [build matrix][sauce_site]:
@@ -345,6 +347,9 @@ Here's our [build matrix][sauce_site]:
 [cov]: https://coveralls.io
 [cov_img]: https://img.shields.io/coveralls/FormidableLabs/chai-jq.svg
 [cov_site]: https://coveralls.io/r/FormidableLabs/chai-jq
+[cc]: https://codeclimate.com
+[cc_img]: https://codeclimate.com/github/FormidableLabs/chai-jq/badges/gpa.svg
+[cc_site]: https://codeclimate.com/github/FormidableLabs/chai-jq
 [sauce]: https://saucelabs.com
 [sauce_img]: https://saucelabs.com/browser-matrix/chai-jq.svg
 [sauce_site]: https://saucelabs.com/u/chai-jq
