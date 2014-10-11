@@ -330,7 +330,7 @@ with the plugin.
 We test all changes with [Travis CI][trav], report internal test coverage
 with [Coveralls][cov] and check complexity / static analysis with
 [Code Climate][cc]. Here is the status for our
-[build][trav_site], [coverage][cov_site], and [complexity](cc_site):
+[build][trav_site], [coverage][cov_site], and [complexity][cc_site]:
 
 [![Build Status][trav_img]][trav_site]
 [![Coverage Status][cov_img]][cov_site]

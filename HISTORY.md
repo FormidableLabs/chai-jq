@@ -3,6 +3,7 @@ History
 
 ## Current
 
+* Add coverage, static analysis integrations.
 * Add Sauce Labs integration.
 
 ## 0.0.7
