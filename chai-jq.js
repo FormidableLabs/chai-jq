@@ -29,6 +29,11 @@
         id = $el.attr("id"),
         cls = $el.attr("class") || "";
 
+      // Detect if completely empty.
+      if (!$el || $el.length === 0) {
+        return "<EMPTY OBJECT>";
+      }
+
       // Try CSS selector id.
       if (id) {
         name += "#" + id;
@@ -128,7 +133,7 @@
      */
     var _containMethod = function (jqMeth, opts) {
       // Unpack options.
-      opts = opts || {};
+      opts = opts || /* istanbul ignore next */ {};
       opts.hasArg       = !!opts.hasArg;
       opts.isProperty   = !!opts.isProperty;
       opts.hasContains  = !!opts.hasContains;

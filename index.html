@@ -176,14 +176,14 @@ provided:</p>
 <li><strong>message</strong> (<code>String</code>) failure message (<em>optional</em>)</li>
 <li><strong><em>returns</em></strong> current object or attribute string value</li>
 </ul>
-<p>Asserts that the target has exactly the given named 
-data-attribute, or asserts the target contains a subset 
+<p>Asserts that the target has exactly the given named
+data-attribute, or asserts the target contains a subset
 of the data-attribute when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div data-id=\&quot;hi\&quot; data-foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$data(&quot;id&quot;, &quot;hi&quot;).and
   .to.contain.$data(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
-<p>Changes context to data-attribute string <em>value</em> when no 
+<p>Changes context to data-attribute string <em>value</em> when no
 expected value is provided:</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div data-id=\&quot;hi\&quot; data-foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$data(&quot;foo&quot;).and
@@ -298,6 +298,8 @@ license.</p>
         <div id="history"><h1 id="history">History</h1>
 <h2 id="current">Current</h2>
 <ul>
+<li>Add name of <code>&lt;EMPTY OBJECT&gt;</code> for zero-length selectors.</li>
+<li>Add coverage enforcement and get to 100% coverage.</li>
 <li>Add coverage, static analysis integrations.</li>
 <li>Add Sauce Labs integration.</li>
 </ul>

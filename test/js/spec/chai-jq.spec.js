@@ -86,6 +86,19 @@ define(["jquery"], function ($) {
         }).to.throw("expected '#test' to have val 'foo' but found ''");
       });
 
+      it("works with no matched element", function () {
+        var $fixture = $("NO_MATCH");
+
+        expect($fixture)
+          .to.have.$val(undefined).and
+          .to.not.have.$val("bar");
+
+        expect(function () {
+          expect($fixture).to.have.$val("foo");
+        }).to.throw(
+          "expected <EMPTY OBJECT> to have val 'foo' but found 'undefined'");
+      });
+
       it("can override error messages", function () {
         var $fixture = this.$fixture;
 

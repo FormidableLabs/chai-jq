@@ -3,6 +3,8 @@ History
 
 ## Current
 
+* Add name of `<EMPTY OBJECT>` for zero-length selectors.
+* Add coverage enforcement and get to 100% coverage.
 * Add coverage, static analysis integrations.
 * Add Sauce Labs integration.
 

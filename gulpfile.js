@@ -170,11 +170,6 @@ var testFrontend = function () {
 gulp.task("test:frontend:dev", testFrontend({
   singleRun: true,
   browsers: ["PhantomJS"]
-}));
-
-gulp.task("test:frontend:dev-cov", testFrontend({
-  singleRun: true,
-  browsers: ["PhantomJS"]
 }, KARMA_COV));
 
 gulp.task("test:frontend:ci", testFrontend({

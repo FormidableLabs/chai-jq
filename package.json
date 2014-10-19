@@ -34,6 +34,8 @@
   },
   "scripts": {
     "test": "gulp check",
+    "check": "npm run-script test && npm run-script coverage",
+    "coverage": "./node_modules/karma-coverage/node_modules/.bin/istanbul check-coverage --statements 100 --branches 100 --lines 100 --functions 100 'coverage/**/coverage.json'",
     "sauce-local": "gulp test:frontend:sauce"
   },
   "repository": {
