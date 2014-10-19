@@ -128,7 +128,7 @@
      */
     var _containMethod = function (jqMeth, opts) {
       // Unpack options.
-      opts || (opts = {});
+      opts = opts || {};
       opts.hasArg       = !!opts.hasArg;
       opts.isProperty   = !!opts.isProperty;
       opts.hasContains  = !!opts.hasContains;
@@ -327,8 +327,8 @@
     chai.Assertion.addMethod("$attr", $attr);
 
     /**
-     * Asserts that the target has exactly the given named 
-     * data-attribute, or asserts the target contains a subset 
+     * Asserts that the target has exactly the given named
+     * data-attribute, or asserts the target contains a subset
      * of the data-attribute when using the
      * `include` or `contain` modifiers.
      *
@@ -338,7 +338,7 @@
      *   .to.contain.$data("foo", "bar");
      * ```
      *
-     * Changes context to data-attribute string *value* when no 
+     * Changes context to data-attribute string *value* when no
      * expected value is provided:
      *
      * ```js
@@ -486,6 +486,7 @@
     chai.Assertion.addMethod("$css", $css);
   }
 
+  /* istanbul ignore next */
   /*!
    * Wrap AMD, etc. using boilerplate.
    */
