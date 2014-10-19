@@ -6,6 +6,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 script:
   - ./node_modules/.bin/gulp check:ci
+  - npm run-script coverage
   - ./node_modules/.bin/gulp test:frontend:sauce
 env:
   global:

@@ -11,7 +11,8 @@ var fs = require("fs"),
   mocha = require("gulp-mocha"),
   jade = require("gulp-jade"),
   rename = require("gulp-rename"),
-  mdox = require("gulp-mdox");
+  mdox = require("gulp-mdox"),
+  rimraf = require("gulp-rimraf");
 
 // ----------------------------------------------------------------------------
 // Globals
@@ -58,6 +59,21 @@ var SAUCE_ENVS = {
 var SAUCE_BRANCH = process.env.TRAVIS_BRANCH || "local";
 var SAUCE_TAG = process.env.SAUCE_USERNAME + "@" + SAUCE_BRANCH;
 
+// Karma coverage.
+var KARMA_COV = {
+  reporters: ["mocha", "coverage"],
+  preprocessors: {
+    "chai-jq.js": ["coverage"]
+  },
+  coverageReporter: {
+    reporters: [
+      { type: "json", file: "coverage.json" },
+      { type: "lcov" }
+    ],
+    dir: "coverage/"
+  }
+};
+
 // ----------------------------------------------------------------------------
 // Helpers
 // ----------------------------------------------------------------------------
@@ -73,12 +89,23 @@ var _jshintCfg = function (name) {
 gulp.task("jshint:frontend", function () {
   gulp
     .src([
-      "test/js/spec/**/*.js",
       "test/js/adapters/karma.js",
       "*.js",
       "!gulpfile.js"
     ])
     .pipe(jshint(_jshintCfg(".jshintrc-frontend.json")))
+    .pipe(jshint.reporter("default"))
+    .pipe(jshint.reporter("fail"));
+});
+
+gulp.task("jshint:test", function () {
+  gulp
+    .src([
+      "test/js/spec/**/*.js"
+    ])
+    .pipe(jshint(_.merge(_jshintCfg(".jshintrc-frontend.json"), {
+      expr: true
+    })))
     .pipe(jshint.reporter("default"))
     .pipe(jshint.reporter("fail"));
 });
@@ -95,7 +122,7 @@ gulp.task("jshint:backend", function () {
     .pipe(jshint.reporter("fail"));
 });
 
-gulp.task("jshint", ["jshint:frontend", "jshint:backend"]);
+gulp.task("jshint", ["jshint:frontend", "jshint:test", "jshint:backend"]);
 
 // ----------------------------------------------------------------------------
 // Test - Frontend
@@ -104,7 +131,7 @@ gulp.task("jshint", ["jshint:frontend", "jshint:backend"]);
 process.env.PHANTOMJS_BIN = "./node_modules/.bin/phantomjs";
 
 // Test wrapper.
-var testFrontend = function (opts) {
+var testFrontend = function () {
   var files = [
     // Libraries
     "test/js/lib/sinon.js",
@@ -119,19 +146,21 @@ var testFrontend = function (opts) {
     "test/js/spec/chai-jq.spec.js"
   ];
 
+  var opts = _.extend.apply(_, [{
+    frameworks: ["mocha"],
+    port: 9999,
+    reporters: ["mocha"],
+    client: {
+      mocha: {
+        ui: "bdd"
+      }
+    }
+  }].concat(_.toArray(arguments)));
+
   return function () {
     return gulp
       .src(files)
-      .pipe(karma(_.extend({
-        frameworks: ["mocha"],
-        port: 9999,
-        reporters: ["mocha"],
-        client: {
-          mocha: {
-            ui: "bdd"
-          }
-        }
-      }, opts)))
+      .pipe(karma(opts))
       .on("error", function (err) {
         throw err;
       });
@@ -141,19 +170,13 @@ var testFrontend = function (opts) {
 gulp.task("test:frontend:dev", testFrontend({
   singleRun: true,
   browsers: ["PhantomJS"]
-}));
+}, KARMA_COV));
 
 gulp.task("test:frontend:ci", testFrontend({
   singleRun: true,
-  browsers: ["PhantomJS", "Firefox"],
-  reporters: ["mocha", "coverage", "coveralls"],
-  preprocessors: {
-    "chai-jq.js": ["coverage"]
-  },
-  coverageReporter: {
-    type: "lcov",
-    dir: "coverage/"
-  }
+  browsers: ["PhantomJS", "Firefox"]
+}, KARMA_COV, {
+  reporters: ["mocha", "coverage", "coveralls"]
 }));
 
 gulp.task("test:frontend:sauce", testFrontend({
@@ -224,7 +247,7 @@ gulp.task("copy", function () {
       "bower_components/mocha/mocha.js",
       "bower_components/mocha/mocha.css",
       "bower_components/chai/chai.js",
-      "bower_components/jquery/jquery.js",
+      "bower_components/jquery/dist/jquery.js",
       "bower_components/requirejs/require.js",
       "bower_components/pure/pure-min.css"
     ])
@@ -252,6 +275,17 @@ gulp.task("watch", function () {
 });
 
 // ----------------------------------------------------------------------------
+// Clean
+// ----------------------------------------------------------------------------
+gulp.task("clean", function () {
+  gulp
+    .src([
+      "coverage"
+    ], { read: false })
+    .pipe(rimraf());
+});
+
+// ----------------------------------------------------------------------------
 // Aggregated Tasks
 // ----------------------------------------------------------------------------
 gulp.task("check:dev",  ["jshint", "test:backend", "test:frontend:dev"]);
@@ -261,4 +295,4 @@ gulp.task("check",      ["check:dev"]);
 
 gulp.task("build",      ["copy", "docs:api", "templates"]);
 
-gulp.task("default",    ["check", "build"]);
+gulp.task("default",    ["clean", "check", "build"]);

@@ -25,6 +25,11 @@
      * Give a more useful element name.
      */
     var _elName = function ($el) {
+      // Detect if completely empty.
+      if (!$el || $el.length === 0) {
+        return "<EMPTY OBJECT>";
+      }
+
       var name = "",
         id = $el.attr("id"),
         cls = $el.attr("class") || "";
@@ -128,7 +133,7 @@
      */
     var _containMethod = function (jqMeth, opts) {
       // Unpack options.
-      opts || (opts = {});
+      opts = opts || /* istanbul ignore next */ {};
       opts.hasArg       = !!opts.hasArg;
       opts.isProperty   = !!opts.isProperty;
       opts.hasContains  = !!opts.hasContains;
@@ -246,7 +251,9 @@
      * @api public
      */
     var $val = _jqAssert(function (exp) {
-      var act = this._$el.val(),
+      // Manually check empty elements for `.val` call b/c ie9 can otherwise
+      // report `Unspecified error.` at least in Sauce Labs.
+      var act = this._$el && this._$el.length > 0 ? this._$el.val() : undefined,
         comp = _isRegExp(exp) ? _regExpMatch : _equals;
 
       this.assert(
@@ -327,8 +334,8 @@
     chai.Assertion.addMethod("$attr", $attr);
 
     /**
-     * Asserts that the target has exactly the given named 
-     * data-attribute, or asserts the target contains a subset 
+     * Asserts that the target has exactly the given named
+     * data-attribute, or asserts the target contains a subset
      * of the data-attribute when using the
      * `include` or `contain` modifiers.
      *
@@ -338,7 +345,7 @@
      *   .to.contain.$data("foo", "bar");
      * ```
      *
-     * Changes context to data-attribute string *value* when no 
+     * Changes context to data-attribute string *value* when no
      * expected value is provided:
      *
      * ```js
@@ -486,6 +493,7 @@
     chai.Assertion.addMethod("$css", $css);
   }
 
+  /* istanbul ignore next */
   /*!
    * Wrap AMD, etc. using boilerplate.
    */

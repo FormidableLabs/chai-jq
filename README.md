@@ -212,8 +212,8 @@ See: [http://api.jquery.com/attr/](http://api.jquery.com/attr/)
 * **message** (`String`) failure message (_optional_)
 * **_returns_** current object or attribute string value
 
-Asserts that the target has exactly the given named 
-data-attribute, or asserts the target contains a subset 
+Asserts that the target has exactly the given named
+data-attribute, or asserts the target contains a subset
 of the data-attribute when using the
 `include` or `contain` modifiers.
 
@@ -223,7 +223,7 @@ expect($("<div data-id=\"hi\" data-foo=\"bar time\" />"))
   .to.contain.$data("foo", "bar");
 ```
 
-Changes context to data-attribute string *value* when no 
+Changes context to data-attribute string *value* when no
 expected value is provided:
 
 ```js

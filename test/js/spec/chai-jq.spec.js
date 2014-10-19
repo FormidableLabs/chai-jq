@@ -86,6 +86,24 @@ define(["jquery"], function ($) {
         }).to.throw("expected '#test' to have val 'foo' but found ''");
       });
 
+      it("works with no matched element", function () {
+        // NOTE: On ie9/win7 in Sauce Labs, the failure message is an
+        // `Unspecified error.` if an empty selector is not attached /
+        // searched from the DOM. So `var $fixture = $("#NO_MATCH");` would
+        // cause this. However, `.find` from something attached to DOM works
+        // like normal, hence the selector below.
+        var $fixture = this.$fixture.find("#NO_MATCH");
+
+        expect($fixture)
+          .to.have.$val(undefined).and
+          .to.not.have.$val("bar");
+
+        expect(function () {
+          expect($fixture).to.have.$val("foo");
+        }).to.throw(
+          "expected <EMPTY OBJECT> to have val 'foo' but found 'undefined'");
+      });
+
       it("can override error messages", function () {
         var $fixture = this.$fixture;
 
