@@ -1,7 +1,7 @@
 History
 =======
 
-## Current
+## 0.0.8
 
 * Add name of `<EMPTY OBJECT>` for zero-length selectors.
 * Add coverage enforcement and get to 100% coverage.
