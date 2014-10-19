@@ -247,7 +247,7 @@ gulp.task("copy", function () {
       "bower_components/mocha/mocha.js",
       "bower_components/mocha/mocha.css",
       "bower_components/chai/chai.js",
-      "bower_components/jquery/jquery.js",
+      "bower_components/jquery/dist/jquery.js",
       "bower_components/requirejs/require.js",
       "bower_components/pure/pure-min.css"
     ])
