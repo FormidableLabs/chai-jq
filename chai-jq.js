@@ -251,7 +251,9 @@
      * @api public
      */
     var $val = _jqAssert(function (exp) {
-      var act = this._$el.val(),
+      // Manually check empty elements for `.val` call b/c ie9 can otherwise
+      // report `Unspecified error.` at least in Sauce Labs.
+      var act = this._$el.length > 0 ? this._$el.val() : undefined,
         comp = _isRegExp(exp) ? _regExpMatch : _equals;
 
       this.assert(
