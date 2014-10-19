@@ -87,7 +87,7 @@ define(["jquery"], function ($) {
       });
 
       it("works with no matched element", function () {
-        var $fixture = $("NO_MATCH");
+        var $fixture = $("#NO_MATCH");
 
         expect($fixture)
           .to.have.$val(undefined).and
