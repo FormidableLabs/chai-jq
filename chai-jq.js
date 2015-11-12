@@ -1,22 +1,24 @@
+/*eslint-disable strict*/
 /*!
  * chai-jq
  * -------
  * An alternate jQuery assertion library for Chai.
  */
 (function () {
+  /*eslint-disable consistent-this*/
   var root = this;
+  /*eslint-enable consistent-this*/
 
   /*!
    * Chai jQuery plugin implementation.
    */
-  function chaiJq(chai, utils) {
-    "use strict";
-
+  /*eslint-disable max-statements*/
+  var chaiJq = function (chai, utils) {
     // ------------------------------------------------------------------------
     // Variables
     // ------------------------------------------------------------------------
-    var flag = utils.flag,
-      toString = Object.prototype.toString;
+    var flag = utils.flag;
+    var toString = Object.prototype.toString;
 
     // ------------------------------------------------------------------------
     // Helpers
@@ -30,9 +32,9 @@
         return "<EMPTY OBJECT>";
       }
 
-      var name = "",
-        id = $el.attr("id"),
-        cls = $el.attr("class") || "";
+      var name = "";
+      var id = $el.attr("id");
+      var cls = $el.attr("class") || "";
 
       // Try CSS selector id.
       if (id) {
@@ -85,6 +87,7 @@
      */
     var _jqAssert = function (fn) {
       return function (exp, msg) {
+        /*eslint-disable no-invalid-this*/
         // Set properties.
         this._$el = flag(this, "object");
         this._name = _elName(this._$el);
@@ -112,6 +115,7 @@
 
       // Return decorated assert.
       return _jqAssert(function () {
+        /*eslint-disable no-invalid-this*/
         this.assert(
           this._$el.is(jqSelector),
           "expected " + this._name + " to be " + selectorDesc,
@@ -134,29 +138,31 @@
     var _containMethod = function (jqMeth, opts) {
       // Unpack options.
       opts = opts || /* istanbul ignore next */ {};
-      opts.hasArg       = !!opts.hasArg;
-      opts.isProperty   = !!opts.isProperty;
-      opts.hasContains  = !!opts.hasContains;
-      opts.defaultAct   = undefined;
+      opts.hasArg = !!opts.hasArg;
+      opts.isProperty = !!opts.isProperty;
+      opts.hasContains = !!opts.hasContains;
+      opts.defaultAct = undefined;
 
       // Return decorated assert.
+      /*eslint-disable complexity*/
       return _jqAssert(function () {
+        /*eslint-disable no-invalid-this*/
         // Arguments.
-        var exp = arguments[opts.hasArg ? 1 : 0],
-          arg = opts.hasArg ? arguments[0] : undefined,
+        var exp = arguments[opts.hasArg ? 1 : 0];
+        var arg = opts.hasArg ? arguments[0] : undefined;
 
-          // Switch context to property / check mere presence.
-          noExp = arguments.length === (opts.hasArg ? 1 : 0),
-          isProp = opts.isProperty && noExp,
+        // Switch context to property / check mere presence.
+        var noExp = arguments.length === (opts.hasArg ? 1 : 0);
+        var isProp = opts.isProperty && noExp;
 
-          // Method.
-          act = (opts.hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]()),
-          meth = opts.hasArg ? jqMeth + "('" + arg + "')" : jqMeth,
+        // Method.
+        var act = opts.hasArg ? this._$el[jqMeth](arg) : this._$el[jqMeth]();
+        var meth = opts.hasArg ? jqMeth + "('" + arg + "')" : jqMeth;
 
-          // Assertion type.
-          contains = !isProp && opts.hasContains && flag(this, "contains"),
-          have = contains ? "contain" : "have",
-          comp = _equals;
+        // Assertion type.
+        var contains = !isProp && opts.hasContains && flag(this, "contains");
+        var have = contains ? "contain" : "have";
+        var comp = _equals;
 
         // Set comparison.
         if (isProp) {
@@ -191,6 +197,7 @@
           flag(this, "object", act);
         }
       });
+      /*eslint-enable complexity*/
     };
 
     // ------------------------------------------------------------------------
@@ -251,10 +258,11 @@
      * @api public
      */
     var $val = _jqAssert(function (exp) {
+      /*eslint-disable no-invalid-this*/
       // Manually check empty elements for `.val` call b/c ie9 can otherwise
       // report `Unspecified error.` at least in Sauce Labs.
-      var act = this._$el && this._$el.length > 0 ? this._$el.val() : undefined,
-        comp = _isRegExp(exp) ? _regExpMatch : _equals;
+      var act = this._$el && this._$el.length > 0 ? this._$el.val() : undefined;
+      var comp = _isRegExp(exp) ? _regExpMatch : _equals;
 
       this.assert(
         comp(exp, act),
@@ -283,6 +291,7 @@
      * @api public
      */
     var $class = _jqAssert(function (exp) {
+      /*eslint-disable no-invalid-this*/
       var act = this._$el.attr("class") || "";
 
       this.assert(
@@ -491,19 +500,18 @@
     });
 
     chai.Assertion.addMethod("$css", $css);
-  }
+  };
 
   /* istanbul ignore next */
   /*!
    * Wrap AMD, etc. using boilerplate.
    */
-  function wrap(plugin) {
-    "use strict";
+  var wrap = function (plugin) {
     /* global module:false, define:false */
 
     if (typeof require === "function" &&
         typeof exports === "object" &&
-        typeof module  === "object") {
+        typeof module === "object") {
       // NodeJS
       module.exports = plugin;
 
@@ -525,7 +533,8 @@
         return plugin(chai, utils, root.jQuery);
       });
     }
-  }
+  };
+  /*eslint-enable max-statements*/
 
   // Hook it all together.
   wrap(chaiJq);

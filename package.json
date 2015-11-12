@@ -34,6 +34,11 @@
     "sinon": "^1.16.1"
   },
   "scripts": {
+    "lint-client": "eslint -c .eslintrc-client chai-jq.js",
+    "lint-client-test": "eslint -c .eslintrc-client-test test/js/spec test/adapters/karma.js",
+    "lint-server": "eslint -c .eslintrc-server *.js",
+    "lint-server-test": "eslint -c .eslintrc-server-test test/js/spec test/adapters/node.js",
+    "lint": "npm run lint-client && npm run lint-client-test && npm run lint-server && npm run lint-server-test",
     "test-frontend": "node node_modules/karma/bin/karma start karma.conf.js",
     "test-frontend-ci": "node node_modules/karma/bin/karma start --browsers PhantomJS,Firefox karma.conf.coverage.js",
     "test-frontend-cov": "node node_modules/karma/bin/karma start karma.conf.coverage.js",
@@ -41,6 +46,9 @@
     "test-ci": "npm run test-frontend-ci",
     "test-cov": "npm run test-frontend-cov",
     "test-dev": "npm run test-frontend-dev",
+    "check": "npm run lint && npm run test",
+    "check-ci": "npm run lint && npm run test-ci",
+    "check-cov": "npm run lint && npm run test-cov",
     "server-test": "http-server -p 3030 ."
   },
   "repository": {

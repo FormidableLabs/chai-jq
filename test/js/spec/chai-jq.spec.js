@@ -1,17 +1,23 @@
 // Boilerplate and test setup.
 (function () {
   /*global module:true */
-  var root = this,
-    isNode = typeof require === "function" &&
-             typeof exports === "object" &&
-             typeof module  === "object";
+  /*eslint-disable consistent-this*/
+  var root = this;
+  /*eslint-enable consistent-this*/
+
+  var isNode = typeof require === "function" &&
+               typeof exports === "object" &&
+               typeof module === "object";
 
   // Make AMD/Non-AMD compatible (boilerplate).
   if (typeof define !== "function") { /*global define:true */
     define = function (deps, callback) {
       // Export if node, else actually run.
-      if (isNode) { module.exports = callback; }
-      else        { callback(root.$); }
+      if (isNode) {
+        module.exports = callback;
+      } else {
+        callback(root.$);
+      }
     };
   }
 
@@ -24,12 +30,15 @@
 
 define(["jquery"], function ($) {
   describe("chai-jq", function () {
+    var $base;
+    var $fixture;
+
     before(function () {
-      this.$base = $("#fixtures");
+      $base = $("#fixtures");
     });
 
     afterEach(function () {
-      this.$base.empty();
+      $base.empty();
     });
 
     describe("test meta", function () {
@@ -71,12 +80,10 @@ define(["jquery"], function ($) {
 
     describe("$val", function () {
       beforeEach(function () {
-        this.$fixture = $("<input id=\"test\" />").appendTo(this.$base);
+        $fixture = $("<input id=\"test\" />").appendTo($base);
       });
 
       it("works with no val", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.have.$val("").and
           .to.not.have.$val("bar");
@@ -92,29 +99,25 @@ define(["jquery"], function ($) {
         // searched from the DOM. So `var $fixture = $("#NO_MATCH");` would
         // cause this. However, `.find` from something attached to DOM works
         // like normal, hence the selector below.
-        var $fixture = this.$fixture.find("#NO_MATCH");
+        var $noMatch = $fixture.find("#NO_MATCH");
 
-        expect($fixture)
+        expect($noMatch)
           .to.have.$val(undefined).and
           .to.not.have.$val("bar");
 
         expect(function () {
-          expect($fixture).to.have.$val("foo");
+          expect($noMatch).to.have.$val("foo");
         }).to.throw(
           "expected <EMPTY OBJECT> to have val 'foo' but found 'undefined'");
       });
 
       it("can override error messages", function () {
-        var $fixture = this.$fixture;
-
         expect(function () {
           expect($fixture).to.have.$val("foo", "MY ERROR MSG");
         }).to.throw("MY ERROR MSG");
       });
 
       it("matches basic vals", function () {
-        var $fixture = this.$fixture;
-
         $fixture.val("MY_VALUE");
 
         expect($fixture)
@@ -131,8 +134,6 @@ define(["jquery"], function ($) {
       });
 
       it("matches regexes with basic val", function () {
-        var $fixture = this.$fixture;
-
         $fixture.val("RE_VAL");
 
         expect($fixture)
@@ -158,12 +159,10 @@ define(["jquery"], function ($) {
 
     describe("$class", function () {
       beforeEach(function () {
-        this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);
+        $fixture = $("<div id=\"test\" />").appendTo($base);
       });
 
       it("works with no class", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.have.$class("").and
           .to.not.have.$class("bar");
@@ -174,8 +173,6 @@ define(["jquery"], function ($) {
       });
 
       it("matches single classes in elements", function () {
-        var $fixture = this.$fixture;
-
         $fixture.prop("class", "MY_CLASS");
 
         expect($fixture)
@@ -189,8 +186,6 @@ define(["jquery"], function ($) {
       });
 
       it("matches multiple classes in elements", function () {
-        var $fixture = this.$fixture;
-
         $fixture.prop("class", "CLS1 CLS2");
 
         expect($fixture)
@@ -211,13 +206,11 @@ define(["jquery"], function ($) {
 
     describe("$visible, $hidden", function () {
       beforeEach(function () {
-        this.$fixture = $("<div id=\"test\" >&nbsp;</div>")
-          .appendTo(this.$base);
+        $fixture = $("<div id=\"test\" >&nbsp;</div>")
+          .appendTo($base);
       });
 
       it("verifies element visibility", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.be.$visible.and
           .to.not.be.$hidden;
@@ -248,8 +241,6 @@ define(["jquery"], function ($) {
 
       // JsDom doesn't work for parent visibility.
       it.skipNode("verifies visibility if parent is hidden", function () {
-        var $fixture = this.$fixture;
-
         $fixture.wrap("<div />");
 
         expect($fixture)
@@ -266,13 +257,11 @@ define(["jquery"], function ($) {
 
     describe("$attr", function () {
       beforeEach(function () {
-        this.$fixture = $("<div id=\"test\" foo=\"fun time\" />")
-          .appendTo(this.$base);
+        $fixture = $("<div id=\"test\" foo=\"fun time\" />")
+          .appendTo($base);
       });
 
       it("matches attribute", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.have.$attr("id", "test").and
           .to.have.$attr("foo", "fun time").and
@@ -283,15 +272,13 @@ define(["jquery"], function ($) {
         expect(function () {
           expect($fixture).to.have.$attr("foo", "fun");
         }).to.throw("expected '#test' to have attr('foo') 'fun' " +
-                    "but found '" + "fun time" + "'");
+                    "but found 'fun time'");
       });
 
       it("checks presence of attribute", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture).to.have.$attr("id");
         expect($fixture).to.have.$attr("foo");
-        expect(this.$fixture).to.not.have.$attr("bar");
+        expect($fixture).to.not.have.$attr("bar");
 
         expect(function () {
           expect($fixture).to.have.$attr("bar");
@@ -303,22 +290,20 @@ define(["jquery"], function ($) {
       });
 
       it("changes context to attribute", function () {
-        expect(this.$fixture).to.have.$attr("foo").and
+        expect($fixture).to.have.$attr("foo").and
           .to.equal("fun time").and
           .to.match(/^f/).and
           .to.not.have.length(2);
       });
 
       it("does not change context for negated attribute", function () {
-        expect(this.$fixture).to.not
+        expect($fixture).to.not
           .have.$attr("bar").and
           .have.$attr("baz").and
           .have.$attr("boy");
       });
 
       it("matches attribute subsets", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.contain.$attr("id", "test").and
           .to.contain.$attr("id", "te").and
@@ -331,7 +316,7 @@ define(["jquery"], function ($) {
         expect(function () {
           expect($fixture).to.contain.$attr("foo", "funky");
         }).to.throw("expected '#test' to contain attr('foo') 'funky' " +
-                    "but found '" + "fun time" + "'");
+                    "but found 'fun time'");
 
         expect($("<div id=\"hi\" foo=\"bar time\" />"))
           .to.have.$attr("id", "hi").and
@@ -345,13 +330,11 @@ define(["jquery"], function ($) {
           "data-id=\"test\" " +
           "data-options='{\"name\":\"John\"}' " +
           "data-foo=\"fun time\" />";
-        this.$fixture = $(el)
-          .appendTo(this.$base);
+        $fixture = $(el)
+          .appendTo($base);
       });
 
       it("matches data attribute", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.have.$data("id", "test").and
           .to.have.$data("foo", "fun time").and
@@ -366,15 +349,13 @@ define(["jquery"], function ($) {
         expect(function () {
           expect($fixture).to.have.$data("foo", "fun");
         }).to.throw("expected '#test' to have data('foo') 'fun' " +
-                    "but found '" + "fun time" + "'");
+                    "but found 'fun time'");
       });
 
       it("checks presence of data attribute", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture).to.have.$data("id");
         expect($fixture).to.have.$data("foo");
-        expect(this.$fixture).to.not.have.$data("bar");
+        expect($fixture).to.not.have.$data("bar");
 
         expect(function () {
           expect($fixture).to.have.$data("bar");
@@ -386,22 +367,20 @@ define(["jquery"], function ($) {
       });
 
       it("changes context to data attribute", function () {
-        expect(this.$fixture).to.have.$data("foo").and
+        expect($fixture).to.have.$data("foo").and
           .to.equal("fun time").and
           .to.match(/^f/).and
           .to.not.have.length(2);
       });
 
       it("does not change context for negated data attribute", function () {
-        expect(this.$fixture).to.not
+        expect($fixture).to.not
           .have.$data("bar").and
           .have.$data("baz").and
           .have.$data("boy");
       });
 
       it("matches data attribute subsets", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.contain.$data("id", "test").and
           .to.contain.$data("id", "te").and
@@ -414,7 +393,7 @@ define(["jquery"], function ($) {
         expect(function () {
           expect($fixture).to.contain.$data("foo", "funky");
         }).to.throw("expected '#test' to contain data('foo') 'funky' " +
-                    "but found '" + "fun time" + "'");
+                    "but found 'fun time'");
 
         expect($("<div id=\"test\" data-id=\"hi\" data-foo=\"bar time\" />"))
           .to.have.$data("id", "hi").and
@@ -424,14 +403,12 @@ define(["jquery"], function ($) {
 
     describe("$prop", function () {
       beforeEach(function () {
-        this.$fixture = $(
+        $fixture = $(
           "<input id=\"test\" type=\"checkbox\" checked=\"checked\" />")
-            .appendTo(this.$base);
+            .appendTo($base);
       });
 
       it("matches property", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.have.$prop("nothave", undefined);
 
@@ -453,8 +430,6 @@ define(["jquery"], function ($) {
       });
 
       it("checks presence of property", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture).to.have.$prop("checked");
         expect($fixture).to.have.$prop("type");
         expect($fixture).to.not.have.$prop("bar");
@@ -469,14 +444,14 @@ define(["jquery"], function ($) {
       });
 
       it("changes context to property", function () {
-        expect(this.$fixture).to.have.$prop("type").and
+        expect($fixture).to.have.$prop("type").and
           .to.equal("checkbox").and
           .to.match(/^c.*x$/).and
           .to.not.have.length(2);
       });
 
       it("does not change context for negated property", function () {
-        expect(this.$fixture).to.not
+        expect($fixture).to.not
           .have.$prop("bar").and
           .have.$prop("baz");
       });
@@ -484,12 +459,11 @@ define(["jquery"], function ($) {
 
     describe("$html", function () {
       beforeEach(function () {
-        this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);
+        $fixture = $("<div id=\"test\" />").appendTo($base);
       });
 
       it("matches HTML", function () {
-        var $fixture = this.$fixture,
-          html = "<div><em>Hi</em>there</div>";
+        var html = "<div><em>Hi</em>there</div>";
 
         $fixture.html(html);
 
@@ -504,8 +478,7 @@ define(["jquery"], function ($) {
       });
 
       it("matches HTML subsets", function () {
-        var $fixture = this.$fixture,
-          html = "<div><em>Hi</em>there</div>";
+        var html = "<div><em>Hi</em>there</div>";
 
         $fixture.html(html);
 
@@ -529,12 +502,11 @@ define(["jquery"], function ($) {
 
     describe("$text", function () {
       beforeEach(function () {
-        this.$fixture = $("<div id=\"test\" />").appendTo(this.$base);
+        $fixture = $("<div id=\"test\" />").appendTo($base);
       });
 
       it("matches text", function () {
-        var $fixture = this.$fixture,
-          html = "<div><em>Hi</em> there</div>";
+        var html = "<div><em>Hi</em> there</div>";
 
         $fixture.html(html);
 
@@ -549,8 +521,7 @@ define(["jquery"], function ($) {
       });
 
       it("matches text subsets", function () {
-        var $fixture = this.$fixture,
-          html = "<div><em>Hi</em> there</div>";
+        var html = "<div><em>Hi</em> there</div>";
 
         $fixture.html(html);
 
@@ -574,14 +545,12 @@ define(["jquery"], function ($) {
 
     describe("$css", function () {
       beforeEach(function () {
-        this.$fixture = $(
+        $fixture = $(
           "<div style=\"width: 50px; border: 1px dotted black;\" />"
-        ).appendTo(this.$base);
+        ).appendTo($base);
       });
 
       it("matches explicit CSS properties", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.have.$css("width", "50px").and
           .to.not
@@ -602,8 +571,6 @@ define(["jquery"], function ($) {
 
       // JsDom doesn't work properly with computed properties.
       it.skipNode("matches computed CSS properties", function () {
-        var $fixture = this.$fixture;
-
         expect($fixture)
           .to.have.$css("border-top-style", "dotted").and
           .to.not
