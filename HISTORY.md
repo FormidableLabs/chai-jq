@@ -1,6 +1,10 @@
 History
 =======
 
+## 0.0.9
+
+* Add keywords for Chai docs.
+
 ## 0.0.8
 
 * Add name of `<EMPTY OBJECT>` for zero-length selectors.

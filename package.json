@@ -1,6 +1,6 @@
 {
   "name": "chai-jq",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "An alternate jQuery assertion library for Chai.",
   "main": "chai-jq.js",
   "dependencies": {},
@@ -35,7 +35,7 @@
   "scripts": {
     "test": "gulp check",
     "check": "npm run-script test && npm run-script coverage",
-    "coverage": "./node_modules/karma-coverage/node_modules/.bin/istanbul check-coverage --statements 100 --branches 100 --lines 100 --functions 100 'coverage/**/coverage.json'",
+    "coverage": "node_modules/karma-coverage/node_modules/.bin/istanbul check-coverage --statements 100 --branches 100 --lines 100 --functions 100 'coverage/**/coverage.json'",
     "sauce-local": "gulp test:frontend:sauce"
   },
   "repository": {
@@ -47,7 +47,11 @@
     "assertion",
     "assert",
     "chai",
-    "jquery"
+    "chai-plugin",
+    "jquery",
+    "browser",
+    "vendor",
+    "dom"
   ],
   "author": "Ryan Roemer <ryan.roemer@formidablelabs.com>",
   "license": "MIT",
