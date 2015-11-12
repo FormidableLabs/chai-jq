@@ -53,7 +53,7 @@
     "vendor",
     "dom"
   ],
-  "author": "Ryan Roemer <ryan.roemer@formidablelabs.com>",
+  "author": "Ryan Roemer <ryan.roemer@formidable.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/FormidableLabs/chai-jq/issues"
