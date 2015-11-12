@@ -2,10 +2,10 @@
  * Mocha bridge and test runner.
  */
 // Imports
-var plugin  = require("../../chai-jq");
-var jsdom   = require("jsdom");
-var chai    = require("chai");
-var $       = require("jquery");
+var plugin = require("../../chai-jq");
+var jsdom = require("jsdom");
+var chai = require("chai");
+var $ = require("jquery");
 
 // Set up JsDom.
 var document = jsdom.jsdom("<html><head></head><body>" +
