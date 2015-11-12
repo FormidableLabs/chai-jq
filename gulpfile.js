@@ -61,7 +61,7 @@ var SAUCE_TAG = process.env.SAUCE_USERNAME + "@" + SAUCE_BRANCH;
 
 // Karma coverage.
 var KARMA_COV = {
-  reporters: ["mocha", "coverage"],
+  reporters: ["spec", "coverage"],
   preprocessors: {
     "chai-jq.js": ["coverage"]
   },
