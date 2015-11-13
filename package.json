@@ -41,6 +41,7 @@
     "lint": "npm run lint-client && npm run lint-client-test && npm run lint-server && npm run lint-server-test",
     "test-frontend": "node node_modules/karma/bin/karma start karma.conf.js",
     "test-frontend-ci": "node node_modules/karma/bin/karma start --browsers PhantomJS,Firefox karma.conf.coverage.js",
+    "test-frontend-sauce": "node node_modules/karma/bin/karma start karma.conf.saucelabs.js",
     "test-frontend-cov": "node node_modules/karma/bin/karma start karma.conf.coverage.js",
     "test": "npm run test-frontend",
     "test-ci": "npm run test-frontend-ci",

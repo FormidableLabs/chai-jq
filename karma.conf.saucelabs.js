@@ -4,7 +4,6 @@
  *
  * This configuration is the same as basic one-shot version, just with sauce.
  */
-
 var SAUCE_ENVS = {
   /*eslint-disable camelcase*/
   // Already tested in Travis.
@@ -48,9 +47,9 @@ var SAUCE_TAG = process.env.SAUCE_USERNAME + "@" + SAUCE_BRANCH;
 
 module.exports = function (config) {
   /* eslint-disable global-require */
-  require("./karma.conf")(config);
+  require("./karma.conf.coverage")(config);
   config.set({
-    reporters: ["spec", "saucelabs"],
+    reporters: ["spec", "saucelabs", "coverage"],
     sauceLabs: {
       testName: "chai-jq - Frontend Unit Tests",
       tags: [SAUCE_TAG],

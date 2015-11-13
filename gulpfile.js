@@ -10,6 +10,7 @@ var mdox = require("gulp-mdox");
 // ----------------------------------------------------------------------------
 // Docs
 // ----------------------------------------------------------------------------
+// TODO: Update to non-gulp documentation workflow.
 gulp.task("docs:api", function () {
   gulp
     .src("chai-jq.js")
