@@ -62,5 +62,3 @@ module.exports = function (config) {
     browsers: Object.keys(SAUCE_ENVS)
   });
 };
-
-// TODO: CI COVERALLS UPLOAD!!!
