@@ -4,7 +4,6 @@
  * Gulp file.
  */
 var gulp = require("gulp");
-var jade = require("gulp-jade");
 var mdox = require("gulp-mdox");
 
 // ----------------------------------------------------------------------------
@@ -24,17 +23,8 @@ gulp.task("docs:api", function () {
     .pipe(gulp.dest("./"));
 });
 
-gulp.task("templates", function () {
-  gulp
-    .src("_templates/**/*.jade")
-    .pipe(jade({
-      pretty: true
-    }))
-    .pipe(gulp.dest("./"));
-});
-
 // ----------------------------------------------------------------------------
 // Aggregated Tasks
 // ----------------------------------------------------------------------------
-gulp.task("build", ["docs:api", "templates"]);
+gulp.task("build", ["templates"]);
 gulp.task("default", ["build"]);

@@ -17,6 +17,7 @@ coverage
 Procfile
 
 # Code / build
+_templates
 test
 karma*
 webpack*

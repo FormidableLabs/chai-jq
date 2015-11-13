@@ -46,7 +46,8 @@ JsDom.</p>
 <p><strong>Standard Browser</strong>: To use in a standard HTML page, include <code>chai-jq.js</code>
 after Chai.</p>
 <pre><code class="lang-html">&lt;script src=&quot;chai.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script src=&quot;chai-jq.js&quot;&gt;&lt;/script&gt;
+</code></pre>
 <p><strong>AMD Browser</strong>: To use in a RequireJS/AMD page, require in <code>chai-jq</code> and
 inject it into Chai before your test imports / runners begin:</p>
 <pre><code class="lang-js">require([&quot;chai&quot;, &quot;chai-jq&quot;], function (chai, plugin) {
@@ -54,7 +55,8 @@ inject it into Chai before your test imports / runners begin:</p>
   chai.use(plugin);
 
   // Rest of your test code here...
-});</code></pre>
+});
+</code></pre>
 <p><strong>Node.js / JsDom</strong>: To use in Node.js/JsDom, require in <code>chai-jq</code> and
 inject it into Chai before your test imports / runners begin:</p>
 <pre><code class="lang-js">var chai    = require(&quot;chai&quot;);
@@ -63,7 +65,8 @@ var plugin  = require(&quot;chai-jq&quot;);
 // Inject plugin.
 chai.use(plugin);
 
-// Rest of test code here...</code></pre>
+// Rest of test code here...
+</code></pre>
 <h3 id="object-context-changes">Object Context Changes</h3>
 <p>One slight difference from how assertions in <code>chai-jq</code> work from Chai and other
 plugins is the switching of object context for certain assertions, currently:</p>
@@ -79,7 +82,8 @@ expect($elem)
   // Assertion object is `$elem`
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
   // Assertion object is still `$elem`
-  .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
+  .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);
+</code></pre>
 <p>In the above example, the jQuery object <code>$elem</code> remains the object under
 assertion for both <code>$attr</code> calls. However, in the special case for one of the
 enumerated assertions above where:</p>
@@ -98,7 +102,8 @@ expect($elem)
     // Assertion object now changed to `$attr()` value: `&quot;bar time&quot;`
     .to.equal(&quot;bar time&quot;).and
     .to.match(/^b/).and
-    .to.not.have.length(2);</code></pre>
+    .to.not.have.length(2);
+</code></pre>
 <p>In the above example here, the object under assertion becomes the string
 <code>&quot;bar time&quot;</code> immediately after the call to <code>$attr(&quot;foo&quot;)</code> with no expected
 value.</p>
@@ -120,15 +125,17 @@ value.</p>
 <p><em>Node.js/JsDom Note</em>: JsDom does not currently infer zero-sized or
 hidden parent elements as hidden / visible appropriately.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div&gt;&amp;nbsp;&lt;/div&gt;&quot;))
-  .to.be.$visible;</code></pre>
-<p>See: <a href="http://api.jquery.com/visible-selector/"><a href="http://api.jquery.com/visible-selector/">http://api.jquery.com/visible-selector/</a></a></p>
+  .to.be.$visible;
+</code></pre>
+<p>See: <a href="http://api.jquery.com/visible-selector/">http://api.jquery.com/visible-selector/</a></p>
 <h3 id="-hidden-"><code>$hidden</code></h3>
 <p>Asserts that the element is hidden.</p>
 <p><em>Node.js/JsDom Note</em>: JsDom does not currently infer zero-sized or
 hidden parent elements as hidden / visible appropriately.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;display: none\&quot; /&gt;&quot;))
-  .to.be.$hidden;</code></pre>
-<p>See: <a href="http://api.jquery.com/hidden-selector/"><a href="http://api.jquery.com/hidden-selector/">http://api.jquery.com/hidden-selector/</a></a></p>
+  .to.be.$hidden;
+</code></pre>
+<p>See: <a href="http://api.jquery.com/hidden-selector/">http://api.jquery.com/hidden-selector/</a></p>
 <h3 id="-val-expected-message-"><code>$val(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String|RegExp</code>) value</li>
@@ -137,8 +144,9 @@ hidden parent elements as hidden / visible appropriately.</p>
 <p>Asserts that the element value matches a string or regular expression.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input value=&#39;foo&#39; /&gt;&quot;))
   .to.have.$val(&quot;foo&quot;).and
-  .to.have.$val(/^foo/);</code></pre>
-<p>See: <a href="http://api.jquery.com/val/"><a href="http://api.jquery.com/val/">http://api.jquery.com/val/</a></a></p>
+  .to.have.$val(/^foo/);
+</code></pre>
+<p>See: <a href="http://api.jquery.com/val/">http://api.jquery.com/val/</a></p>
 <h3 id="-class-expected-message-"><code>$class(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) class name</li>
@@ -147,8 +155,9 @@ hidden parent elements as hidden / visible appropriately.</p>
 <p>Asserts that the element has a class match.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div class=&#39;foo bar&#39; /&gt;&quot;))
   .to.have.$class(&quot;foo&quot;).and
-  .to.have.$class(&quot;bar&quot;);</code></pre>
-<p>See: <a href="http://api.jquery.com/hasClass/"><a href="http://api.jquery.com/hasClass/">http://api.jquery.com/hasClass/</a></a></p>
+  .to.have.$class(&quot;bar&quot;);
+</code></pre>
+<p>See: <a href="http://api.jquery.com/hasClass/">http://api.jquery.com/hasClass/</a></p>
 <h3 id="-attr-name-expected-message-"><code>$attr(name, [expected], [message])</code></h3>
 <ul>
 <li><strong>name</strong> (<code>String</code>) attribute name</li>
@@ -161,14 +170,16 @@ asserts the target contains a subset of the attribute when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$attr(&quot;id&quot;, &quot;hi&quot;).and
-  .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
+  .to.contain.$attr(&quot;foo&quot;, &quot;bar&quot;);
+</code></pre>
 <p>Changes context to attribute string <em>value</em> when no expected value is
 provided:</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div id=\&quot;hi\&quot; foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$attr(&quot;foo&quot;).and
     .to.equal(&quot;bar time&quot;).and
-    .to.match(/^b/);</code></pre>
-<p>See: <a href="http://api.jquery.com/attr/"><a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></a></p>
+    .to.match(/^b/);
+</code></pre>
+<p>See: <a href="http://api.jquery.com/attr/">http://api.jquery.com/attr/</a></p>
 <h3 id="-data-name-expected-message-"><code>$data(name, [expected], [message])</code></h3>
 <ul>
 <li><strong>name</strong> (<code>String</code>) data-attribute name</li>
@@ -182,14 +193,16 @@ of the data-attribute when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div data-id=\&quot;hi\&quot; data-foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$data(&quot;id&quot;, &quot;hi&quot;).and
-  .to.contain.$data(&quot;foo&quot;, &quot;bar&quot;);</code></pre>
+  .to.contain.$data(&quot;foo&quot;, &quot;bar&quot;);
+</code></pre>
 <p>Changes context to data-attribute string <em>value</em> when no
 expected value is provided:</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div data-id=\&quot;hi\&quot; data-foo=\&quot;bar time\&quot; /&gt;&quot;))
   .to.have.$data(&quot;foo&quot;).and
     .to.equal(&quot;bar time&quot;).and
-    .to.match(/^b/);</code></pre>
-<p>See: <a href="http://api.jquery.com/data/"><a href="http://api.jquery.com/data/">http://api.jquery.com/data/</a></a></p>
+    .to.match(/^b/);
+</code></pre>
+<p>See: <a href="http://api.jquery.com/data/">http://api.jquery.com/data/</a></p>
 <h3 id="-prop-name-expected-message-"><code>$prop(name, [expected], [message])</code></h3>
 <ul>
 <li><strong>name</strong> (<code>String</code>) property name</li>
@@ -200,14 +213,16 @@ expected value is provided:</p>
 <p>Asserts that the target has exactly the given named property.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
   .to.have.$prop(&quot;checked&quot;, true).and
-  .to.have.$prop(&quot;type&quot;, &quot;checkbox&quot;);</code></pre>
+  .to.have.$prop(&quot;type&quot;, &quot;checkbox&quot;);
+</code></pre>
 <p>Changes context to property string <em>value</em> when no expected value is
 provided:</p>
 <pre><code class="lang-js">expect($(&quot;&lt;input type=\&quot;checkbox\&quot; checked=\&quot;checked\&quot; /&gt;&quot;))
   .to.have.$prop(&quot;type&quot;).and
     .to.equal(&quot;checkbox&quot;).and
-    .to.match(/^c.*x$/);</code></pre>
-<p>See: <a href="http://api.jquery.com/prop/"><a href="http://api.jquery.com/prop/">http://api.jquery.com/prop/</a></a></p>
+    .to.match(/^c.*x$/);
+</code></pre>
+<p>See: <a href="http://api.jquery.com/prop/">http://api.jquery.com/prop/</a></p>
 <h3 id="-html-expected-message-"><code>$html(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) HTML content</li>
@@ -218,8 +233,9 @@ asserts the target contains a subset of the HTML when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div&gt;&lt;span&gt;foo&lt;/span&gt;&lt;/div&gt;&quot;))
   .to.have.$html(&quot;&lt;span&gt;foo&lt;/span&gt;&quot;).and
-  .to.contain.$html(&quot;foo&quot;);</code></pre>
-<p>See: <a href="http://api.jquery.com/html/"><a href="http://api.jquery.com/html/">http://api.jquery.com/html/</a></a></p>
+  .to.contain.$html(&quot;foo&quot;);
+</code></pre>
+<p>See: <a href="http://api.jquery.com/html/">http://api.jquery.com/html/</a></p>
 <h3 id="-text-expected-message-"><code>$text(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) text content</li>
@@ -230,8 +246,9 @@ asserts the target contains a subset of the text when using the
 <code>include</code> or <code>contain</code> modifiers.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div&gt;&lt;span&gt;foo&lt;/span&gt; bar&lt;/div&gt;&quot;))
   .to.have.$text(&quot;foo bar&quot;).and
-  .to.contain.$text(&quot;foo&quot;);</code></pre>
-<p>See: <a href="http://api.jquery.com/text/"><a href="http://api.jquery.com/text/">http://api.jquery.com/text/</a></a></p>
+  .to.contain.$text(&quot;foo&quot;);
+</code></pre>
+<p>See: <a href="http://api.jquery.com/text/">http://api.jquery.com/text/</a></p>
 <h3 id="-css-expected-message-"><code>$css(expected, [message])</code></h3>
 <ul>
 <li><strong>expected</strong> (<code>String</code>) CSS property content</li>
@@ -251,8 +268,9 @@ respect to CSS / styles, especially those that come from CSS classes
 and not explicity <code>style</code> attributes.</p>
 <pre><code class="lang-js">expect($(&quot;&lt;div style=\&quot;width: 50px; border: 1px dotted black;\&quot; /&gt;&quot;))
   .to.have.$css(&quot;width&quot;, &quot;50px&quot;).and
-  .to.have.$css(&quot;border-top-style&quot;, &quot;dotted&quot;);</code></pre>
-<p>See: <a href="http://api.jquery.com/css/"><a href="http://api.jquery.com/css/">http://api.jquery.com/css/</a></a></p>
+  .to.have.$css(&quot;border-top-style&quot;, &quot;dotted&quot;);
+</code></pre>
+<p>See: <a href="http://api.jquery.com/css/">http://api.jquery.com/css/</a></p>
 <h2 id="contributions">Contributions</h2>
 <p>Please see the <a href="./CONTRIBUTING.md">Contributions Guide</a> for how to help out
 with the plugin.</p>
@@ -348,10 +366,10 @@ params in Markdown output.</li>
 <p>Community contributions are most welcome. Here are a couple of guidelines for
 contributions.</p>
 <ul>
-<li>Install the dev. environment with <code>npm install</code> and <code>bower install</code>.</li>
+<li>Install the dev. environment with <code>npm install</code>.</li>
 <li>Use GitHub pull requests.</li>
 <li>Reference existing open GitHub issues in commits where relevant.</li>
-<li>Styles, Tests: Always run <code>gulp check</code> to run all style and test checks.
+<li>Styles, Tests: Always run <code>npm run check</code> to run all style and test checks.
 This is a test library -- it should pass its own tests. ;)</li>
 <li>Generation: Please run <code>gulp</code> to correctly generate all appropriate files
 before finishing up and submitting your pull request.</li>
