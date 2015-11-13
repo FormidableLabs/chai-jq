@@ -63,6 +63,4 @@ module.exports = function (config) {
   });
 };
 
-// TODO: TEST THIS!!!
-// TODO: Integrate to travis.yml commands.
 // TODO: CI COVERALLS UPLOAD!!!

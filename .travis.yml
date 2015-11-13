@@ -18,6 +18,12 @@ script:
   - npm run check-ci
   - npm run test-frontend-sauce
 
+  # Manually send coverage reports to coveralls.
+  # - Aggregate client results
+  # - Single server results
+  - ls  coverage/client/*/lcov.info coverage/server/lcov.info | cat
+  - cat coverage/client/*/lcov.info coverage/server/lcov.info | node_modules/.bin/coveralls || echo "Coveralls upload failed"
+
 env:
   global:
     - secure: GUzDAvlbRX+xII7nNDzGw72XDz2GX3b4tGwZiV/LR3N+oWQMR7Kv4D8p4x/K9RR2NVgYvWc4EW1NHF/X28B7SWnxFH2W8znteyx6cyV2InVmAUAUMXP5sW4msEN/tQuEusyzkzm9me5n8uHPGbkm6g30bmyEB8+NE3lQgQk3B8w=
