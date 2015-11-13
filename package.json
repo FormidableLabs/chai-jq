@@ -54,8 +54,9 @@
     "check-ci": "npm run lint && npm run test-ci",
     "check-cov": "npm run lint && npm run test-cov",
     "server-test": "http-server -p 3030 .",
+    "build-api": "gulp",
     "build-templates": "jade -P -H -o . _templates",
-    "build": "npm run build-templates"
+    "build": "npm run build-templates && npm run build-api"
   },
   "repository": {
     "type": "git",

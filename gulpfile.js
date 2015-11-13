@@ -26,5 +26,5 @@ gulp.task("docs:api", function () {
 // ----------------------------------------------------------------------------
 // Aggregated Tasks
 // ----------------------------------------------------------------------------
-gulp.task("build", ["templates"]);
+gulp.task("build", ["docs:api"]);
 gulp.task("default", ["build"]);
