@@ -1,7 +1,11 @@
 language: node_js
 
 node_js:
-  - 0.10
+  - "0.10"
+  # jsdom fails with error here.
+  #- "0.12"
+
+sudo: false
 
 branches:
   only:
@@ -12,9 +16,17 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 script:
-  - ./node_modules/.bin/gulp check:ci
-  - npm run-script coverage
-  - ./node_modules/.bin/gulp test:frontend:sauce
+  - npm run check-ci
+  - npm run test-frontend-sauce
+
+  # Manually send coverage reports to coveralls.
+  # - Aggregate client results
+  # - Single server results
+  - ls  coverage/client/*/lcov.info coverage/server/lcov.info | cat
+  - cat coverage/client/*/lcov.info coverage/server/lcov.info | node_modules/.bin/coveralls || echo "Coveralls upload failed"
+
+  # Try a build of the docs and such
+  - npm run build
 
 env:
   global:

@@ -15,3 +15,12 @@ build
 */build
 coverage
 Procfile
+
+# Code / build
+_templates
+test
+karma*
+webpack*
+.eslint*
+.editor*
+.travis*
