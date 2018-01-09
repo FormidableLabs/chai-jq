@@ -30,7 +30,7 @@
     "karma-safari-launcher": "^0.1.1",
     "karma-sauce-launcher": "^0.2.14",
     "karma-spec-reporter": "0.0.20",
-    "marked": "0.2.10",
+    "marked": "^0.3.9",
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.18",
     "sinon": "^1.16.1"
